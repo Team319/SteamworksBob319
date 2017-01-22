@@ -70,12 +70,12 @@ public class RobotMap {
       //  driveTrainJoystickDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         driveTrainShifter = new DoubleSolenoid(0, 0, 1);
         
-        //---------------------------shooter--------------------------
+        //---------------------------shooter--------------------------//
         
         shooterShooterLead = new CANTalon(8);
         shooterShooterFollow = new CANTalon(9);
    
-        //----------------fuelCollector----------------------------
+        //----------------fuelCollector----------------------------//
         
         fuelCollectorFuelCollector = new CANTalon(1);
         fuelCollectorFuelPiston = new DoubleSolenoid(0, 2, 3);
