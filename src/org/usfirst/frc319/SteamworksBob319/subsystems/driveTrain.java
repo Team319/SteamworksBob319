@@ -38,6 +38,8 @@ public class driveTrain extends Subsystem {
     private final CANTalon leftDriveFollow = RobotMap.driveTrainLeftDriveFollow;
     private final CANTalon rightDriveFollow = RobotMap.driveTrainRightDriveFollow;
     private final RobotDrive joystickDrive = RobotMap.driveTrainJoystickDrive;
+    
+    public boolean shift;
 
    public driveTrain (){
 	   
@@ -75,6 +77,18 @@ public class driveTrain extends Subsystem {
     
     public void joystickDrive(double moveValue, double rotateValue){
     	joystickDrive.arcadeDrive(moveValue, rotateValue, true);
+    }
+    
+    public void shiftUp(){
+    	shifter.set(DoubleSolenoid.Value.kForward);
+    	
+    	shift = true;
+    }
+    
+    public void shiftDown(){
+    	shifter.set(DoubleSolenoid.Value.kReverse);
+    	
+    	shift = false;
     }
 }
 

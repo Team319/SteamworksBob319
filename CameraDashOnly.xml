@@ -1,0 +1,55 @@
+<xml version="1.0">
+<dashboard>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="139" y="-3"/>
+		<width>1040</width>
+		<height>659</height>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="1" y="488"/>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="0" y="367"/>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="0" y="246"/>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="0" y="125"/>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="5" y="4"/>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<widget field="Autonoumous Mode Chooser" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="555"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+	<hidden field="AutonomousCommand"/>
+	<hidden field="JoystickDrive"/>
+	<hidden field="Shooter Velocity"/>
+	<hidden field="CollectorStop"/>
+	<hidden field="CommandGroup1"/>
+	<hidden field="motorspeed"/>
+	<hidden field="Auto Selector"/>
+	<hidden field="GearCollectorGo"/>
+	<hidden field="Left Encoder"/>
+	<hidden field="Elevator Velocity"/>
+	<hidden field="InstantCommandExample"/>
+	<hidden field="FuelCollectorGo"/>
+	<hidden field="TimedCommandExample"/>
+	<hidden field="Right Encoder"/>
+	<hidden field="CollectorGo"/>
+	<hidden field="CommandOther2"/>
+	<hidden field="CommandOther1"/>
+	<hidden field="Joystickdrive"/>
+	<hidden field="FuelCollectorStop"/>
+	<hidden field="Autonomous Command"/>
+</xml>

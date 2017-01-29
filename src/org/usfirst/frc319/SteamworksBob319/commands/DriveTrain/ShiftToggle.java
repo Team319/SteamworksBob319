@@ -29,12 +29,12 @@ public class ShiftToggle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (Robot.driveTrain.shift == true)
+    	if (Robot.driveTrain.shift == false)
     	{
     	Robot.driveTrain.shiftUp();
     	System.out.println("HighGear");
     	}
-    	else if(Robot.driveTrain.shift == false){
+    	else if(Robot.driveTrain.shift == true){
     	Robot.driveTrain.shiftDown();
     	System.out.println();
     	}

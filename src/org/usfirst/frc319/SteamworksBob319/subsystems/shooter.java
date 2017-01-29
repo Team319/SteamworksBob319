@@ -13,7 +13,10 @@ package org.usfirst.frc319.SteamworksBob319.subsystems;
 
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterStop;
+
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -30,9 +33,31 @@ public class shooter extends Subsystem {
 
 public shooter (){
 	
-	shooterLead.changeControlMode(TalonControlMode.PercentVbus);
+	shooterLead.changeControlMode(TalonControlMode.Speed);
+	shooterLead.enableBrakeMode(false);
+	shooterFollow.enableBrakeMode(false);
+	
+
+	shooterLead.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+	shooterLead.reverseOutput(false);
+	shooterLead.reverseSensor(true);
+	
 	shooterFollow.changeControlMode(TalonControlMode.Follower);
 	shooterFollow.set(shooterLead.getDeviceID());
+	shooterFollow.reverseOutput(true);
+	
+	shooterLead.configNominalOutputVoltage(+0.0f, -0.0f);
+	shooterLead.configPeakOutputVoltage(+12.0f, -12.0f);
+	shooterFollow.configPeakOutputVoltage(+12.0f, -12.0f);
+	
+	
+	
+	shooterLead.setProfile(0);
+	shooterLead.setF(0.02939);
+	shooterLead.setP(0.1);
+	shooterLead.setI(.00036);
+	shooterLead.setIZone(4000);
+	shooterLead.setD(0);
 }
 
     // Put methods for controlling this subsystem
@@ -40,8 +65,27 @@ public shooter (){
 
     public void initDefaultCommand() {
 
+    	setDefaultCommand(new ShooterStop());
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
+    
+    public void shooterGoToSpeed(double speed){
+    	//shooterLead.changeControlMode(TalonControlMode.Speed);
+    	shooterLead.set(speed);
+    	//shooterLead.changeControlMode(TalonControlMode.PercentVbus);
+    	//shooterLead.set(.4);
+    }
+    
+    public void shooterStop(){
+    	//shooterLead.changeControlMode(TalonControlMode.PercentVbus);
+    	shooterLead.set(0);
+    }
+    
+    public int getShooterSpeed(){
+    	return shooterLead.getEncVelocity();
+    }
+    	
+ 
 }
 

@@ -22,7 +22,7 @@ public class RollervatorStop extends Command {
     public RollervatorStop() {
 
     
-        requires(Robot.shooter);
+        requires(Robot.rollervator);
 
    
     }

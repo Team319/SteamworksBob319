@@ -13,7 +13,10 @@ package org.usfirst.frc319.SteamworksBob319.subsystems;
 
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorStop;
+
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -29,9 +32,35 @@ public class rollervator extends Subsystem {
     private final CANTalon rollervatorFollow = RobotMap.rollervatorRollervatorFollow;
 
     public rollervator(){
-    	rollervatorLead.changeControlMode(TalonControlMode.PercentVbus);
+    	/*
+    	rollervatorLead.changeControlMode(TalonControlMode.Speed);
     	rollervatorFollow.changeControlMode(TalonControlMode.Follower);
     	rollervatorFollow.set(rollervatorLead.getDeviceID());
+    	*/
+
+        rollervatorLead.changeControlMode(TalonControlMode.Speed);
+        rollervatorLead.enableBrakeMode(false);
+        rollervatorFollow.enableBrakeMode(false);
+        
+        rollervatorLead.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        rollervatorLead.reverseOutput(false);
+        rollervatorLead.reverseSensor(true);
+        
+        rollervatorFollow.changeControlMode(TalonControlMode.Follower);
+        rollervatorFollow.set(rollervatorLead.getDeviceID());
+        rollervatorFollow.reverseOutput(true);
+       // talon7.reverseSensor(true);  There is no sensor, doing this for continuity
+        
+        rollervatorLead.configNominalOutputVoltage(+0.0f, -0.0f);
+        rollervatorLead.configPeakOutputVoltage(+12.0f, -12.0f);
+        rollervatorFollow.configPeakOutputVoltage(+12.0f, -12.0f);
+        
+        rollervatorLead.setProfile(0);
+        rollervatorLead.setF(.10);
+        rollervatorLead.setP(0.06);
+        rollervatorLead.setI(0);
+        rollervatorLead.setIZone(0);
+        
     }
 
     // Put methods for controlling this subsystem
@@ -39,10 +68,21 @@ public class rollervator extends Subsystem {
 
     public void initDefaultCommand() {
       
+    	setDefaultCommand(new RollervatorStop());
 
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
+    public void rollervatorStop(){
+    	//rollervatorLead.changeControlMode(TalonControlMode.PercentVbus);
+    	rollervatorLead.set(0);
+   }
+    public void rollervatorGo(double speed){
+    	//rollervatorLead.changeControlMode(TalonControlMode.Speed);
+    	rollervatorLead.set(speed); 
+    }
+    
+    
 }
 
 
