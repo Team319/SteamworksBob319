@@ -9,9 +9,9 @@ import org.json.simple.JSONObject;
 //Generic Motion Profile Class
 public class SrxMotionProfile {
 
-	public int numPoints;
+	private int numPoints;
 	// Position (rotations) Velocity (RPM) Duration (ms)
-	public double[][] points;
+	private double[][] points;
 
 	public SrxMotionProfile() {
 
@@ -32,9 +32,9 @@ public class SrxMotionProfile {
 			int len = jsonPoints.size();
 			for (int i = 0; i < len; i++) {
 				JSONObject singlePoint = (JSONObject) jsonPoints.get(i);
-				points[i][2] = (double) singlePoint.get("dt");
 				points[i][0] = (double) singlePoint.get("pos");
 				points[i][1] = (double) singlePoint.get("vel");
+				points[i][2] = (double) singlePoint.get("dt");
 				//System.out.println(pointsArray[i][0] + "," + pointsArray[i][1] + "," + pointsArray[i][2]);
 			}
 		}
@@ -47,7 +47,6 @@ public class SrxMotionProfile {
 	}
 
 	public JSONObject toJson() {
-		StringBuilder sb = new StringBuilder();
 		JSONObject obj = new JSONObject();
 		obj.put("numPoints", numPoints);
 		// obj.put("points", points);

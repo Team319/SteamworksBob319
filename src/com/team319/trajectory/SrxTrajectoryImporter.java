@@ -1,31 +1,24 @@
 package com.team319.trajectory;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-
-
-public class SrxProfileImporter {
+public class SrxTrajectoryImporter {
 
 	public String path; 
 
-	public SrxProfileImporter (String directory){
+	public SrxTrajectoryImporter (String directory){
 		this.path = directory;
 	}
 	
-	public CombinedSrxMotionProfile importCombinedSRXMotionProfile (String profileName){
+	public SrxTrajectory importSrxTrajectory (String trajectoryName){
 		//these are actually json files, so append appropriately
-		String fileName = profileName + "_SRX_Combined.json";
+		String fileName = trajectoryName + "_SrxTrajectory.json";
 		
 		//get the full filepath
 		
@@ -42,7 +35,7 @@ public class SrxProfileImporter {
 			return null;
 		}
 		
-		CombinedSrxMotionProfile cSrxProfile = new CombinedSrxMotionProfile(combinedJson);
+		SrxTrajectory cSrxProfile = new SrxTrajectory(combinedJson);
 		
 		return cSrxProfile;
 		

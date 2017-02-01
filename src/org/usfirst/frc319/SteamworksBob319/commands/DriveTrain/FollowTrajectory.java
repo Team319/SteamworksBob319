@@ -19,9 +19,9 @@ import org.usfirst.frc319.SteamworksBob319.RobotMap;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
-import com.team319.trajectory.CombinedSrxMotionProfile;
+import com.team319.trajectory.SrxTrajectory;
+import com.team319.trajectory.SrxTrajectoryImporter;
 import com.team319.trajectory.SrxMotionProfileFollower;
-import com.team319.trajectory.SrxProfileImporter;
 
 /**
  *
@@ -37,18 +37,18 @@ public class FollowTrajectory extends Command {
 	//LeftMotionProfile leftProfile;//= new LeftMotionProfile(RobotMap.driveTrainLeftDriveLead);
 	//RightMotionProfile rightProfile; // = new RightMotionProfile(RobotMap.driveTrainRightDriveLead);
     
-	CombinedSrxMotionProfile profile;
-	SrxProfileImporter importer = new SrxProfileImporter("/home/lvuser");
+    SrxTrajectory traj;
+    SrxTrajectoryImporter importer = new SrxTrajectoryImporter("/home/lvuser");
 	
-    public FollowTrajectory(String profileName) {
+    public FollowTrajectory(String trajectoryName) {
     	//its not going to be a double, we are passing a variable.
         requires(Robot.driveTrain);
         
         
-        this.profile = importer.importCombinedSRXMotionProfile(profileName);
+        this.traj = importer.importSrxTrajectory(trajectoryName);
         
-        this.leftFollower = new SrxMotionProfileFollower(RobotMap.driveTrainLeftDriveLead, this.profile.leftProfile);
-        this.rightFollower = new SrxMotionProfileFollower(RobotMap.driveTrainRightDriveLead, this.profile.rightProfile);
+        this.leftFollower = new SrxMotionProfileFollower(RobotMap.driveTrainLeftDriveLead, this.traj.leftProfile);
+        this.rightFollower = new SrxMotionProfileFollower(RobotMap.driveTrainRightDriveLead, this.traj.rightProfile);
 
     }
 
