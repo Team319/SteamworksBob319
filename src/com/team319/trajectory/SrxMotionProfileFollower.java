@@ -24,8 +24,6 @@
  */
 package com.team319.trajectory;
 
-
-import org.usfirst.frc319.SteamworksBob319.RightGeneratedMotionProfile;
 import org.usfirst.frc319.SteamworksBob319.instrumentation;
 
 import com.ctre.CANTalon;
