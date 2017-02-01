@@ -12,7 +12,7 @@
 package org.usfirst.frc319.SteamworksBob319;
 
 import org.usfirst.frc319.SteamworksBob319.commands.*;
-import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.CombinedSRXMotionProfileTest;
+import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowBothMotionProfiles;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.JoystickDrive;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.ShiftToggle;
@@ -87,11 +87,13 @@ public class OI {
         selectButton.whileHeld(new AutonomousCommand());
         leftBumper = new JoystickButton(operatorController, 5);
        
-        leftBumper.whenPressed(new CombinedSRXMotionProfileTest("BlueHopperAutoPt2"));
+        leftBumper.whenPressed(new FollowTrajectory("DriveForwardFiveFeet"));
       
         
         rightBumper = new JoystickButton(driverController, 6);
-        rightBumper.whenPressed(new RollervatorStop());
+      //  rightBumper.whenPressed(new AutoCommandGroup());
+        rightBumper.whenPressed(new FollowTrajectory("BlueHopperAutoPt2"));
+        
         leftBumper = new JoystickButton(driverController, 5);
         leftBumper.whenPressed(new RollervatorGo());
         yButton = new JoystickButton(driverController, 4);

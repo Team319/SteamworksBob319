@@ -1,55 +1,133 @@
 <xml version="1.0">
 <dashboard>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="139" y="-3"/>
-		<width>1040</width>
-		<height>659</height>
-		<property name="Camera Choice" value=""/>
-	</static-widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="1" y="488"/>
-		<property name="Camera Choice" value=""/>
-	</static-widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="0" y="367"/>
-		<property name="Camera Choice" value=""/>
-	</static-widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="0" y="246"/>
-		<property name="Camera Choice" value=""/>
-	</static-widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="0" y="125"/>
-		<property name="Camera Choice" value=""/>
-	</static-widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="5" y="4"/>
-		<property name="Camera Choice" value=""/>
-	</static-widget>
+	<widget field="shooter speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="69"/>
+	</widget>
+	<widget field="GearCollectorGo" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="331"/>
+	</widget>
+	<widget field="FuelCollectorStop" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="295"/>
+	</widget>
+	<widget field="AutonomousCommand" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="259"/>
+	</widget>
+	<widget field="FuelCollectorGo" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="223"/>
+	</widget>
+	<widget field="CommandGroup1" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="187"/>
+	</widget>
+	<widget field="GearCollectorStop" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="151"/>
+	</widget>
+	<widget field="JoystickDrive" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="21" y="115"/>
+	</widget>
 	<widget field="Autonoumous Mode Chooser" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="0" y="555"/>
+		<location x="0" y="115"/>
+	</widget>
+	<widget field="Auto Selector" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="92"/>
+	</widget>
+	<widget field="Shooter Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="510" y="122"/>
+	</widget>
+	<widget field="Left Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="46"/>
+	</widget>
+	<widget field="Right Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="23"/>
+	</widget>
+	<widget field="Elevator Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
 	</widget>
 </dashboard>
 <live-window>
+	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="CANTalon[8]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="18"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[10]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="175"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="AnalogInput[0]" type="Analog Input" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+			<location x="6" y="332"/>
+			<height>22</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[6]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="354"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="DoubleSolenoid[0,4]" type="Double Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
+			<location x="6" y="511"/>
+			<height>22</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[2]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="533"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[3]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="690"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[0]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="847"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="DoubleSolenoid[0,6]" type="Double Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
+			<location x="6" y="1004"/>
+			<height>22</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[1]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="1026"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[4]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="1183"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="DoubleSolenoid[0,0]" type="Double Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
+			<location x="6" y="1340"/>
+			<height>22</height>
+			<width>309</width>
+		</widget>
+		<widget field="DoubleSolenoid[0,2]" type="Double Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
+			<location x="6" y="1362"/>
+			<height>22</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[5]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="1384"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[9]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="1541"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<widget field="CANTalon[7]" type="CANSpeedController" class="edu.wpi.first.smartdashboard.livewindow.elements.CANSpeedController">
+			<location x="6" y="1698"/>
+			<height>157</height>
+			<width>309</width>
+		</widget>
+		<location x="0" y="0"/>
+		<width>321</width>
+		<height>1862</height>
+	</widget>
 </live-window>
-	<hidden field="AutonomousCommand"/>
-	<hidden field="JoystickDrive"/>
-	<hidden field="Shooter Velocity"/>
-	<hidden field="CollectorStop"/>
-	<hidden field="CommandGroup1"/>
-	<hidden field="motorspeed"/>
-	<hidden field="Auto Selector"/>
-	<hidden field="GearCollectorGo"/>
-	<hidden field="Left Encoder"/>
-	<hidden field="Elevator Velocity"/>
-	<hidden field="InstantCommandExample"/>
-	<hidden field="FuelCollectorGo"/>
-	<hidden field="TimedCommandExample"/>
-	<hidden field="Right Encoder"/>
-	<hidden field="CollectorGo"/>
-	<hidden field="CommandOther2"/>
-	<hidden field="CommandOther1"/>
-	<hidden field="Joystickdrive"/>
-	<hidden field="FuelCollectorStop"/>
-	<hidden field="Autonomous Command"/>
 </xml>

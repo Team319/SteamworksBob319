@@ -32,9 +32,9 @@ public class SrxMotionProfile {
 			int len = jsonPoints.size();
 			for (int i = 0; i < len; i++) {
 				JSONObject singlePoint = (JSONObject) jsonPoints.get(i);
-				points[i][0] = (double) singlePoint.get("dt");
-				points[i][1] = (double) singlePoint.get("pos");
-				points[i][2] = (double) singlePoint.get("vel");
+				points[i][2] = (double) singlePoint.get("dt");
+				points[i][0] = (double) singlePoint.get("pos");
+				points[i][1] = (double) singlePoint.get("vel");
 				//System.out.println(pointsArray[i][0] + "," + pointsArray[i][1] + "," + pointsArray[i][2]);
 			}
 		}
