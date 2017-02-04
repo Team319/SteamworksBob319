@@ -238,7 +238,7 @@ public class LeftMotionProfile {
 	/** Start filling the MPs to all of the involved Talons. */
 	private void startFilling() {
 		/* since this example only has one talon, just update that one */
-		startFilling(LeftGeneratedMotionProfile.Points, LeftGeneratedMotionProfile.kNumPoints);
+		//startFilling(LeftGeneratedMotionProfile.Points, LeftGeneratedMotionProfile.kNumPoints);
 	}
 
 	private void startFilling(double[][] profile, int totalCnt) {

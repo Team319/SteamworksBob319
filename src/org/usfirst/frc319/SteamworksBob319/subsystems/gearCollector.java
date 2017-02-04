@@ -16,6 +16,8 @@ import org.usfirst.frc319.SteamworksBob319.commands.*;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorStop;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -30,7 +32,9 @@ public class gearCollector extends Subsystem {
     private final DoubleSolenoid gearPiston = RobotMap.gearCollectorGearPiston;
     private final CANTalon gearCollectorMotor = RobotMap.gearCollectorGearCollectorMotor;
 
-    
+public gearCollector (){
+	gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);
+}
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -43,5 +47,18 @@ public class gearCollector extends Subsystem {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
+    public void gearCollectorIn(double speed){
+    	gearCollectorMotor.set(speed);
+    }
+    public void gearCollectorStop(double speed){
+    	gearCollectorMotor.set(0);
+    }
+    public void gearCollectorDeploy(){
+    	gearPiston.set(DoubleSolenoid.Value.kForward);
+    }
+    public void gearCollectorRetract(){
+    	gearPiston.set(DoubleSolenoid.Value.kReverse);
+    }
+    	
 }
 

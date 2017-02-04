@@ -30,6 +30,7 @@ public class FollowTrajectory extends Command {
 	
 	int loops = 0;
 	boolean motionProfileStarted = true;
+	String trajectoryToFollow;
 	
 	SrxMotionProfileFollower leftFollower;
     SrxMotionProfileFollower rightFollower;
@@ -43,18 +44,22 @@ public class FollowTrajectory extends Command {
     public FollowTrajectory(String trajectoryName) {
     	//its not going to be a double, we are passing a variable.
         requires(Robot.driveTrain);
+        this.trajectoryToFollow = trajectoryName;
         
         
-        this.traj = importer.importSrxTrajectory(trajectoryName);
-        
-        this.leftFollower = new SrxMotionProfileFollower(RobotMap.driveTrainLeftDriveLead, this.traj.leftProfile);
-        this.rightFollower = new SrxMotionProfileFollower(RobotMap.driveTrainRightDriveLead, this.traj.rightProfile);
 
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Robot.driveTrain.shiftDown();
+
+    	this.traj = importer.importSrxTrajectory(trajectoryToFollow);
+    	
+		this.leftFollower = new SrxMotionProfileFollower(RobotMap.driveTrainLeftDriveLead, this.traj.leftProfile);
+		this.rightFollower = new SrxMotionProfileFollower(RobotMap.driveTrainRightDriveLead, this.traj.rightProfile);
+    	
+    		
     	loops = 0;
     	
     	rightFollower.reset();

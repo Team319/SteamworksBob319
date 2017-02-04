@@ -32,8 +32,15 @@ public class brakePad extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new BrakePadDoNothing());
+    	
+       
+    }
+    public void brakePadDeploy(){
+    	brakePadPiston.set(DoubleSolenoid.Value.kForward);
+    }
+    public void brakePadRetract(){
+    	brakePadPiston.set(DoubleSolenoid.Value.kReverse);
     }
 }
 

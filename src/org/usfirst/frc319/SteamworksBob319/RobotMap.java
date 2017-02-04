@@ -15,6 +15,7 @@ package org.usfirst.frc319.SteamworksBob319;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
 
@@ -47,6 +48,7 @@ public class RobotMap {
     public static CANTalon activeFloorActiveFloor;
     public static Compressor compressorCompressor;
     public static AnalogInput compressorPressureSensor;
+    
 
 
 
