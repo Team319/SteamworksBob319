@@ -33,15 +33,11 @@ public class rollervator extends Subsystem {
     private final CANTalon rollervatorLead = RobotMap.rollervatorRollervatorLead;
     private final CANTalon rollervatorFollow = RobotMap.rollervatorRollervatorFollow;
 
-    StringBuilder _sb = new StringBuilder();
-    int _loops = 0;
+    StringBuilder _sb = new StringBuilder(); //used for tuning PID
+    int _loops = 0; // used for tuning PID
     
     public rollervator(){
-    	/*
-    	rollervatorLead.changeControlMode(TalonControlMode.Speed);
-    	rollervatorFollow.changeControlMode(TalonControlMode.Follower);
-    	rollervatorFollow.set(rollervatorLead.getDeviceID());
-    	*/
+    	
 
         rollervatorLead.changeControlMode(TalonControlMode.Speed);
         rollervatorLead.enableBrakeMode(false);
@@ -76,14 +72,14 @@ public class rollervator extends Subsystem {
     	setDefaultCommand(new RollervatorStop());
 
         // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
+  
     }
     public void rollervatorStop(){
-    	//rollervatorLead.changeControlMode(TalonControlMode.PercentVbus);
+    	rollervatorLead.changeControlMode(TalonControlMode.PercentVbus);// used to let rollervator to coast to zero speed
     	rollervatorLead.set(0);
    }
     public void rollervatorGo(double speed){
-    	//rollervatorLead.changeControlMode(TalonControlMode.Speed);
+    	rollervatorLead.changeControlMode(TalonControlMode.Speed);
     	rollervatorLead.set(speed); 
     }
     public void rollervatorClimb(double speed){
@@ -95,6 +91,8 @@ public class rollervator extends Subsystem {
     public void changeModeToVbus(){
     	rollervatorLead.changeControlMode(TalonControlMode.PercentVbus);
     }
+    
+    //---USED for tuning rollervator Velocity PID -----//
     public void rollervatorPIDTestMode(){
         
         SmartDashboard.putInt("motorspeed", rollervatorLead.getEncVelocity());
@@ -145,14 +143,18 @@ public class rollervator extends Subsystem {
         _sb.setLength(0);
     }
 
-        public int getShooterSpeed(){
+    
+    // ----- All of the information that could be used by the rollervator ------//
+    
+    public int getShooterSpeed(){
         	return rollervatorLead.getEncVelocity();
         }
         
-    
     public double getRollervatorCurrent(){
     	return rollervatorLead.getOutputCurrent();
     }
+    
+    //--- could be used as an isfinished to cut the motor off if current is exceeded ---///
     public boolean rollervatorHasExceededCurrentThreshhold(double threshhold){
     	if (rollervatorLead.getOutputCurrent() > threshhold){
     		return true;

@@ -31,6 +31,7 @@ public class gearCollector extends Subsystem {
   
     private final DoubleSolenoid gearPiston = RobotMap.gearCollectorGearPiston;
     private final CANTalon gearCollectorMotor = RobotMap.gearCollectorGearCollectorMotor;
+    private final CANTalon gearCollectorArm = RobotMap.gearCollectorGearCollectorArm;
 
 public gearCollector (){
 	gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);

@@ -74,20 +74,21 @@ public shooter (){
 
     	setDefaultCommand(new ShooterStop());
         // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
+      
     }
     
     public void shooterGoToSpeed(double speed){
     	//shooterLead.changeControlMode(TalonControlMode.Speed);
     	shooterLead.set(speed);
-    	//shooterLead.changeControlMode(TalonControlMode.PercentVbus);
-    	//shooterLead.set(.4);
+    	
     }
     
     public void shooterStop(){
-    	//shooterLead.changeControlMode(TalonControlMode.PercentVbus);
+    	//shooterLead.changeControlMode(TalonControlMode.PercentVbus);// used to let the shooter just stop on its own
     	shooterLead.set(0);
     }
+    
+    //------USED TO TUNE SHOOTER --- NEED TO MAKE A COMMAND TO RUN THIS -- THEN MAKE DEFAULT----//
     public void shooterPIDTestMode(){
     
     SmartDashboard.putInt("motorspeed", shooterLead.getEncVelocity());

@@ -36,15 +36,23 @@ public class RobotMap {
     public static CANTalon driveTrainRightDriveFollow;
     public static RobotDrive driveTrainJoystickDrive;
     public static DoubleSolenoid driveTrainShifter;
+    
+    
     public static CANTalon shooterShooterLead;
     public static CANTalon shooterShooterFollow;
+    
     public static CANTalon fuelCollectorFuelCollector;
     public static DoubleSolenoid fuelCollectorFuelPiston;
+    
     public static CANTalon rollervatorRollervatorLead;
     public static CANTalon rollervatorRollervatorFollow;
+    
     public static DoubleSolenoid gearCollectorGearPiston;
     public static CANTalon gearCollectorGearCollectorMotor;
+    public static CANTalon gearCollectorGearCollectorArm;
+    
     public static DoubleSolenoid brakePadBrakePadPiston;
+    
     public static Compressor compressorCompressor;
     public static AnalogInput compressorPressureSensor;
     
@@ -90,6 +98,7 @@ public class RobotMap {
        
         gearCollectorGearPiston = new DoubleSolenoid(0, 4, 5);
         gearCollectorGearCollectorMotor = new CANTalon(4);
+        gearCollectorGearCollectorArm = new CANTalon(10);
         
       //---------------------------brakePad-------------------------------
         
