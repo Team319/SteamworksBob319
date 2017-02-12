@@ -22,6 +22,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearThenHopperAuto;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueHopperAuto;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.GearOnlyAuto;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedGearThenHopperAuto;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedHopperAuto;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
@@ -66,7 +71,8 @@ public class Robot extends IterativeRobot {
         brakePad = new brakePad();
         //activeFloor = new activeFloor();
         compressor = new compressor();
-       // CameraServer.getInstance().startAutomaticCapture();
+        CameraServer.getInstance().startAutomaticCapture();
+        
 
        
         autoChooser = new SendableChooser();

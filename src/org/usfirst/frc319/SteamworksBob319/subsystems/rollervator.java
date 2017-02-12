@@ -11,6 +11,7 @@
 
 package org.usfirst.frc319.SteamworksBob319.subsystems;
 
+import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorStop;
@@ -20,6 +21,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -31,6 +33,9 @@ public class rollervator extends Subsystem {
     private final CANTalon rollervatorLead = RobotMap.rollervatorRollervatorLead;
     private final CANTalon rollervatorFollow = RobotMap.rollervatorRollervatorFollow;
 
+    StringBuilder _sb = new StringBuilder();
+    int _loops = 0;
+    
     public rollervator(){
     	/*
     	rollervatorLead.changeControlMode(TalonControlMode.Speed);
@@ -90,6 +95,61 @@ public class rollervator extends Subsystem {
     public void changeModeToVbus(){
     	rollervatorLead.changeControlMode(TalonControlMode.PercentVbus);
     }
+    public void rollervatorPIDTestMode(){
+        
+        SmartDashboard.putInt("motorspeed", rollervatorLead.getEncVelocity());
+        
+        /* get gamepad axis */
+    	double leftYstick = Robot.oi.driverController.getLeftStickY();
+    	double motorOutput = rollervatorLead.getOutputVoltage() / rollervatorLead.getBusVoltage();
+    	/* prepare line to print */
+    	_sb.append("\tout:");
+    	_sb.append(motorOutput);
+        _sb.append("\tspd:");
+        _sb.append(rollervatorLead.getSpeed() );
+        
+        if(Robot.oi.driverController.getRawButton(1)){
+        	/* Speed mode */
+        	double targetSpeed =  1000; /* 1500 RPM in either direction */
+        	rollervatorLead.changeControlMode(TalonControlMode.Speed);
+        	rollervatorLead.set(targetSpeed); /* 1500 RPM in either direction */
+        	//_sb.append(_talon.getControlMode() );
+        	
+        	//System.out.println(_talonFollower.getControlMode() );
+        	/* append more signals to print when in speed mode. */
+            _sb.append("\terr:");
+            _sb.append(rollervatorLead.getClosedLoopError());
+            _sb.append("\ttrg:");
+            _sb.append(targetSpeed);
+        } 
+        else if (Robot.oi.driverController.getRawButton(2)){
+        	rollervatorLead.set(-.6);
+        	//System.out.println(_talon.getControlMode() );
+        	//System.out.println(_talonFollower.getControlMode() );
+        	//System.out.println("constant voltage mode");
+        }
+        
+        else {
+        	/* Percent voltage mode */
+        	//System.out.println(_talon.getControlMode() );
+        	//System.out.println(_talonFollower.getControlMode() );
+        	rollervatorLead.changeControlMode(TalonControlMode.PercentVbus);
+        	rollervatorLead.set(leftYstick);
+        	//System.out.println("joystick vbus mode");
+        }
+
+        if(++_loops >= 10) {
+        	_loops = 0;
+        	System.out.println(_sb.toString());
+        }
+        _sb.setLength(0);
+    }
+
+        public int getShooterSpeed(){
+        	return rollervatorLead.getEncVelocity();
+        }
+        
+    
     public double getRollervatorCurrent(){
     	return rollervatorLead.getOutputCurrent();
     }

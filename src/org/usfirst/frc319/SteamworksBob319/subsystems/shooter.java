@@ -11,6 +11,7 @@
 
 package org.usfirst.frc319.SteamworksBob319.subsystems;
 
+import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterStop;
@@ -20,6 +21,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -30,6 +32,9 @@ public class shooter extends Subsystem {
     
     private final CANTalon shooterLead = RobotMap.shooterShooterLead;
     private final CANTalon shooterFollow = RobotMap.shooterShooterFollow;
+    
+    StringBuilder _sb = new StringBuilder();
+    int _loops = 0;
 
 public shooter (){
 	
@@ -58,6 +63,8 @@ public shooter (){
 	shooterLead.setI(.00036);
 	shooterLead.setIZone(4000);
 	shooterLead.setD(0);
+	
+	
 }
 
     // Put methods for controlling this subsystem
@@ -81,11 +88,62 @@ public shooter (){
     	//shooterLead.changeControlMode(TalonControlMode.PercentVbus);
     	shooterLead.set(0);
     }
+    public void shooterPIDTestMode(){
     
+    SmartDashboard.putInt("motorspeed", shooterLead.getEncVelocity());
+    
+    /* get gamepad axis */
+	double leftYstick = Robot.oi.driverController.getLeftStickY();
+	double motorOutput = shooterLead.getOutputVoltage() / shooterLead.getBusVoltage();
+	/* prepare line to print */
+	_sb.append("\tout:");
+	_sb.append(motorOutput);
+    _sb.append("\tspd:");
+    _sb.append(shooterLead.getSpeed() );
+    
+    if(Robot.oi.driverController.getRawButton(1)){
+    	/* Speed mode */
+    	double targetSpeed =  1000; /* 1500 RPM in either direction */
+    	shooterLead.changeControlMode(TalonControlMode.Speed);
+    	shooterLead.set(targetSpeed); /* 1500 RPM in either direction */
+    	//_sb.append(_talon.getControlMode() );
+    	
+    	//System.out.println(_talonFollower.getControlMode() );
+    	/* append more signals to print when in speed mode. */
+        _sb.append("\terr:");
+        _sb.append(shooterLead.getClosedLoopError());
+        _sb.append("\ttrg:");
+        _sb.append(targetSpeed);
+    } 
+    else if (Robot.oi.driverController.getRawButton(2)){
+    	shooterLead.set(-.6);
+    	//System.out.println(_talon.getControlMode() );
+    	//System.out.println(_talonFollower.getControlMode() );
+    	//System.out.println("constant voltage mode");
+    }
+    
+    else {
+    	/* Percent voltage mode */
+    	//System.out.println(_talon.getControlMode() );
+    	//System.out.println(_talonFollower.getControlMode() );
+    	shooterLead.changeControlMode(TalonControlMode.PercentVbus);
+    	shooterLead.set(leftYstick);
+    	//System.out.println("joystick vbus mode");
+    }
+
+    if(++_loops >= 10) {
+    	_loops = 0;
+    	System.out.println(_sb.toString());
+    }
+    _sb.setLength(0);
+}
+
     public int getShooterSpeed(){
     	return shooterLead.getEncVelocity();
     }
+    
+}
     	
  
-}
+
 

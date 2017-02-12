@@ -1,5 +1,4 @@
 /**
-
  * Example logic for firing and managing motion profiles.
  * This example sends MPs, waits for them to finish
  * Although this code uses a CANTalon, nowhere in this module do we changeMode() or call set() to change the output.

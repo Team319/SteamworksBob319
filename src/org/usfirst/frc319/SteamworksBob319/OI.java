@@ -12,7 +12,7 @@ package org.usfirst.frc319.SteamworksBob319;
 
 import org.usfirst.frc319.SteamworksBob319.commands.*;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
-import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowBothMotionProfiles;
+//import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowBothMotionProfiles;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.JoystickDrive;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.ShiftToggle;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
@@ -70,57 +70,26 @@ public class OI {
 	public BobController driverController;
 	public BobController operatorController;
 
-	/*public JoystickButton aButton;
-	public JoystickButton bButton;
-	public JoystickButton xButton;
-	public JoystickButton yButton;
-	public JoystickButton leftBumper;
-	public JoystickButton rightBumper;
-	public JoystickButton selectButton;
-	public JoystickButton startButton;
-	// public JoystickButton rightBumper;*/
-
 	public OI() {
 
 		operatorController = new BobController(1);
 		driverController = new BobController(0);
+		
 
 		// --------OPERATOR---------------//
 
-		/*
-		 * selectButton = new JoystickButton(operatorController, 7); leftBumper
-		 * = new JoystickButton(operatorController, 5); rightBumper = new
-		 * JoystickButton(operatorController, 6); yButton = new
-		 * JoystickButton(operatorController, 4); aButton = new
-		 * JoystickButton(operatorController, 1); bButton = new
-		 * JoystickButton(operatorController, 2); xButton = new
-		 * JoystickButton(operatorController, 3); startButton = new
-		 * JoystickButton(operatorController, 8);
-		 */
-
 		//operatorController.selectButton.whenPressed(new BlueHopperAuto());
-		operatorController.leftBumper.whenPressed(new FollowTrajectory("BlueHopperAutoPt1"));
-		operatorController.rightBumper.whenPressed(new BlueHopperAuto());
+		operatorController.leftBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt1"));
+		//operatorController.rightBumper.whenPressed(new BlueHopperAuto());
 		//operatorController.rightBumper.whenPressed(new FollowTrajectory("Drive15ft"));
-		operatorController.rightBumper.whenPressed(new FollowTrajectory("BlueHopperAutoPt2"));
-		//operatorController.yButton.whenPressed(new FollowTrajectory("BlueHopperAutoPt3"));
+		operatorController.rightBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt2"));
+		operatorController.yButton.whenPressed(new FollowTrajectory("RedHopperAutoPt3"));
 		operatorController.aButton.whenPressed(new RollervatorClimb()); // was gearCollectorIn
 		operatorController.bButton.whenPressed(new GearCollectorStop());
 		operatorController.xButton.whenPressed(new GearCollectorDeploy());
 		operatorController.startButton.whenPressed(new GearCollectorRetract());
 
 		// -----------DRIVER-----------//
-
-		/*
-		 * leftBumper = new JoystickButton(driverController, 5); yButton = new
-		 * JoystickButton(driverController, 4); xButton = new
-		 * JoystickButton(driverController, 3); bButton = new
-		 * JoystickButton(driverController, 2); aButton = new
-		 * JoystickButton(driverController, 1); rightBumper = new
-		 * JoystickButton(driverController, 6); startButton = new
-		 * JoystickButton(driverController, 8); selectButton = new
-		 * JoystickButton(driverController, 7);
-		 */
 
 		driverController.leftBumper.whenPressed(new RollervatorGo());
 		driverController.yButton.whenPressed(new ShooterGoToSpeed());
