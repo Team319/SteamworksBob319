@@ -8,7 +8,6 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package org.usfirst.frc319.SteamworksBob319;
 
 import org.usfirst.frc319.SteamworksBob319.commands.*;
@@ -24,6 +23,7 @@ import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorD
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorIn;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorRetract;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorStop;
+import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorClimb;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorStop;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoToSpeed;
@@ -34,128 +34,122 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.*;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
-
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    //// CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
+	//// CREATING BUTTONS
+	// One type of button is a joystick button which is any button on a
+	//// joystick.
+	// You create one by telling it which joystick it's on and which button
+	// number it is.
+	// Joystick stick = new Joystick(port);
+	// Button button = new JoystickButton(stick, buttonNumber);
 
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
+	// There are a few additional built in buttons you can use. Additionally,
+	// by subclassing Button you can create custom triggers and bind those to
+	// commands the same as any other Button.
 
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
+	//// TRIGGERING COMMANDS WITH BUTTONS
+	// Once you have a button, it's trivial to bind it to a button in one of
+	// three ways:
 
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
+	// Start the command when the button is pressed and let it run the command
+	// until it is finished as determined by it's isFinished method.
+	// button.whenPressed(new ExampleCommand());
 
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
+	// Run the command while the button is being held down and interrupt it once
+	// the button is released.
+	// button.whileHeld(new ExampleCommand());
 
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
+	// Start the command when the button is released and let it run the command
+	// until it is finished as determined by it's isFinished method.
+	// button.whenReleased(new ExampleCommand());
 
+	public BobController driverController;
+	public BobController operatorController;
 
-    
-    public JoystickButton aButton;
-    public JoystickButton bButton;
-    public JoystickButton xButton;
-    public JoystickButton yButton;
-    public JoystickButton leftBumper;
-    public JoystickButton rightBumper;
-    public Joystick driverController;
-    public JoystickButton selectButton;
-    public Joystick operatorController;
-    public JoystickButton startButton;
-    //public JoystickButton rightBumper;
+	/*public JoystickButton aButton;
+	public JoystickButton bButton;
+	public JoystickButton xButton;
+	public JoystickButton yButton;
+	public JoystickButton leftBumper;
+	public JoystickButton rightBumper;
+	public JoystickButton selectButton;
+	public JoystickButton startButton;
+	// public JoystickButton rightBumper;*/
 
+	public OI() {
 
-    public OI() {
-  
+		operatorController = new BobController(1);
+		driverController = new BobController(0);
 
-        operatorController = new Joystick(1);
-        driverController = new Joystick(0);
-        
-        //--------OPERATOR---------------//
-        
-        selectButton = new JoystickButton(operatorController, 7);
-        leftBumper = new JoystickButton(operatorController, 5);
-        rightBumper = new JoystickButton(operatorController, 6);
-        yButton = new JoystickButton(operatorController, 4);
-        aButton = new JoystickButton(operatorController, 1);
-        bButton = new JoystickButton(operatorController, 2);
-        xButton = new JoystickButton(operatorController, 3);
-        startButton = new JoystickButton(operatorController, 8);
-        
-        selectButton.whenPressed(new BlueHopperAuto());
-        leftBumper.whenPressed(new FollowTrajectory("BlueHopperAutoPt1"));
-    //  rightBumper.whenPressed(new AutoCommandGroup());
-        rightBumper.whenPressed(new FollowTrajectory("BlueHopperAutoPt2"));
-        yButton.whenPressed(new FollowTrajectory("BlueHopperAutoPt3"));
-        aButton.whenPressed(new GearCollectorIn());
-        bButton.whenPressed(new GearCollectorStop());
-        xButton.whenPressed(new GearCollectorDeploy());
-        startButton.whenPressed(new GearCollectorRetract());
-        
-        
+		// --------OPERATOR---------------//
 
-        //-----------DRIVER-----------//
-        
-        leftBumper = new JoystickButton(driverController, 5);
-        yButton = new JoystickButton(driverController, 4); 
-        xButton = new JoystickButton(driverController, 3);
-        bButton = new JoystickButton(driverController, 2);
-        aButton = new JoystickButton(driverController, 1);
-        rightBumper = new JoystickButton(driverController, 6);
-        startButton = new JoystickButton(driverController, 8);
-        selectButton = new JoystickButton(driverController, 7);	
-       
-        leftBumper.whenPressed(new RollervatorGo());
-        yButton.whenPressed(new ShooterGoToSpeed());
-        xButton.whenPressed(new ShiftToggle());
-        bButton.whenPressed(new ShooterRollervatorStop());
-        aButton.whenPressed(new FuelCollectorRetract());
-        rightBumper.whenPressed(new FuelCollectorDeploy());
-        startButton.whenPressed(new BrakePadDeploy());
-        selectButton.whenPressed(new BrakePadRetract());
-        
-        
-        
-/*
-        // SmartDashboard Buttons
-        SmartDashboard.putData("FuelCollectorGo", new FuelCollectorGo());
-        SmartDashboard.putData("AutonomousCommand", new AutonomousCommand());
-        SmartDashboard.putData("JoystickDrive", new JoystickDrive());
-        SmartDashboard.putData("FuelCollectorStop", new FuelCollectorStop());
-        SmartDashboard.putData("GearCollectorGo", new GearCollectorGo());
-        SmartDashboard.putData("GearCollectorStop", new GearCollectorStop());
-        SmartDashboard.putData("CommandGroup1", new CommandGroup1());
-*/
-        
-    }
+		/*
+		 * selectButton = new JoystickButton(operatorController, 7); leftBumper
+		 * = new JoystickButton(operatorController, 5); rightBumper = new
+		 * JoystickButton(operatorController, 6); yButton = new
+		 * JoystickButton(operatorController, 4); aButton = new
+		 * JoystickButton(operatorController, 1); bButton = new
+		 * JoystickButton(operatorController, 2); xButton = new
+		 * JoystickButton(operatorController, 3); startButton = new
+		 * JoystickButton(operatorController, 8);
+		 */
 
+		//operatorController.selectButton.whenPressed(new BlueHopperAuto());
+		operatorController.leftBumper.whenPressed(new FollowTrajectory("BlueHopperAutoPt1"));
+		operatorController.rightBumper.whenPressed(new BlueHopperAuto());
+		//operatorController.rightBumper.whenPressed(new FollowTrajectory("Drive15ft"));
+		operatorController.rightBumper.whenPressed(new FollowTrajectory("BlueHopperAutoPt2"));
+		//operatorController.yButton.whenPressed(new FollowTrajectory("BlueHopperAutoPt3"));
+		operatorController.aButton.whenPressed(new RollervatorClimb()); // was gearCollectorIn
+		operatorController.bButton.whenPressed(new GearCollectorStop());
+		operatorController.xButton.whenPressed(new GearCollectorDeploy());
+		operatorController.startButton.whenPressed(new GearCollectorRetract());
 
-    public Joystick getdriverController() {
-        return driverController;
-    }
+		// -----------DRIVER-----------//
 
-    public Joystick getoperatorController() {
-        return operatorController;
-    }
+		/*
+		 * leftBumper = new JoystickButton(driverController, 5); yButton = new
+		 * JoystickButton(driverController, 4); xButton = new
+		 * JoystickButton(driverController, 3); bButton = new
+		 * JoystickButton(driverController, 2); aButton = new
+		 * JoystickButton(driverController, 1); rightBumper = new
+		 * JoystickButton(driverController, 6); startButton = new
+		 * JoystickButton(driverController, 8); selectButton = new
+		 * JoystickButton(driverController, 7);
+		 */
 
+		driverController.leftBumper.whenPressed(new RollervatorGo());
+		driverController.yButton.whenPressed(new ShooterGoToSpeed());
+		driverController.xButton.whenPressed(new ShiftToggle());
+		driverController.bButton.whenPressed(new ShooterRollervatorStop());
+		driverController.aButton.whenPressed(new FuelCollectorRetract());
+		driverController.rightBumper.whenPressed(new FuelCollectorDeploy());
+		driverController.startButton.whenPressed(new BrakePadDeploy());
+		driverController.selectButton.whenPressed(new BrakePadRetract());
 
- 
+		/*
+		 * // SmartDashboard Buttons SmartDashboard.putData("FuelCollectorGo",
+		 * new FuelCollectorGo()); SmartDashboard.putData("AutonomousCommand",
+		 * new AutonomousCommand()); SmartDashboard.putData("JoystickDrive", new
+		 * JoystickDrive()); SmartDashboard.putData("FuelCollectorStop", new
+		 * FuelCollectorStop()); SmartDashboard.putData("GearCollectorGo", new
+		 * GearCollectorGo()); SmartDashboard.putData("GearCollectorStop", new
+		 * GearCollectorStop()); SmartDashboard.putData("CommandGroup1", new
+		 * CommandGroup1());
+		 */
+
+	}
+
+	public Joystick getdriverController() {
+		return driverController;
+	}
+
+	public Joystick getoperatorController() {
+		return operatorController;
+	}
+
 }
-

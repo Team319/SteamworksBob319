@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
     public static rollervator rollervator;
     public static gearCollector gearCollector;
     public static brakePad brakePad;
-    public static activeFloor activeFloor;
+   // public static activeFloor activeFloor;
     public static compressor compressor;
    
     
@@ -64,9 +64,9 @@ public class Robot extends IterativeRobot {
         rollervator = new rollervator();
         gearCollector = new gearCollector();
         brakePad = new brakePad();
-        activeFloor = new activeFloor();
+        //activeFloor = new activeFloor();
         compressor = new compressor();
-        CameraServer.getInstance().startAutomaticCapture();
+       // CameraServer.getInstance().startAutomaticCapture();
 
        
         autoChooser = new SendableChooser();
@@ -131,7 +131,10 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putDouble("shooter speed", Robot.shooter.getShooterSpeed());
-    }
+        SmartDashboard.putDouble("rollervator current", Robot.rollervator.getRollervatorCurrent());
+        SmartDashboard.putDouble("left drivetrain velocity",  Robot.driveTrain.getLeftDriveVelocity());
+        SmartDashboard.putDouble("right drivetrain velocity", Robot.driveTrain.getRightDriveVelocity());
+        }
 
     /**
      * This function is called periodically during test mode

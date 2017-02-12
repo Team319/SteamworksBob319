@@ -34,6 +34,7 @@ import com.team319.trajectory.SrxMotionProfile;
 public class SrxMotionProfileFollower {
 	
 	private SrxMotionProfile _mp;
+	private int _profileSelect;
 
 	/**
 	 * The status of the motion profile executer and buffer inside the Talon.
@@ -110,9 +111,10 @@ public class SrxMotionProfileFollower {
 	 * @param talon
 	 *            reference to Talon object to fetch motion profile status from.
 	 */
-	public SrxMotionProfileFollower(CANTalon talon, SrxMotionProfile srxMotionProfile) {
+	public SrxMotionProfileFollower(CANTalon talon, int PIDProfileSlot, SrxMotionProfile srxMotionProfile) {
 		_talon = talon;
 		_mp = srxMotionProfile;
+		_profileSelect = PIDProfileSlot;
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
@@ -239,7 +241,7 @@ public class SrxMotionProfileFollower {
 			}
 		}
 		/* printfs and/or logging */
-		instrumentation.process(_status);
+		//instrumentation.process(_status);
 	}
 
 	/** Start filling the MPs to all of the involved Talons. */
@@ -275,7 +277,7 @@ public class SrxMotionProfileFollower {
 			point.position = profile[i][0];
 			point.velocity = profile[i][1];
 			point.timeDurMs = (int) profile[i][2];
-			point.profileSlotSelect = 0; /* which set of gains would you like to use? */
+			point.profileSlotSelect = _profileSelect; /* which set of gains would you like to use? */
 			point.velocityOnly = false; /* set true to not do any position
 										 * servo, just velocity feedforward
 										 */

@@ -8,8 +8,8 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package org.usfirst.frc319.SteamworksBob319.commands.DriveTrain;
+
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
@@ -18,44 +18,40 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
  */
 public class ShiftToggle extends Command {
 
-   
-    public ShiftToggle() {
+	public ShiftToggle() {
 
-    
-        requires(Robot.driveTrain);
+		requires(Robot.driveTrain);
 
-   
-    }
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	if (Robot.driveTrain.shift == false)
-    	{
-    	Robot.driveTrain.shiftUp();
-    	System.out.println("HighGear");
-    	}
-    	else if(Robot.driveTrain.shift == true){
-    	Robot.driveTrain.shiftDown();
-    	System.out.println();
-    	}
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		if (Robot.driveTrain.isHighGear == false) {
+			Robot.driveTrain.shiftUp();
+			System.out.println("HighGear");
+		} else if (Robot.driveTrain.isHighGear == true) {
+			Robot.driveTrain.shiftDown();
+			System.out.println("LowGear");
+		}
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;  // Might be nice to have this be a threshold so a command group would only start once it's at speed
-    }
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return true; // Might be nice to have this be a threshold so a command
+						// group would only start once it's at speed
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

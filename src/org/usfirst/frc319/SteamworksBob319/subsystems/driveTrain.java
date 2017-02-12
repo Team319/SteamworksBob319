@@ -15,6 +15,7 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.JoystickDrive;
+import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.VelocityDrive;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -32,15 +34,20 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class driveTrain extends Subsystem {
 
     
-    private final CANTalon leftDriveLead = RobotMap.driveTrainLeftDriveLead;
-    private final CANTalon rightDriveLead = RobotMap.driveTrainRightDriveLead;
+    public final CANTalon leftDriveLead = RobotMap.driveTrainLeftDriveLead;
+    public final CANTalon rightDriveLead = RobotMap.driveTrainRightDriveLead;
     private final DoubleSolenoid shifter = RobotMap.driveTrainShifter;
     private final CANTalon leftDriveFollow = RobotMap.driveTrainLeftDriveFollow;
     private final CANTalon rightDriveFollow = RobotMap.driveTrainRightDriveFollow;
     private final RobotDrive joystickDrive = RobotMap.driveTrainJoystickDrive;
     
-    public boolean shift;
-
+    public boolean isHighGear;
+    public final int LOW_GEAR_PROFILE = 1;
+    public final int HIGH_GEAR_PROFILE = 0;
+    
+    StringBuilder _sb = new StringBuilder();
+    int _loops = 0;
+    
    public driveTrain (){
 	   
 	   rightDriveLead.changeControlMode(TalonControlMode.PercentVbus);
@@ -58,6 +65,28 @@ public class driveTrain extends Subsystem {
 	   leftDriveLead.reverseSensor(true);
 	   leftDriveLead.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 	   leftDriveLead.configEncoderCodesPerRev(1024);
+	   
+   		rightDriveLead.configNominalOutputVoltage(+0.0f, -0.0f);
+   		rightDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
+   		
+   		
+   		leftDriveLead.configNominalOutputVoltage(+0.0f, -0.0f);
+   		leftDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
+   		
+   		double pHighGear = .3;//.5
+   		double pLowGear = 1;//.3
+   		double fGainHighGear = .147;
+   		double fGainLowGear = 0.320; //.320
+   		double dLowGear = 100;//75 //start at plowgear
+   		double dHighGear = 75;//0
+   		double closedLoopRampRate = 72;
+   		rightDriveLead.setPID(pHighGear, 0, dHighGear, fGainHighGear, 0, closedLoopRampRate, HIGH_GEAR_PROFILE); // high gear
+   		rightDriveLead.setPID(pLowGear, 0, dLowGear, fGainLowGear, 0, closedLoopRampRate, LOW_GEAR_PROFILE); // low gear
+   		leftDriveLead.setPID(pHighGear, 0, dHighGear, fGainHighGear, 0, closedLoopRampRate, HIGH_GEAR_PROFILE); // high gear
+   		leftDriveLead.setPID(pLowGear, 0, dLowGear, fGainLowGear, 0, closedLoopRampRate, LOW_GEAR_PROFILE); // low gear
+   
+   		rightDriveLead.setProfile(1); // 
+   		leftDriveLead.setProfile(1);
    }
     
 
@@ -68,13 +97,23 @@ public class driveTrain extends Subsystem {
       
 
         setDefaultCommand(new JoystickDrive());
-
-
+    	
+    	  //setDefaultCommand(new VelocityDrive());
+        //setDefaultCommand(new RightDrivetrainPIDTest());
+        //setDefaultCommand(new LeftDrivetrainPIDTest());
+                                   //change to left or rightdriveTrainPIDTestMode
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     
     }
     
+    public int getLeftDrivetrainEncoder(){
+    	return -leftDriveLead.getEncPosition();
+    }
+    public int getRightDrivetrainEncoder(){
+    	return rightDriveLead.getEncPosition();
+    }
+    	
     public void joystickDrive(double moveValue, double rotateValue){
     	joystickDrive.arcadeDrive(moveValue, rotateValue, true);
     }
@@ -82,13 +121,129 @@ public class driveTrain extends Subsystem {
     public void shiftUp(){
     	shifter.set(DoubleSolenoid.Value.kForward);
     	
-    	shift = true;
+    	isHighGear = true;
     }
     
     public void shiftDown(){
     	shifter.set(DoubleSolenoid.Value.kReverse);
     	
-    	shift = false;
+    	isHighGear = false;
     }
+    
+    
+    public void changeDriveTrainControlModeToSpeed(){
+    	leftDriveLead.changeControlMode(TalonControlMode.Speed);
+    	rightDriveLead.changeControlMode(TalonControlMode.Speed);
+    }
+    
+    public void setLeftRightMotors(double leftSpeed, double rightSpeed){
+    	leftDriveLead.set(leftSpeed);
+    	rightDriveLead.set(rightSpeed);
+    }
+    public double getRightDriveVelocity(){
+    	return rightDriveLead.getSpeed();
+    }
+    public double getLeftDriveVelocity(){
+    	return leftDriveLead.getSpeed();
+    }
+    
+    public void rightDrivetrainPIDTestMode(){
+  	  SmartDashboard.putInt("motorspeed", rightDriveLead.getEncVelocity());
+    	
+    	/* get gamepad axis */
+    	double leftYstick = Robot.oi.driverController.getRawAxis(1);
+    	double motorOutput = rightDriveLead.getOutputVoltage() / rightDriveLead.getBusVoltage();
+    	/* prepare line to print */
+  		_sb.append("\tout:");
+  		_sb.append(motorOutput);
+        _sb.append("\tspd:");
+        _sb.append(rightDriveLead.getSpeed() );
+        
+        if(Robot.oi.driverController.getRawButton(1)){
+        	/* Speed mode */
+        	double targetSpeed = 468;//Robot.oi.driverController.getRawAxis(1) * 1015; 
+        	rightDriveLead.changeControlMode(TalonControlMode.Speed);
+        	rightDriveLead.setProfile(1); // 0 = high gear, 1 = low gear
+        	rightDriveLead.set(targetSpeed); 
+        	//_sb.append(_talon.getControlMode() );
+        	
+        	//System.out.println(_talonFollower.getControlMode() );
+        	/* append more signals to print when in speed mode. */
+            _sb.append("\terr:");
+            _sb.append(rightDriveLead.getClosedLoopError());
+            _sb.append("\ttrg:");
+            _sb.append(targetSpeed);
+        } 
+        else if (Robot.oi.driverController.getRawButton(2)){
+        	rightDriveLead.set(-.6);
+        	//System.out.println(_talon.getControlMode() );
+        	//System.out.println(_talonFollower.getControlMode() );
+        	//System.out.println("constant voltage mode");
+        }
+        
+        else {
+        	/* Percent voltage mode */
+        	//System.out.println(_talon.getControlMode() );
+        	//System.out.println(_talonFollower.getControlMode() );
+        	rightDriveLead.changeControlMode(TalonControlMode.PercentVbus);
+        	rightDriveLead.set(leftYstick);
+        	//System.out.println("joystick vbus mode");
+        }
+
+        if(++_loops >= 10) {
+        	_loops = 0;
+        	System.out.println(_sb.toString());
+        }
+        _sb.setLength(0);
+    }
+    public void leftDrivetrainPIDTestMode(){
+    	  SmartDashboard.putInt("motorspeed", leftDriveLead.getEncVelocity());
+      	
+      	/* get gamepad axis */
+      	double leftYstick = Robot.oi.driverController.getRawAxis(1);
+      	double motorOutput = leftDriveLead.getOutputVoltage() / leftDriveLead.getBusVoltage();
+      	/* prepare line to print */
+    		_sb.append("\tout:");
+    		_sb.append(motorOutput);
+          _sb.append("\tspd:");
+          _sb.append(leftDriveLead.getSpeed() );
+          
+          if(Robot.oi.driverController.getRawButton(1)){
+          	/* Speed mode */
+          	double targetSpeed = Robot.oi.driverController.getRawAxis(1) * 1015; /* ____ RPM in either direction */
+          	leftDriveLead.changeControlMode(TalonControlMode.Speed);
+          	leftDriveLead.setProfile(1); // 0 = high gear, 1 = low gear
+          	leftDriveLead.set(targetSpeed); /* 1500 RPM in either direction */
+          	//_sb.append(_talon.getControlMode() );
+          	
+          	//System.out.println(_talonFollower.getControlMode() );
+          	/* append more signals to print when in speed mode. */
+              _sb.append("\terr:");
+              _sb.append(leftDriveLead.getClosedLoopError());
+              _sb.append("\ttrg:");
+              _sb.append(targetSpeed);
+          } 
+          /*else if (Robot.oi.driverController.getRawButton(2)){
+          	leftDriveLead.set(-.6);
+          	//System.out.println(_talon.getControlMode() );
+          	//System.out.println(_talonFollower.getControlMode() );
+          	//System.out.println("constant voltage mode");
+          }*/
+          
+          else {
+          	/* Percent voltage mode */
+          	//System.out.println(_talon.getControlMode() );
+          	//System.out.println(_talonFollower.getControlMode() );
+          	leftDriveLead.changeControlMode(TalonControlMode.PercentVbus);
+          	leftDriveLead.set(leftYstick);
+          	//System.out.println("joystick vbus mode");
+          }
+
+          if(++_loops >= 10) {
+          	_loops = 0;
+          	System.out.println(_sb.toString());
+          }
+          _sb.setLength(0);
+      }
 }
 

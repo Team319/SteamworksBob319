@@ -81,6 +81,24 @@ public class rollervator extends Subsystem {
     	//rollervatorLead.changeControlMode(TalonControlMode.Speed);
     	rollervatorLead.set(speed); 
     }
+    public void rollervatorClimb(double speed){
+    	rollervatorLead.set(speed);
+    }
+    public void changeModeToSpeed(){
+    	rollervatorLead.changeControlMode(TalonControlMode.Speed);
+    }
+    public void changeModeToVbus(){
+    	rollervatorLead.changeControlMode(TalonControlMode.PercentVbus);
+    }
+    public double getRollervatorCurrent(){
+    	return rollervatorLead.getOutputCurrent();
+    }
+    public boolean rollervatorHasExceededCurrentThreshhold(double threshhold){
+    	if (rollervatorLead.getOutputCurrent() > threshhold){
+    		return true;
+    	}
+    	else return false;
+    }
     
     
 }

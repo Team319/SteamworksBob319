@@ -11,6 +11,8 @@
 
 package org.usfirst.frc319.SteamworksBob319.commands.DriveTrain;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
 /**
@@ -32,9 +34,10 @@ public class JoystickDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double moveValue = Robot.oi.driverController.getRawAxis(1);
-    	double rotateValue = Robot.oi.driverController.getRawAxis(4);
+    	double moveValue = Robot.oi.driverController.getLeftStickY();
+    	double rotateValue = Robot.oi.driverController.getRightStickX();
     	Robot.driveTrain.joystickDrive(moveValue, rotateValue);
+    	SmartDashboard.putBoolean("isHighGear", Robot.driveTrain.isHighGear);
     }
 
     // Make this return true when this Command no longer needs to run execute()

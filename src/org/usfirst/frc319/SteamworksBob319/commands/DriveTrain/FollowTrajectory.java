@@ -11,6 +11,7 @@
 
 package org.usfirst.frc319.SteamworksBob319.commands.DriveTrain;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc319.SteamworksBob319.LeftMotionProfile;
 import org.usfirst.frc319.SteamworksBob319.RightMotionProfile;
@@ -52,13 +53,24 @@ public class FollowTrajectory extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(12.0f, -12.0f);
+		Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(12.0f, -12.0f);
     	//Robot.driveTrain.shiftDown();
-
+		SmartDashboard.putString("Trajectory: ", "Importing " + trajectoryToFollow);
     	this.traj = importer.importSrxTrajectory(trajectoryToFollow);
+
+		SmartDashboard.putString("Trajectory: ", "Finished Importing " + trajectoryToFollow);
+    	System.out.println("Importing " + trajectoryToFollow);
     	
-		this.leftFollower = new SrxMotionProfileFollower(RobotMap.driveTrainLeftDriveLead, this.traj.leftProfile);
-		this.rightFollower = new SrxMotionProfileFollower(RobotMap.driveTrainRightDriveLead, this.traj.rightProfile);
+    	if (Robot.driveTrain.isHighGear){
+    		this.leftFollower = new SrxMotionProfileFollower(RobotMap.driveTrainLeftDriveLead, Robot.driveTrain.HIGH_GEAR_PROFILE, this.traj.leftProfile);
+    		this.rightFollower = new SrxMotionProfileFollower(RobotMap.driveTrainRightDriveLead, Robot.driveTrain.HIGH_GEAR_PROFILE, this.traj.rightProfile);
+    	}
+    	else {
+    		this.leftFollower = new SrxMotionProfileFollower(RobotMap.driveTrainLeftDriveLead, Robot.driveTrain.LOW_GEAR_PROFILE, this.traj.leftProfile);
+    		this.rightFollower = new SrxMotionProfileFollower(RobotMap.driveTrainRightDriveLead, Robot.driveTrain.LOW_GEAR_PROFILE, this.traj.rightProfile);
     	
+    	} 	
     		
     	loops = 0;
     	
@@ -74,6 +86,7 @@ public class FollowTrajectory extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//System.out.println(" P: " + Robot.driveTrain.leftDriveLead.getP()+ " I: " + Robot.driveTrain.leftDriveLead.getI()+ " D: " + Robot.driveTrain.leftDriveLead.getD()+ " F: " + Robot.driveTrain.leftDriveLead.getF());
     	
     	rightFollower.control();
     	leftFollower.control();

@@ -45,7 +45,6 @@ public class RobotMap {
     public static DoubleSolenoid gearCollectorGearPiston;
     public static CANTalon gearCollectorGearCollectorMotor;
     public static DoubleSolenoid brakePadBrakePadPiston;
-    public static CANTalon activeFloorActiveFloor;
     public static Compressor compressorCompressor;
     public static AnalogInput compressorPressureSensor;
     
@@ -56,15 +55,15 @@ public class RobotMap {
         
     	//-------------------drivetrain----------------------- 
     	
-        driveTrainLeftDriveLead = new CANTalon(4);
-        driveTrainLeftDriveFollow = new CANTalon(3);
+        driveTrainLeftDriveLead = new CANTalon(7);
+        driveTrainLeftDriveFollow = new CANTalon(8);
         
-        driveTrainRightDriveLead = new CANTalon(5);
-        driveTrainRightDriveFollow = new CANTalon(6);
+        driveTrainRightDriveLead = new CANTalon(2);
+        driveTrainRightDriveFollow = new CANTalon(3);
         
         driveTrainJoystickDrive = new RobotDrive(driveTrainLeftDriveLead, driveTrainRightDriveLead);
         
-        driveTrainJoystickDrive.setSafetyEnabled(true);
+        driveTrainJoystickDrive.setSafetyEnabled(false);//changed from true for velocity control testing 2/10/17
         driveTrainJoystickDrive.setExpiration(0.1);
         driveTrainJoystickDrive.setSensitivity(0.5);
         driveTrainJoystickDrive.setMaxOutput(1.0);
@@ -74,31 +73,27 @@ public class RobotMap {
         
         //---------------------------shooter--------------------------//
         
-        shooterShooterLead = new CANTalon(8);
-        shooterShooterFollow = new CANTalon(9);
+        shooterShooterLead = new CANTalon(1);
+        shooterShooterFollow = new CANTalon(6);
    
         //----------------fuelCollector----------------------------//
         
-        fuelCollectorFuelCollector = new CANTalon(1);
+        fuelCollectorFuelCollector = new CANTalon(9);
         fuelCollectorFuelPiston = new DoubleSolenoid(0, 2, 3);
        
         //------------rollervator----------------------
         
-        rollervatorRollervatorLead = new CANTalon(2);
-        rollervatorRollervatorFollow = new CANTalon(7);
+        rollervatorRollervatorLead = new CANTalon(0);
+        rollervatorRollervatorFollow = new CANTalon(5);
         
         //----------------------gearCollector----------------------
        
         gearCollectorGearPiston = new DoubleSolenoid(0, 4, 5);
-        gearCollectorGearCollectorMotor = new CANTalon(0);
+        gearCollectorGearCollectorMotor = new CANTalon(4);
         
       //---------------------------brakePad-------------------------------
         
         brakePadBrakePadPiston = new DoubleSolenoid(0, 6, 7);
-      
-        //------------------------activeFloor-----------------------
-       
-        activeFloorActiveFloor = new CANTalon(10);
         
         //------------------------compressor-----------------------------
         
