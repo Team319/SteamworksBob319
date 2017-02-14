@@ -84,7 +84,7 @@ public class OI {
 		//operatorController.rightBumper.whenPressed(new FollowTrajectory("Drive15ft"));
 		operatorController.rightBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt2"));
 		operatorController.yButton.whenPressed(new FollowTrajectory("RedHopperAutoPt3"));
-		operatorController.aButton.whenPressed(new RollervatorClimb()); // was gearCollectorIn
+		//operatorController.aButton.whenPressed(new RollervatorClimb()); // was gearCollectorIn
 		operatorController.bButton.whenPressed(new GearCollectorStop());
 		operatorController.xButton.whenPressed(new GearCollectorDeploy());
 		operatorController.startButton.whenPressed(new GearCollectorRetract());

@@ -11,15 +11,20 @@
 
 package org.usfirst.frc319.SteamworksBob319.subsystems;
 
+import org.usfirst.frc319.SteamworksBob319.InstrumentationMotionMagic;
+import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorMotionMagicTestMode;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorStop;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -32,9 +37,34 @@ public class gearCollector extends Subsystem {
     private final DoubleSolenoid gearPiston = RobotMap.gearCollectorGearPiston;
     private final CANTalon gearCollectorMotor = RobotMap.gearCollectorGearCollectorMotor;
     private final CANTalon gearCollectorArm = RobotMap.gearCollectorGearCollectorArm;
+    private final DigitalInput GearSensor = RobotMap.gearCollectorSensor;
+    StringBuilder _sb = new StringBuilder();
 
 public gearCollector (){
 	gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);
+	gearCollectorArm.changeControlMode(TalonControlMode.MotionMagic);
+	
+	gearCollectorArm.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+	gearCollectorArm.reverseSensor(false);
+	// _talon.configEncoderCodesPerRev(XXX), // if using
+	// FeedbackDevice.QuadEncoder
+	// _talon.configPotentiometerTurns(XXX), // if using
+	// FeedbackDevice.AnalogEncoder or AnalogPot
+
+	/* set the peak and nominal outputs, 12V means full */
+	gearCollectorArm.configNominalOutputVoltage(+0.0f, -0.0f);
+	gearCollectorArm.configPeakOutputVoltage(+12.0f, -12.0f);
+	/* set closed loop gains in slot0 - see documentation */
+	gearCollectorArm.setProfile(0);
+	gearCollectorArm.setF(1.03);
+	gearCollectorArm.setP(4); //.5 // ridiculously high but it never oscillated, error is almost 0
+	gearCollectorArm.setI(0);
+	gearCollectorArm.setD(0);
+	/* set acceleration and vcruise velocity - see documentation */
+	gearCollectorArm.setMotionMagicCruiseVelocity(108.75); 
+	gearCollectorArm.setMotionMagicAcceleration(108.75);
+	
+	
 }
 
     // Put methods for controlling this subsystem
@@ -43,6 +73,7 @@ public gearCollector (){
     public void initDefaultCommand() {
        
         setDefaultCommand(new GearCollectorStop());
+        //setDefaultCommand(new GearCollectorMotionMagicTestMode());
 
 
         // Set the default command for a subsystem here.
@@ -54,12 +85,46 @@ public gearCollector (){
     public void gearCollectorStop(double speed){
     	gearCollectorMotor.set(0);
     }
-    public void gearCollectorDeploy(){
-    	gearPiston.set(DoubleSolenoid.Value.kForward);
+  
+    public void gearCollectorDeploy(double degrees){
+    	double revs = degrees/360;
+    	gearCollectorArm.set(revs);
     }
     public void gearCollectorRetract(){
-    	gearPiston.set(DoubleSolenoid.Value.kReverse);
+    	gearCollectorArm.set(0);
     }
-    	
+    
+    public void gearCollectorMotionMagicTestMode() {
+		/* get gamepad axis - forward stick is positive */
+		double leftYstick = -1.0 * Robot.oi.operatorController.getAxis(AxisType.kY);
+		/* calculate the percent motor output */
+		double motorOutput = gearCollectorArm.getOutputVoltage() / gearCollectorArm.getBusVoltage();
+		/* prepare line to print */
+		_sb.append("\tout:");
+		
+		_sb.append(motorOutput);
+		_sb.append("\tspd:");
+		_sb.append(gearCollectorArm.getSpeed());
+
+		if (Robot.oi.operatorController.getRawButton(1)) {
+			/* Motion Magic */
+			double targetPos = leftYstick
+					* 0.2; /* .2 Rotations in either direction */ //dont break things
+			gearCollectorArm.changeControlMode(TalonControlMode.MotionMagic);
+			gearCollectorArm.set(targetPos); 
+
+			/* append more signals to print when in speed mode. */
+			_sb.append("\terr:");
+			_sb.append(gearCollectorArm.getClosedLoopError());
+			_sb.append("\ttrg:");
+			_sb.append(targetPos);
+		} else {
+			/* Percent voltage mode */
+			gearCollectorArm.changeControlMode(TalonControlMode.PercentVbus);
+			gearCollectorArm.set(leftYstick);
+		}
+		/* instrumentation */
+		InstrumentationMotionMagic.Process(gearCollectorArm, _sb);
+	}
 }
 

@@ -16,10 +16,10 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
 /**
  *
  */
-public class GearCollectorDeploy extends Command {
+public class GearCollectorMotionMagicTestMode extends Command {
 
     
-    public GearCollectorDeploy() {
+    public GearCollectorMotionMagicTestMode() {
 
   
         requires(Robot.gearCollector);
@@ -28,18 +28,16 @@ public class GearCollectorDeploy extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double degrees = 90;
-    	Robot.gearCollector.gearCollectorDeploy(degrees);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	Robot.gearCollector.gearCollectorMotionMagicTestMode();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

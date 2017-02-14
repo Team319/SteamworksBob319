@@ -9,20 +9,30 @@
 // it from being updated in the future.
 
 
-package org.usfirst.frc319.SteamworksBob319.commands;
+package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+
+import org.usfirst.frc319.SteamworksBob319.commands.BrakePadDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.BrakePadRetract;
+import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
+import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoToSpeed;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
  *
  */
-public class CommandGroup1 extends CommandGroup {
+public class GearCollectStopRetract extends CommandGroup {
 
 
   
-    public CommandGroup1() {
-
+    public GearCollectStopRetract() {
+    	
+    	addSequential(new GearCollectorIn());
+    	//addSequential(new [Insert Stop motor here])
+    	addSequential(new GearCollectorRetract());
+    	
+    	
    
         // Add Commands here:
         // e.g. addSequential(new Command1());

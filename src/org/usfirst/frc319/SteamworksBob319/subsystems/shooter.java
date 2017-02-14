@@ -14,6 +14,7 @@ package org.usfirst.frc319.SteamworksBob319.subsystems;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterPIDTestMode;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterStop;
 
 import com.ctre.CANTalon;
@@ -71,14 +72,14 @@ public shooter (){
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-
     	setDefaultCommand(new ShooterStop());
+    	//setDefaultCommand(new ShooterPIDTestMode());
         // Set the default command for a subsystem here.
       
     }
     
     public void shooterGoToSpeed(double speed){
-    	//shooterLead.changeControlMode(TalonControlMode.Speed);
+    	shooterLead.changeControlMode(TalonControlMode.Speed);
     	shooterLead.set(speed);
     	
     }
@@ -87,6 +88,7 @@ public shooter (){
     	//shooterLead.changeControlMode(TalonControlMode.PercentVbus);// used to let the shooter just stop on its own
     	shooterLead.set(0);
     }
+    
     
     //------USED TO TUNE SHOOTER --- NEED TO MAKE A COMMAND TO RUN THIS -- THEN MAKE DEFAULT----//
     public void shooterPIDTestMode(){

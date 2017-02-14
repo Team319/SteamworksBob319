@@ -56,6 +56,8 @@ public class RobotMap {
     public static Compressor compressorCompressor;
     public static AnalogInput compressorPressureSensor;
     
+    public static DigitalInput gearCollectorSensor;
+    
 
 
 
@@ -99,6 +101,7 @@ public class RobotMap {
         gearCollectorGearPiston = new DoubleSolenoid(0, 4, 5);
         gearCollectorGearCollectorMotor = new CANTalon(4);
         gearCollectorGearCollectorArm = new CANTalon(10);
+        gearCollectorSensor = new DigitalInput(0);
         
       //---------------------------brakePad-------------------------------
         

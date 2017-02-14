@@ -70,7 +70,7 @@ public class rollervator extends Subsystem {
     public void initDefaultCommand() {
       
     	setDefaultCommand(new RollervatorStop());
-
+    	//setDefaultCommand(new RollervatorPIDTestMode());
         // Set the default command for a subsystem here.
   
     }
@@ -83,6 +83,7 @@ public class rollervator extends Subsystem {
     	rollervatorLead.set(speed); 
     }
     public void rollervatorClimb(double speed){
+    	rollervatorLead.changeControlMode(TalonControlMode.Speed);
     	rollervatorLead.set(speed);
     }
     public void changeModeToSpeed(){
