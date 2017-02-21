@@ -14,6 +14,7 @@ package org.usfirst.frc319.SteamworksBob319.subsystems;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorPIDTestMode;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorStop;
 
 import com.ctre.CANTalon;
@@ -59,8 +60,8 @@ public class rollervator extends Subsystem {
         rollervatorLead.setProfile(0);
         rollervatorLead.setF(.10);
         rollervatorLead.setP(0.06);
-        rollervatorLead.setI(0);
-        rollervatorLead.setIZone(0);
+        rollervatorLead.setI(0.08);
+        rollervatorLead.setIZone(500);
         
     }
 
@@ -69,6 +70,7 @@ public class rollervator extends Subsystem {
 
     public void initDefaultCommand() {
       
+    	//setDefaultCommand(new MotorTest(this, RobotMap.rollervatorRollervatorLead));
     	setDefaultCommand(new RollervatorStop());
     	//setDefaultCommand(new RollervatorPIDTestMode());
         // Set the default command for a subsystem here.
@@ -99,7 +101,7 @@ public class rollervator extends Subsystem {
         SmartDashboard.putInt("motorspeed", rollervatorLead.getEncVelocity());
         
         /* get gamepad axis */
-    	double leftYstick = Robot.oi.driverController.getLeftStickY();
+    	double leftYstick = Robot.oi.operatorController.getLeftStickY();
     	double motorOutput = rollervatorLead.getOutputVoltage() / rollervatorLead.getBusVoltage();
     	/* prepare line to print */
     	_sb.append("\tout:");
@@ -107,7 +109,7 @@ public class rollervator extends Subsystem {
         _sb.append("\tspd:");
         _sb.append(rollervatorLead.getSpeed() );
         
-        if(Robot.oi.driverController.getRawButton(1)){
+        if(Robot.oi.operatorController.getRawButton(1)){
         	/* Speed mode */
         	double targetSpeed =  1000; /* 1500 RPM in either direction */
         	rollervatorLead.changeControlMode(TalonControlMode.Speed);
@@ -121,7 +123,7 @@ public class rollervator extends Subsystem {
             _sb.append("\ttrg:");
             _sb.append(targetSpeed);
         } 
-        else if (Robot.oi.driverController.getRawButton(2)){
+        else if (Robot.oi.operatorController.getRawButton(2)){
         	rollervatorLead.set(-.6);
         	//System.out.println(_talon.getControlMode() );
         	//System.out.println(_talonFollower.getControlMode() );
@@ -133,7 +135,7 @@ public class rollervator extends Subsystem {
         	//System.out.println(_talon.getControlMode() );
         	//System.out.println(_talonFollower.getControlMode() );
         	rollervatorLead.changeControlMode(TalonControlMode.PercentVbus);
-        	rollervatorLead.set(leftYstick);
+        	rollervatorLead.set(Robot.oi.operatorController.getLeftStickY());
         	//System.out.println("joystick vbus mode");
         }
 
@@ -147,7 +149,7 @@ public class rollervator extends Subsystem {
     
     // ----- All of the information that could be used by the rollervator ------//
     
-    public int getShooterSpeed(){
+    public int getRollervatorSpeed(){
         	return rollervatorLead.getEncVelocity();
         }
         

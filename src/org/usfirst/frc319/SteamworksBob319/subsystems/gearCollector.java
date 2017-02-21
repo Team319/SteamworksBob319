@@ -25,6 +25,8 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -38,6 +40,7 @@ public class gearCollector extends Subsystem {
     private final CANTalon gearCollectorMotor = RobotMap.gearCollectorGearCollectorMotor;
     private final CANTalon gearCollectorArm = RobotMap.gearCollectorGearCollectorArm;
     private final DigitalInput GearSensor = RobotMap.gearCollectorSensor;
+    private final Relay lights = RobotMap.lights;
     StringBuilder _sb = new StringBuilder();
 
 public gearCollector (){
@@ -61,7 +64,7 @@ public gearCollector (){
 	gearCollectorArm.setI(0);
 	gearCollectorArm.setD(0);
 	/* set acceleration and vcruise velocity - see documentation */
-	gearCollectorArm.setMotionMagicCruiseVelocity(108.75); 
+	gearCollectorArm.setMotionMagicCruiseVelocity(108.75);//108.75 
 	gearCollectorArm.setMotionMagicAcceleration(108.75);
 	
 	
@@ -86,9 +89,13 @@ public gearCollector (){
     	gearCollectorMotor.set(0);
     }
   
-    public void gearCollectorDeploy(double degrees){
+    public void gearCollectorGoToAngle(double degrees){
     	double revs = degrees/360;
     	gearCollectorArm.set(revs);
+    }
+    
+    public double gearArmAngle(){
+    	return gearCollectorArm.getPosition()*360.0;
     }
     public void gearCollectorRetract(){
     	gearCollectorArm.set(0);
@@ -96,7 +103,7 @@ public gearCollector (){
     
     public void gearCollectorMotionMagicTestMode() {
 		/* get gamepad axis - forward stick is positive */
-		double leftYstick = -1.0 * Robot.oi.operatorController.getAxis(AxisType.kY);
+		double leftYstick = -0.5 * Robot.oi.operatorController.getAxis(AxisType.kY);
 		/* calculate the percent motor output */
 		double motorOutput = gearCollectorArm.getOutputVoltage() / gearCollectorArm.getBusVoltage();
 		/* prepare line to print */
@@ -126,5 +133,11 @@ public gearCollector (){
 		/* instrumentation */
 		InstrumentationMotionMagic.Process(gearCollectorArm, _sb);
 	}
+    public void lightsOn(){
+    	lights.set(Relay.Value.kForward);
+    }
+    public void lightsOff(){
+    	lights.set(Relay.Value.kOff);
+    }
 }
 

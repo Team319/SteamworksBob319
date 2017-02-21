@@ -16,10 +16,10 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
 /**
  *
  */
-public class GearCollectorDeploy extends Command {
+public class GearCollectorArmDeploy extends Command {
 
     
-    public GearCollectorDeploy() {
+    public GearCollectorArmDeploy() {
 
   
         requires(Robot.gearCollector);
@@ -28,8 +28,8 @@ public class GearCollectorDeploy extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double degrees = 90;
-    	Robot.gearCollector.gearCollectorDeploy(degrees);
+    	double degrees = -79;
+    	Robot.gearCollector.gearCollectorGoToAngle(degrees);
     }
 
     // Called repeatedly when this Command is scheduled to run

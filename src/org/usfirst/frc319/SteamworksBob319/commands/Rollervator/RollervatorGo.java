@@ -33,7 +33,7 @@ public class RollervatorGo extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = 1000;
+    	double speed = 900;
     	Robot.rollervator.rollervatorGo(speed); // Mr. Derrick thinks we could put this into initialize and it would work.
     }
 

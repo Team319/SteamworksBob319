@@ -16,10 +16,10 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
 /**
  *
  */
-public class GearCollectorIn extends Command {
+public class GearCollectorOut extends Command {
 
     
-    public GearCollectorIn() {
+    public GearCollectorOut() {
 
   
         requires(Robot.gearCollector);
@@ -32,7 +32,7 @@ public class GearCollectorIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = .3;
+    	double speed =-.3;
     	Robot.gearCollector.gearCollectorIn(speed);
     }
 

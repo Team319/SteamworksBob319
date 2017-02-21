@@ -19,10 +19,14 @@ import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorD
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorIn;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorRetract;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorStop;
-import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmGoToDepositGear;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorIn;
-import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorRetract;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorOut;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmRetract;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorStop;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightsOff;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightsOn;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorClimb;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorStop;
@@ -72,33 +76,38 @@ public class OI {
 
 	public OI() {
 
-		operatorController = new BobController(1);
 		driverController = new BobController(0);
+		operatorController = new BobController(1);
 		
 
 		// --------OPERATOR---------------//
 
 		//operatorController.selectButton.whenPressed(new BlueHopperAuto());
-		operatorController.leftBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt1"));
+		//operatorController.leftBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt1"));
 		//operatorController.rightBumper.whenPressed(new BlueHopperAuto());
-		//operatorController.rightBumper.whenPressed(new FollowTrajectory("Drive15ft"));
-		operatorController.rightBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt2"));
-		operatorController.yButton.whenPressed(new FollowTrajectory("RedHopperAutoPt3"));
-		//operatorController.aButton.whenPressed(new RollervatorClimb()); // was gearCollectorIn
-		operatorController.bButton.whenPressed(new GearCollectorStop());
-		operatorController.xButton.whenPressed(new GearCollectorDeploy());
-		operatorController.startButton.whenPressed(new GearCollectorRetract());
+		operatorController.rightBumper.whenPressed(new GearCollectorStop());
+		//operatorController.rightBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt2"));
+		operatorController.yButton.whenPressed(new GearCollectorArmGoToDepositGear());
+		operatorController.aButton.whenPressed(new GearCollectorArmDeploy()); // was gearCollectorIn
+		//operatorController.bButton.whenPressed(new FuelCollectorRetract());
+		operatorController.xButton.whenPressed(new GearCollectorIn());
+		operatorController.bButton.whenPressed(new GearCollectorOut());
+		//operatorController.startButton.whenPressed(new GearCollectorRetract());
+		//operatorController.aButton.whenPressed(new GearCollectorOut());
+		operatorController.selectButton.whenPressed(new BrakePadRetract());
+		operatorController.leftBumper.whenPressed(new LightsOn());
+			// -----------DRIVER-----------//
 
-		// -----------DRIVER-----------//
-
-		driverController.leftBumper.whenPressed(new RollervatorGo());
-		driverController.yButton.whenPressed(new ShooterGoToSpeed());
+		driverController.leftBumper.whenPressed(new FuelCollectorIn());
+		//driverController.leftBumper.whenPressed(new FuelCollectorDeploy());
+		driverController.yButton.whenPressed(new ShooterRollervatorStop());
 		driverController.xButton.whenPressed(new ShiftToggle());
-		driverController.bButton.whenPressed(new ShooterRollervatorStop());
-		driverController.aButton.whenPressed(new FuelCollectorRetract());
-		driverController.rightBumper.whenPressed(new FuelCollectorDeploy());
-		driverController.startButton.whenPressed(new BrakePadDeploy());
-		driverController.selectButton.whenPressed(new BrakePadRetract());
+		driverController.bButton.whenPressed(new RollervatorGo());
+		driverController.aButton.whenPressed(new ShooterGoToSpeed());
+		driverController.rightBumper.whenPressed(new FuelCollectorStop());
+		driverController.startButton.whenPressed(new ShooterStop()); // was BrakePadDeploy
+		driverController.selectButton.whenPressed(new RollervatorStop()); // was BrakePadRetract
+		//driverController.selectButton.whenPressed(new FuelCollectorRetract());
 
 		/*
 		 * // SmartDashboard Buttons SmartDashboard.putData("FuelCollectorGo",

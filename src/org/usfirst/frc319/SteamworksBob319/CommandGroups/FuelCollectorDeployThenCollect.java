@@ -9,36 +9,29 @@
 // it from being updated in the future.
 
 
-package org.usfirst.frc319.SteamworksBob319.commands.AutoModes;
+package org.usfirst.frc319.SteamworksBob319.CommandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import org.usfirst.frc319.SteamworksBob319.CommandGroups.FuelCollectorDeployThenCollect;
-import org.usfirst.frc319.SteamworksBob319.CommandGroups.RollervatorShooterGoToSpeed;
 import org.usfirst.frc319.SteamworksBob319.commands.DoNothing;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
-import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorStop;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorIn;
+import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoToSpeed;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
  *
  */
-public class RedHopperAuto extends CommandGroup {
+public class FuelCollectorDeployThenCollect extends CommandGroup {
 
 
   
-    public RedHopperAuto() {
+    public FuelCollectorDeployThenCollect() {
 
     	addParallel(new FuelCollectorDeploy());
-    	addSequential(new FollowTrajectory("RedHopperAutoPt1"));//stage 1
-    	addSequential(new DoNothing(),1.5);// do nothing 3 seconds
-    	addSequential(new FollowTrajectory("RedHopperAutoPt2"));//stage 2
-    	addSequential(new FollowTrajectory("RedHopperAutoPt3"));//stage 3
-    	//addParallel(new FuelCollectorStop());
-    	addSequential(new RollervatorShooterGoToSpeed());
-    	
+    	addSequential(new FuelCollectorIn());
  
     } 
 }

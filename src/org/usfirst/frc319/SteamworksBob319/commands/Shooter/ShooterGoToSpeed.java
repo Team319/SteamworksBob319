@@ -33,13 +33,15 @@ public class ShooterGoToSpeed extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = -3000;
-    	Robot.shooter.shooterGoToSpeed(speed);; // Mr. Derrick thinks we could put this into initialize and it would work.
+    	double speed = -720;
+    	Robot.shooter.shooterGoToSpeed(speed);
+    	System.out.println("Shooter Error" + Robot.shooter.getShooterError());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;  // Might be nice to have this be a threshold so a command group would only start once it's at speed
+    	double threshhold = 100;
+        return Robot.shooter.shooterIsAtSpeed(threshhold);
     }
 
     // Called once after isFinished returns true

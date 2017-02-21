@@ -28,7 +28,7 @@ public class RetractCollectorThenStopCollect extends CommandGroup {
   
     public RetractCollectorThenStopCollect() {
 
-    	addSequential(new GearCollectorRetract());
+    	addSequential(new GearCollectorArmRetract());
     	addSequential(new GearCollectorStop());
     	
    

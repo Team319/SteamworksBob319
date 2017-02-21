@@ -28,7 +28,7 @@ public class DeployCollectorThenCollect extends CommandGroup {
   
     public DeployCollectorThenCollect() {
 
-    	addSequential(new GearCollectorDeploy());
+    	addSequential(new GearCollectorArmDeploy());
     	addSequential(new GearCollectorIn());
     	
    

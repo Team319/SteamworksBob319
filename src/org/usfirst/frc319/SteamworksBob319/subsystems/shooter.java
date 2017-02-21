@@ -14,6 +14,7 @@ package org.usfirst.frc319.SteamworksBob319.subsystems;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterMaintainSpeed;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterPIDTestMode;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterStop;
 
@@ -31,7 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class shooter extends Subsystem {
 
     
-    private final CANTalon shooterLead = RobotMap.shooterShooterLead;
+    public final CANTalon shooterLead = RobotMap.shooterShooterLead;
     private final CANTalon shooterFollow = RobotMap.shooterShooterFollow;
     
     StringBuilder _sb = new StringBuilder();
@@ -44,7 +45,8 @@ public shooter (){
 	shooterFollow.enableBrakeMode(false);
 	
 
-	shooterLead.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+	shooterLead.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+	shooterLead.configEncoderCodesPerRev(1024);
 	shooterLead.reverseOutput(false);
 	shooterLead.reverseSensor(true);
 	
@@ -59,10 +61,10 @@ public shooter (){
 	
 	
 	shooterLead.setProfile(0);
-	shooterLead.setF(0.02939);
-	shooterLead.setP(0.1);
-	shooterLead.setI(.00036);
-	shooterLead.setIZone(4000);
+	shooterLead.setF(0.14);
+	shooterLead.setP(1);
+	shooterLead.setI(0.001);
+	shooterLead.setIZone(100);
 	shooterLead.setD(0);
 	
 	
@@ -72,8 +74,10 @@ public shooter (){
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
-    	setDefaultCommand(new ShooterStop());
+    	//setDefaultCommand(new MotorTest(this, RobotMap.shooterShooterLead));
+    	//setDefaultCommand(new ShooterStop());
     	//setDefaultCommand(new ShooterPIDTestMode());
+    	setDefaultCommand(new ShooterMaintainSpeed());
         // Set the default command for a subsystem here.
       
     }
@@ -85,7 +89,7 @@ public shooter (){
     }
     
     public void shooterStop(){
-    	//shooterLead.changeControlMode(TalonControlMode.PercentVbus);// used to let the shooter just stop on its own
+    	shooterLead.changeControlMode(TalonControlMode.PercentVbus);// used to let the shooter just stop on its own
     	shooterLead.set(0);
     }
     
@@ -96,7 +100,7 @@ public shooter (){
     SmartDashboard.putInt("motorspeed", shooterLead.getEncVelocity());
     
     /* get gamepad axis */
-	double leftYstick = Robot.oi.driverController.getLeftStickY();
+	double leftYstick = Robot.oi.operatorController.getLeftStickY();
 	double motorOutput = shooterLead.getOutputVoltage() / shooterLead.getBusVoltage();
 	/* prepare line to print */
 	_sb.append("\tout:");
@@ -104,9 +108,9 @@ public shooter (){
     _sb.append("\tspd:");
     _sb.append(shooterLead.getSpeed() );
     
-    if(Robot.oi.driverController.getRawButton(1)){
+    if(Robot.oi.operatorController.getRawButton(1)){
     	/* Speed mode */
-    	double targetSpeed =  1000; /* 1500 RPM in either direction */
+    	double targetSpeed =  leftYstick * 1000; /* 1500 RPM in either direction */
     	shooterLead.changeControlMode(TalonControlMode.Speed);
     	shooterLead.set(targetSpeed); /* 1500 RPM in either direction */
     	//_sb.append(_talon.getControlMode() );
@@ -118,7 +122,7 @@ public shooter (){
         _sb.append("\ttrg:");
         _sb.append(targetSpeed);
     } 
-    else if (Robot.oi.driverController.getRawButton(2)){
+    else if (Robot.oi.operatorController.getRawButton(2)){
     	shooterLead.set(-.6);
     	//System.out.println(_talon.getControlMode() );
     	//System.out.println(_talonFollower.getControlMode() );
@@ -143,6 +147,15 @@ public shooter (){
 
     public int getShooterSpeed(){
     	return shooterLead.getEncVelocity();
+    }
+    public double getShooterError(){
+    	return shooterLead.getSetpoint() + shooterLead.getEncVelocity();
+    }
+    public boolean shooterIsAtSpeed(double threshhold){
+    	if (shooterLead.getEncVelocity() - shooterLead.getSetpoint() > threshhold) 
+    		return false;
+    	else
+    		return true;
     }
     
 }

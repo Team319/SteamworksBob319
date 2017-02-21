@@ -9,22 +9,30 @@
 // it from being updated in the future.
 
 
-package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
+package org.usfirst.frc319.SteamworksBob319.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
+
 import org.usfirst.frc319.SteamworksBob319.Robot;
+
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 /**
  *
  */
-public class GearCollectorIn extends Command {
-
+public class MotorTest extends Command {
+	
+	CANTalon _talon;
+   
+    public MotorTest() {    
+        //requires(Robot.fuelCollector);   
+    }
     
-    public GearCollectorIn() {
-
-  
-        requires(Robot.gearCollector);
-
-            }
+    public MotorTest(Subsystem subsystem, CANTalon talon){
+    	requires(subsystem);
+    	this._talon = talon;
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -32,8 +40,11 @@ public class GearCollectorIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = .3;
-    	Robot.gearCollector.gearCollectorIn(speed);
+    	
+    	double speed = Robot.oi.operatorController.getLeftStickY();
+    	_talon.changeControlMode(TalonControlMode.PercentVbus);
+    	_talon.set(speed);
+    	//Robot.fuelCollector.fuelCollectorIn(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

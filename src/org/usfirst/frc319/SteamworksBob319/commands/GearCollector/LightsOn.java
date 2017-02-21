@@ -16,10 +16,10 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
 /**
  *
  */
-public class GearCollectorRetract extends Command {
+public class LightsOn extends Command {
 
     
-    public GearCollectorRetract() {
+    public LightsOn() {
 
   
         requires(Robot.gearCollector);
@@ -28,17 +28,16 @@ public class GearCollectorRetract extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearCollector.gearCollectorRetract();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	Robot.gearCollector.lightsOn();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

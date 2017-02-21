@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
     public static rollervator rollervator;
     public static gearCollector gearCollector;
     public static brakePad brakePad;
-   // public static activeFloor activeFloor;
+   // public static activeFloor activeFloor; // should be deleted (TG 2/15/17)
     public static compressor compressor;
    
     
@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
         rollervator = new rollervator();
         gearCollector = new gearCollector();
         brakePad = new brakePad();
-        //activeFloor = new activeFloor();
+        //activeFloor = new activeFloor(); // should be deleted (TG 2/15/17)
         compressor = new compressor();
         CameraServer.getInstance().startAutomaticCapture();
         
@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
        
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Default", new AutonomousCommand());
-        autoChooser.addObject("Bluehopperauto", new BlueHopperAuto());
+        autoChooser.addObject("BluehopperAuto", new BlueHopperAuto());
         autoChooser.addObject("BlueGearThenHopperAuto", new BlueGearThenHopperAuto());
         autoChooser.addObject("GearOnlyAuto", new GearOnlyAuto());
         autoChooser.addObject("RedHopperAuto", new RedHopperAuto());
@@ -93,8 +93,8 @@ public class Robot extends IterativeRobot {
 
         // instantiate the command used for the autonomous period
       
-
-        autonomousCommand = new AutonomousCommand();
+      
+        //autonomousCommand = new BlueHopperAuto();
 
 
     }
@@ -112,6 +112,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
+    	  autonomousCommand = (Command) autoChooser.getSelected();
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -137,9 +138,10 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putDouble("shooter speed", Robot.shooter.getShooterSpeed());
-        SmartDashboard.putDouble("rollervator current", Robot.rollervator.getRollervatorCurrent());
+        SmartDashboard.putDouble("rollervator speed", Robot.rollervator.getRollervatorSpeed());
         SmartDashboard.putDouble("left drivetrain velocity",  Robot.driveTrain.getLeftDriveVelocity());
-        SmartDashboard.putDouble("right drivetrain velocity", Robot.driveTrain.getRightDriveVelocity());
+        SmartDashboard.putDouble("right drivetrain 'velocity", Robot.driveTrain.getRightDriveVelocity());
+        SmartDashboard.putDouble("Gear Arm position", Robot.gearCollector.gearArmAngle());
         }
 
     /**

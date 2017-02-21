@@ -9,22 +9,23 @@
 // it from being updated in the future.
 
 
-package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
+package org.usfirst.frc319.SteamworksBob319.commands.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
 /**
  *
  */
-public class GearCollectorIn extends Command {
+public class ShooterMaintainSpeed extends Command {
+
+   
+    public ShooterMaintainSpeed() {
 
     
-    public GearCollectorIn() {
+        requires(Robot.shooter);
 
-  
-        requires(Robot.gearCollector);
-
-            }
+   
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -32,13 +33,12 @@ public class GearCollectorIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = .3;
-    	Robot.gearCollector.gearCollectorIn(speed);
+    	Robot.shooter.shooterLead.set(Robot.shooter.shooterLead.getSetpoint());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return false; 
     }
 
     // Called once after isFinished returns true

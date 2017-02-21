@@ -31,7 +31,7 @@ public class DeployBrakeElevatorShooterThenShoot extends CommandGroup {
     	addSequential(new BrakePadDeploy());
     	addParallel(new RollervatorGo());
     	addParallel(new ShooterGoToSpeed());
-    	addSequential(new ShooterGoToSpeed());
+    	addSequential(new ShooterGoToSpeed());// Why is ShooterGoToSpeed called twice?
     	addSequential(new BrakePadRetract());
    
         // Add Commands here:

@@ -41,8 +41,8 @@ public class fuelCollector extends Subsystem {
 
     public void initDefaultCommand() {
        
-
-        setDefaultCommand(new FuelCollectorStop());
+    	//setDefaultCommand(new MotorTest(this, RobotMap.fuelCollectorFuelCollector));
+       setDefaultCommand(new FuelCollectorStop());
 
       
 
