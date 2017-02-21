@@ -16,16 +16,15 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
 /**
  *
  */
-public class GearCollectorStop extends Command {
+public class GearCollectorInUntilCollected extends Command {
 
     
-    public GearCollectorStop() {
+    public GearCollectorInUntilCollected() {
 
-   
+  
         requires(Robot.gearCollector);
 
-        
-    }
+            }
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -33,13 +32,13 @@ public class GearCollectorStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.gearCollector.gearCollectorStop(0);
-    	
+    	double speed = .6;
+    	Robot.gearCollector.gearCollectorIn(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return Robot.gearCollector.gearCollectorHasExceededCurrent(2.5);
     }
 
     // Called once after isFinished returns true

@@ -36,14 +36,15 @@ public class RollervatorClimb extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = .5;
-    	Robot.rollervator.rollervatorClimb(speed); 
+    	double power = 1;
+    	Robot.rollervator.rollervatorClimb(power); 
     	System.out.println("rollervatorCurrent = " + Robot.rollervator.getRollervatorCurrent());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.rollervator.rollervatorHasExceededCurrentThreshhold(14);
+        return Robot.rollervator.rollervatorHasExceededCurrentThreshhold(20); // This is the amount of current that stops the climb
+    	//return false;
     }
 
     // Called once after isFinished returns true

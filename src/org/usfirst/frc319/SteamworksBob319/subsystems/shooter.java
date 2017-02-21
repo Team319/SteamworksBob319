@@ -94,10 +94,10 @@ public shooter (){
     }
     
     
-    //------USED TO TUNE SHOOTER --- NEED TO MAKE A COMMAND TO RUN THIS -- THEN MAKE DEFAULT----//
+    //------USED TO TUNE SHOOTER --- USE SHOOTER PID TEST COMMAND TO RUN THIS --  MAKE DEFAULT----//
     public void shooterPIDTestMode(){
     
-    SmartDashboard.putInt("motorspeed", shooterLead.getEncVelocity());
+    
     
     /* get gamepad axis */
 	double leftYstick = Robot.oi.operatorController.getLeftStickY();
@@ -145,14 +145,14 @@ public shooter (){
     _sb.setLength(0);
 }
 
-    public int getShooterSpeed(){
-    	return shooterLead.getEncVelocity();
+    public double getShooterSpeed(){
+    	return shooterLead.getSpeed();
     }
     public double getShooterError(){
-    	return shooterLead.getSetpoint() + shooterLead.getEncVelocity();
+    	return shooterLead.getSetpoint() + shooterLead.getSpeed();
     }
     public boolean shooterIsAtSpeed(double threshhold){
-    	if (shooterLead.getEncVelocity() - shooterLead.getSetpoint() > threshhold) 
+    	if (shooterLead.getSpeed() - shooterLead.getSetpoint() > threshhold) 
     		return false;
     	else
     		return true;

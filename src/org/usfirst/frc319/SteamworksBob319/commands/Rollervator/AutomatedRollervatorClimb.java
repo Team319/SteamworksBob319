@@ -9,7 +9,7 @@
 // it from being updated in the future.
 
 
-package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
+package org.usfirst.frc319.SteamworksBob319.commands.Rollervator;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -22,15 +22,16 @@ import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 /**
  *
  */
-public class DeployCollectorThenCollect extends CommandGroup {
+public class AutomatedRollervatorClimb extends CommandGroup {
 
 
   
-    public DeployCollectorThenCollect() {
+    public AutomatedRollervatorClimb() {
 
-    	addSequential(new GearCollectorArmDeploy());
-    	addSequential(new GearCollectorIn());
-    	
+    	addSequential(new ClimbStart(), 2);
+    	addSequential(new RollervatorClimb());
+    	// start rollervator for one second 
+    	// have command that climbs while monitoring current
    
         // Add Commands here:
         // e.g. addSequential(new Command1());

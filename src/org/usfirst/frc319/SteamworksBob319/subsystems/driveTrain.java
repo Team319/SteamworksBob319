@@ -148,7 +148,7 @@ public class driveTrain extends Subsystem {
     }
     
     public void rightDrivetrainPIDTestMode(){
-  	  SmartDashboard.putInt("motorspeed", rightDriveLead.getEncVelocity());
+  	  //SmartDashboard.putInt("motorspeed", rightDriveLead.getEncVelocity());
     	
     	/* get gamepad axis */
     	double leftYstick = Robot.oi.driverController.getRawAxis(1);
@@ -197,7 +197,7 @@ public class driveTrain extends Subsystem {
         _sb.setLength(0);
     }
     public void leftDrivetrainPIDTestMode(){
-    	  SmartDashboard.putInt("motorspeed", leftDriveLead.getEncVelocity());
+    	  //SmartDashboard.putInt("motorspeed", leftDriveLead.getEncVelocity());
       	
       	/* get gamepad axis */
       	double leftYstick = Robot.oi.driverController.getRawAxis(1);

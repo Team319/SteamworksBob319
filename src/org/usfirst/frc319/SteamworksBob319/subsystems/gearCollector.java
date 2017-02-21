@@ -97,6 +97,18 @@ public gearCollector (){
     public double gearArmAngle(){
     	return gearCollectorArm.getPosition()*360.0;
     }
+    
+    public double getGearCollectorCurrent(){
+    	return gearCollectorMotor.getOutputCurrent();
+    }
+    
+    public boolean gearCollectorHasExceededCurrent(double threshold){
+    	if(getGearCollectorCurrent() > 2.5){
+    		return true;
+    	}
+    	else return false;
+    }
+    
     public void gearCollectorRetract(){
     	gearCollectorArm.set(0);
     }

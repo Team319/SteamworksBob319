@@ -142,6 +142,10 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putDouble("left drivetrain velocity",  Robot.driveTrain.getLeftDriveVelocity());
         SmartDashboard.putDouble("right drivetrain 'velocity", Robot.driveTrain.getRightDriveVelocity());
         SmartDashboard.putDouble("Gear Arm position", Robot.gearCollector.gearArmAngle());
+        SmartDashboard.putDouble("RollerVator Test Mode motorspeed", Robot.rollervator.rollervatorLead.getSpeed());
+        SmartDashboard.putDouble("motorspeed", Robot.shooter.shooterLead.getSpeed());
+        SmartDashboard.putDouble("Collector Current", Robot.gearCollector.getGearCollectorCurrent());
+        SmartDashboard.putDouble("Rollervator Current", Robot.rollervator.getRollervatorCurrent());
         }
 
     /**

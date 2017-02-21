@@ -9,41 +9,47 @@
 // it from being updated in the future.
 
 
-package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
+package org.usfirst.frc319.SteamworksBob319.commands.Rollervator;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
+
+import com.ctre.CANTalon.TalonControlMode;
 
 /**
  *
  */
-public class GearCollectorStop extends Command {
-
-    
-    public GearCollectorStop() {
+public class ClimbStart extends Command {
 
    
-        requires(Robot.gearCollector);
+    public ClimbStart() {
 
-        
+    
+        requires(Robot.rollervator);
+
+   
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    Robot.rollervator.changeModeToVbus();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.gearCollector.gearCollectorStop(0);
-    	
+    	double power = 1;
+    	Robot.rollervator.rollervatorClimb(power); 
+    	System.out.println("rollervatorCurrent = " + Robot.rollervator.getRollervatorCurrent());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        //return Robot.rollervator.rollervatorHasExceededCurrentThreshhold(14);
+    	return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.rollervator.changeModeToSpeed();
     }
 
     // Called when another command which requires one or more of the same

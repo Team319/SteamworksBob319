@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class rollervator extends Subsystem {
 
     
-    private final CANTalon rollervatorLead = RobotMap.rollervatorRollervatorLead;
+    public final CANTalon rollervatorLead = RobotMap.rollervatorRollervatorLead;
     private final CANTalon rollervatorFollow = RobotMap.rollervatorRollervatorFollow;
 
     StringBuilder _sb = new StringBuilder(); //used for tuning PID
@@ -84,9 +84,8 @@ public class rollervator extends Subsystem {
     	rollervatorLead.changeControlMode(TalonControlMode.Speed);
     	rollervatorLead.set(speed); 
     }
-    public void rollervatorClimb(double speed){
-    	rollervatorLead.changeControlMode(TalonControlMode.Speed);
-    	rollervatorLead.set(speed);
+    public void rollervatorClimb(double power){
+    rollervatorLead.set(power);
     }
     public void changeModeToSpeed(){
     	rollervatorLead.changeControlMode(TalonControlMode.Speed);
@@ -98,7 +97,7 @@ public class rollervator extends Subsystem {
     //---USED for tuning rollervator Velocity PID -----//
     public void rollervatorPIDTestMode(){
         
-        SmartDashboard.putInt("motorspeed", rollervatorLead.getEncVelocity());
+        
         
         /* get gamepad axis */
     	double leftYstick = Robot.oi.operatorController.getLeftStickY();
