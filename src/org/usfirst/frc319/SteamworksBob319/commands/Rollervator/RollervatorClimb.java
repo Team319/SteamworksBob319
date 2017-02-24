@@ -36,8 +36,9 @@ public class RollervatorClimb extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double power = 1;
-    	Robot.rollervator.rollervatorClimb(power); 
+    	double power = Robot.oi.operatorController.getLeftStickY();
+    	Robot.rollervator.rollervatorClimb(power);
+    	//Robot.rollervator.rollervatorClimb();
     	System.out.println("rollervatorCurrent = " + Robot.rollervator.getRollervatorCurrent());
     }
 

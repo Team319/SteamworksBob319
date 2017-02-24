@@ -67,24 +67,18 @@ public class OI {
 		//operatorController.rightBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt2"));
 		//operatorController.rightBumper.whenPressed(new FuelCollectorRetract());
 		
-		
 		//operatorController.yButton.whenPressed(new GearCollectorArmGoToDepositGear());
 		
 		operatorController.aButton.whenPressed(new AutomatedCollectGearAndLift()); // was gearCollectorIn
 		//operatorController.aButton.whenPressed(new GearCollectorOut());
 		
-		
-		operatorController.bButton.whenPressed(new FuelCollectorRetract());
-		//operatorController.bButton.whenPressed(new GearCollectorOut());
+		//operatorController.bButton.whenPressed(new FuelCollectorRetract());
+		operatorController.bButton.whenPressed(new GearCollectorOut());
 		operatorController.xButton.whenPressed(new FuelCollectorDeploy());
-		
-		
 		
 		//operatorController.startButton.whenPressed(new GearCollectorRetract());
 		
-		
-		
-		operatorController.selectButton.whenPressed(new AutomatedRollervatorClimb());
+		operatorController.selectButton.whenPressed(new FuelCollectorRetract());
 		operatorController.startButton.whenPressed(new RollervatorStop());
 		
 			// -----------DRIVER-----------//

@@ -14,6 +14,7 @@ package org.usfirst.frc319.SteamworksBob319.subsystems;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.ClimbStart;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorPIDTestMode;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorStop;
 
@@ -72,7 +73,7 @@ public class rollervator extends Subsystem {
       
     	//setDefaultCommand(new MotorTest(this, RobotMap.rollervatorRollervatorLead));
     	setDefaultCommand(new RollervatorStop());
-    	//setDefaultCommand(new RollervatorPIDTestMode());
+    	//setDefaultCommand(new ClimbStart());
         // Set the default command for a subsystem here.
   
     }
@@ -84,8 +85,8 @@ public class rollervator extends Subsystem {
     	rollervatorLead.changeControlMode(TalonControlMode.Speed);
     	rollervatorLead.set(speed); 
     }
-    public void rollervatorClimb(double power){
-    rollervatorLead.set(power);
+    public void rollervatorClimb(double power){		
+   rollervatorLead.set(power);
     }
     public void changeModeToSpeed(){
     	rollervatorLead.changeControlMode(TalonControlMode.Speed);
