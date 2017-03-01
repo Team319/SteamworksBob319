@@ -10,16 +10,23 @@
 
 package org.usfirst.frc319.SteamworksBob319;
 
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.FuelCollectorAndHopperFlapRetract;
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
 //import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowBothMotionProfiles;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.JoystickDrive;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.ShiftToggle;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeployWaitThenHopperFlap;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorIn;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorRetract;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorStop;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorToggle;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapRetract;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.AutomatedCollectGearAndLift;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.DepositGear;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmDeploy;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmGoToDepositGear;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorIn;
@@ -28,6 +35,7 @@ import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorA
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorStop;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightsOff;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightsOn;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.RetractCollectorThenStopCollect;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.AutomatedRollervatorClimb;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorClimb;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
@@ -37,6 +45,7 @@ import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterStop;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.*;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
@@ -48,62 +57,35 @@ public class OI {
 
 	public BobController driverController;
 	public BobController operatorController;
+	public XboxController testController;
 
 	public OI() {
 
 		driverController = new BobController(0);
 		operatorController = new BobController(1);
 		
+		
 
 		// --------OPERATOR---------------//
 
-		//operatorController.selectButton.whenPressed(new BlueHopperAuto());
-		//operatorController.leftBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt1"));
-		//operatorController.leftBumper.whenPressed(new LightsOn());
-		//operatorController.leftBumper.whenPressed(new FuelCollectorDeploy());
+		operatorController.aButton.whenPressed(new AutomatedCollectGearAndLift());
+		operatorController.bButton.whenPressed(new DepositGear());
+		operatorController.yButton.whenPressed(new RetractCollectorThenStopCollect());
 		
-		//operatorController.rightBumper.whenPressed(new BlueHopperAuto());
-		operatorController.rightBumper.whenPressed(new GearCollectorStop());
-		//operatorController.rightBumper.whenPressed(new FollowTrajectory("RedHopperAutoPt2"));
-		//operatorController.rightBumper.whenPressed(new FuelCollectorRetract());
+		operatorController.rightTriggerButton.whenPressed(new SmartShoot());
+		operatorController.rightBumper.whenPressed(new ShooterStop());
 		
-		//operatorController.yButton.whenPressed(new GearCollectorArmGoToDepositGear());
+		operatorController.leftTriggerButton.whenPressed(new AutomatedRollervatorClimb());
+		operatorController.leftBumper.whenPressed(new RollervatorStop());
 		
-		operatorController.aButton.whenPressed(new AutomatedCollectGearAndLift()); // was gearCollectorIn
-		//operatorController.aButton.whenPressed(new GearCollectorOut());
+		operatorController.selectButton.whenPressed(new FuelCollectorAndHopperFlapRetract());
+		operatorController.startButton.whenPressed(new FuelCollectorDeployWaitThenHopperFlap());
 		
-		//operatorController.bButton.whenPressed(new FuelCollectorRetract());
-		operatorController.bButton.whenPressed(new GearCollectorOut());
-		operatorController.xButton.whenPressed(new FuelCollectorDeploy());
-		
-		//operatorController.startButton.whenPressed(new GearCollectorRetract());
-		
-		operatorController.selectButton.whenPressed(new FuelCollectorRetract());
-		operatorController.startButton.whenPressed(new RollervatorStop());
-		
-			// -----------DRIVER-----------//
+		// -----------DRIVER-----------//
 
-		driverController.leftBumper.whenPressed(new FuelCollectorIn());
-		//driverController.leftBumper.whenPressed(new FuelCollectorDeploy());
-		driverController.yButton.whenPressed(new ShooterRollervatorStop());
-		driverController.xButton.whenPressed(new ShiftToggle());
-		driverController.bButton.whenPressed(new RollervatorGo());
-		driverController.aButton.whenPressed(new ShooterGoToSpeed());
-		driverController.rightBumper.whenPressed(new FuelCollectorStop());
-		driverController.startButton.whenPressed(new ShooterStop()); // was BrakePadDeploy
-		driverController.selectButton.whenPressed(new RollervatorStop()); // was BrakePadRetract
-		//driverController.selectButton.whenPressed(new FuelCollectorRetract());
-
-		/*
-		 * // SmartDashboard Buttons SmartDashboard.putData("FuelCollectorGo",
-		 * new FuelCollectorGo()); SmartDashboard.putData("AutonomousCommand",
-		 * new AutonomousCommand()); SmartDashboard.putData("JoystickDrive", new
-		 * JoystickDrive()); SmartDashboard.putData("FuelCollectorStop", new
-		 * FuelCollectorStop()); SmartDashboard.putData("GearCollectorGo", new
-		 * GearCollectorGo()); SmartDashboard.putData("GearCollectorStop", new
-		 * GearCollectorStop()); SmartDashboard.putData("CommandGroup1", new
-		 * CommandGroup1());
-		 */
+		driverController.leftBumper.whenPressed(new FuelCollectorToggle(1));
+		driverController.rightBumper.whenPressed(new ShiftToggle());		
+		driverController.bButton.whenPressed(new ShooterRollervatorStop());
 
 	}
 

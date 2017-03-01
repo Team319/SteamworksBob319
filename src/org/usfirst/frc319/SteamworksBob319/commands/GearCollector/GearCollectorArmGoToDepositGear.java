@@ -12,6 +12,7 @@
 package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
+import org.usfirst.frc319.SteamworksBob319.RobotMap;
 
 /**
  *
@@ -38,6 +39,7 @@ public class GearCollectorArmGoToDepositGear extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	
         return true;
     }
 

@@ -12,6 +12,7 @@ package org.usfirst.frc319.SteamworksBob319.commands.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.hal.HAL;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.hal.FRCNetComm.tInstances;
 import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
 
@@ -24,7 +25,7 @@ import com.ctre.CANTalon.TalonControlMode;
  */
 public class VelocityDrive extends Command {
 
-	public double highGearRPM = 1015;
+	public double highGearRPM = 850;//1015
 	public double lowGearRPM = 468;
 	public double deadband = 0.05;
 
@@ -36,7 +37,8 @@ public class VelocityDrive extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveTrain.changeDriveTrainControlModeToSpeed();
+		Robot.driveTrain.setDrivetrainVelocityDrive();
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -44,7 +46,15 @@ public class VelocityDrive extends Command {
 		double moveValue = Robot.oi.driverController.getLeftStickY();
 		double rotateValue = Robot.oi.driverController.getRightStickX();
 
-		velociRaptorDrive(moveValue, rotateValue, true, highGearRPM, deadband);
+		if(Robot.driveTrain.isHighGear == true){
+		SmartDashboard.putDouble("move value= ", moveValue);
+		SmartDashboard.putDouble("rotate value", rotateValue);
+			
+		velociRaptorDrive(moveValue, -rotateValue, true, highGearRPM, deadband);
+		}
+		else{
+			velociRaptorDrive(moveValue, -rotateValue,true, lowGearRPM, deadband);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -79,19 +89,25 @@ public class VelocityDrive extends Command {
 		double leftMotorSpeed;
 		double rightMotorSpeed;
 
-		if (moveValue > -deadband && moveValue < deadband) {
+		if (moveValue > -deadband && moveValue < deadband && rotateValue >-deadband && rotateValue < deadband) {
 			Robot.driveTrain.leftDriveLead.changeControlMode(TalonControlMode.PercentVbus);
-			Robot.driveTrain.leftDriveLead.changeControlMode(TalonControlMode.PercentVbus);
+			Robot.driveTrain.rightDriveLead.changeControlMode(TalonControlMode.PercentVbus);
 			maxRPM = 1;
 		} else {
 			Robot.driveTrain.changeDriveTrainControlModeToSpeed();
 			if (moveValue > deadband) {
-				Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(0.0f, -12.0f);
-				Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(12.0f, 0.0f);
-	
+				//Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(0.0f, -12.0f);
+				//Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(12.0f, 0.0f);
+				Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
+				Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
+				
 			} else if (moveValue < -deadband) {
-				Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(+12.0f, 0.0f);
-				Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(0.0f, -12.0f);
+				
+				//Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(+12.0f, 0.0f);
+				//Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(0.0f, -12.0f);
+				Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
+				Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
+				
 				
 			}
 		}
@@ -137,7 +153,7 @@ public class VelocityDrive extends Command {
 		leftMotorSpeed = leftMotorSpeed * maxRPM;
 		rightMotorSpeed = rightMotorSpeed * maxRPM;
 
-		// System.out.println("leftMotorSpeed = " +leftMotorSpeed);
+		
 
 		// setLeftRightMotorOutputs(leftMotorSpeed, rightMotorSpeed);
 		Robot.driveTrain.setLeftRightMotors(leftMotorSpeed, rightMotorSpeed);

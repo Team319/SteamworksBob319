@@ -28,8 +28,8 @@ public class AutomatedRollervatorClimb extends CommandGroup {
   
     public AutomatedRollervatorClimb() {
 
-    	addSequential(new ClimbStart(), 2);
-    	addSequential(new RollervatorClimb());
+    	//addSequential(new ClimbStart(800.0), 2);
+    	addSequential(new RollervatorClimb(800.0));
     	// start rollervator for one second 
     	// have command that climbs while monitoring current
    

@@ -29,11 +29,11 @@ public class RollervatorStop extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.rollervator.rollervatorStop();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.rollervator.rollervatorStop(); // Mr. Derrick thinks we could put this into initialize and it would work.
     }
 
     // Make this return true when this Command no longer needs to run execute()

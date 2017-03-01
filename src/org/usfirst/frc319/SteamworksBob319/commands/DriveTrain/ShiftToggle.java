@@ -28,9 +28,11 @@ public class ShiftToggle extends Command {
 	protected void initialize() {
 		if (Robot.driveTrain.isHighGear == false) {
 			Robot.driveTrain.shiftUp();
+			Robot.driveTrain.setDrivetrainProfileHighGear();
 			System.out.println("HighGear");
 		} else if (Robot.driveTrain.isHighGear == true) {
 			Robot.driveTrain.shiftDown();
+			Robot.driveTrain.setDrivetrainProfileLowGear();
 			System.out.println("LowGear");
 		}
 	}

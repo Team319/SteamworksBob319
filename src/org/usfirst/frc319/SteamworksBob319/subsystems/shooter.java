@@ -62,7 +62,7 @@ public shooter (){
 	
 	shooterLead.setProfile(0);
 	shooterLead.setF(0.14);
-	shooterLead.setP(1);
+	shooterLead.setP(.1); //seems to be too high - oscillations
 	shooterLead.setI(0.001);
 	shooterLead.setIZone(100);
 	shooterLead.setD(0);
@@ -100,7 +100,7 @@ public shooter (){
     
     
     /* get gamepad axis */
-	double leftYstick = Robot.oi.operatorController.getLeftStickY();
+	double leftYstick = -Robot.oi.operatorController.getLeftStickY();
 	double motorOutput = shooterLead.getOutputVoltage() / shooterLead.getBusVoltage();
 	/* prepare line to print */
 	_sb.append("\tout:");

@@ -14,7 +14,7 @@ package org.usfirst.frc319.SteamworksBob319.commands.AutoModes;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.FuelCollectorDeployThenCollect;
-import org.usfirst.frc319.SteamworksBob319.CommandGroups.RollervatorShooterGoToSpeed;
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.commands.DoNothing;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
@@ -36,7 +36,7 @@ public class BlueHopperAuto extends CommandGroup {
     	addSequential(new FollowTrajectory("BlueHopperAutoPt2"));//stage 2
     	addSequential(new FollowTrajectory("BlueHopperAutoPt3"));//stage 3
     	//addParallel(new FuelCollectorStop());
-    	addSequential(new RollervatorShooterGoToSpeed());
+    	addSequential(new SmartShoot());
 
     } 
 }

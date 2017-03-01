@@ -40,7 +40,7 @@ public class ShooterGoToSpeed extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double threshhold = 100;
+    	double threshhold = 50;
         return Robot.shooter.shooterIsAtSpeed(threshhold);
     }
 

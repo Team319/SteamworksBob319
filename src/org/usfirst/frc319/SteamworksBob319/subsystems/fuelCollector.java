@@ -8,11 +8,11 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package org.usfirst.frc319.SteamworksBob319.subsystems;
 
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDoNothing;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorStop;
 
 import com.ctre.CANTalon;
@@ -22,48 +22,65 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-
 /**
  *
  */
 public class fuelCollector extends Subsystem {
 
-    private final CANTalon fuelCollector = RobotMap.fuelCollectorFuelCollector;
-    private final DoubleSolenoid fuelPiston = RobotMap.fuelCollectorFuelPiston;
+	private final CANTalon fuelCollector = RobotMap.fuelCollectorFuelCollector;
+	private final DoubleSolenoid fuelPiston = RobotMap.fuelCollectorFuelPiston;
+	private final DoubleSolenoid hopperFlap = RobotMap.fuelCollectorHopperFlap;
 
-    public fuelCollector (){
-    	fuelCollector.changeControlMode(TalonControlMode.PercentVbus);
-    }
+	private boolean bCollecting = false;
 
+	public fuelCollector() {
+		fuelCollector.changeControlMode(TalonControlMode.PercentVbus);
+	}
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
 
-    public void initDefaultCommand() {
-       
-    	//setDefaultCommand(new MotorTest(this, RobotMap.fuelCollectorFuelCollector));
-       setDefaultCommand(new FuelCollectorStop());
+	public void initDefaultCommand() {
 
-      
+		// setDefaultCommand(new MotorTest(this,
+		// RobotMap.fuelCollectorFuelCollector));
+		setDefaultCommand(new FuelCollectorDoNothing());
 
-        // Set the default command for a subsystem here.
-        // setDefaultCommand(new MySpecialCommand());
-    }
-    public void fuelCollectorStop(){
-    	fuelCollector.set(0);
-    	}
-    
-   public void fuelCollectorIn(double speed){
-	   fuelCollector.set(speed);
-   }
-   public void fuelCollectorOut(double speed){
-	   fuelCollector.set(speed);
-   }
-   public void fuelCollectorDeploy(){
-	   fuelPiston.set(DoubleSolenoid.Value.kForward);
-   }
-   public void fuelCollectorRetract(){
-	   fuelPiston.set(DoubleSolenoid.Value.kReverse);
-   }
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
+
+	public void fuelCollectorStop() {
+		bCollecting = false;
+		fuelCollector.set(0);
+	}
+
+	public void fuelCollectorIn(double speed) {
+		bCollecting = true;
+		fuelCollector.set(speed);
+	}
+
+	public void fuelCollectorOut(double speed) {
+		fuelCollector.set(speed);
+	}
+
+	public boolean isCollecting() {
+		return bCollecting;
+	}
+
+	public void fuelCollectorDeploy() {
+		fuelPiston.set(DoubleSolenoid.Value.kForward);
+	}
+
+	public void fuelCollectorRetract() {
+		fuelPiston.set(DoubleSolenoid.Value.kReverse);
+	}
+
+	public void hopperFlapDeploy() {
+		hopperFlap.set(DoubleSolenoid.Value.kForward);
+	}
+
+	public void hopperFlapRetract() {
+		hopperFlap.set(DoubleSolenoid.Value.kReverse);
+	}
 }
-

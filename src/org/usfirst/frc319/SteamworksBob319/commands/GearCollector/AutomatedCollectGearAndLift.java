@@ -27,11 +27,13 @@ public class AutomatedCollectGearAndLift extends CommandGroup {
 
   
     public AutomatedCollectGearAndLift() {
-
+    	
+    	addSequential(new StartGearRumble(1.0));
     	addSequential(new GearCollectorArmDeploy());
     	addSequential(new GearCollectorIn(),1);
     	addSequential(new GearCollectorInUntilCollected());
     	addSequential(new GearCollectorStop());
+    	addSequential(new StopGearRumble());
     	addSequential(new GearCollectorArmGoToDepositGear());
     	
    

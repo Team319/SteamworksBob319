@@ -22,11 +22,11 @@ import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 /**
  *
  */
-public class RollervatorShooterGoToSpeed extends CommandGroup {
+public class SmartShoot extends CommandGroup {
 
 
   
-    public RollervatorShooterGoToSpeed() {
+    public SmartShoot() {
 
     	addSequential(new ShooterGoToSpeed());
     	addSequential(new RollervatorGo());

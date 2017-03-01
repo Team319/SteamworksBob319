@@ -15,8 +15,11 @@ import org.usfirst.frc319.SteamworksBob319.InstrumentationMotionMagic;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectStopRetract;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmMaintainPosition;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorMotionMagicTestMode;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorStop;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.RetractCollectorThenStopCollect;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -38,7 +41,7 @@ public class gearCollector extends Subsystem {
   
     private final DoubleSolenoid gearPiston = RobotMap.gearCollectorGearPiston;
     private final CANTalon gearCollectorMotor = RobotMap.gearCollectorGearCollectorMotor;
-    private final CANTalon gearCollectorArm = RobotMap.gearCollectorGearCollectorArm;
+    public final CANTalon gearCollectorArm = RobotMap.gearCollectorGearCollectorArm;
     private final DigitalInput GearSensor = RobotMap.gearCollectorSensor;
     private final Relay lights = RobotMap.lights;
     StringBuilder _sb = new StringBuilder();
@@ -75,22 +78,28 @@ public gearCollector (){
 
     public void initDefaultCommand() {
        
-        setDefaultCommand(new GearCollectorStop());
+    	//setDefaultCommand(new GearCollectStopRetract());
+        //setDefaultCommand(new GearCollectorArmMaintainPosition());
         //setDefaultCommand(new GearCollectorMotionMagicTestMode());
+    	setDefaultCommand(new GearCollectorStop());
 
 
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
+    
+    public void gearCollectorOut(double speed){
+    	gearCollectorMotor.set(-speed);
+    }
     public void gearCollectorIn(double speed){
     	gearCollectorMotor.set(speed);
     }
-    public void gearCollectorStop(double speed){
+    public void gearCollectorStop(){
     	gearCollectorMotor.set(0);
     }
   
     public void gearCollectorGoToAngle(double degrees){
-    	double revs = degrees/360;
+    	double revs = degrees/360.0;
     	gearCollectorArm.set(revs);
     }
     
@@ -100,6 +109,16 @@ public gearCollector (){
     
     public double getGearCollectorCurrent(){
     	return gearCollectorMotor.getOutputCurrent();
+    }
+    
+    public boolean isArmAtSetpoint(double tolerance){
+    	double position = gearCollectorArm.getPosition();
+    	double setpoint = gearCollectorArm.getSetpoint();
+    	double error = Math.abs(setpoint-position)*360.0;
+    	if (error < Math.abs(tolerance))
+    		return true;
+    	else
+    		return false;
     }
     
     public boolean gearCollectorHasExceededCurrent(double threshold){

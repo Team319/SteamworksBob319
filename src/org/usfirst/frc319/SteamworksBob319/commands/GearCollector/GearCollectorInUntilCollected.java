@@ -10,6 +10,7 @@
 
 
 package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
@@ -33,6 +34,7 @@ public class GearCollectorInUntilCollected extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double speed = .6;
+
     	Robot.gearCollector.gearCollectorIn(speed);
     }
 
@@ -43,6 +45,7 @@ public class GearCollectorInUntilCollected extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+
     }
 
     // Called when another command which requires one or more of the same

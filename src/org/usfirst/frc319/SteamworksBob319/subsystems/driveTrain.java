@@ -45,6 +45,11 @@ public class driveTrain extends Subsystem {
     public final int LOW_GEAR_PROFILE = 1;
     public final int HIGH_GEAR_PROFILE = 0;
     
+    double pVelocityDrive = .4;
+	double fVelocityDrive = .147;
+	double dVelocityDrive = 0.0;
+	double cLRRVelocity = 0.0;
+    
     StringBuilder _sb = new StringBuilder();
     int _loops = 0;
     
@@ -74,19 +79,22 @@ public class driveTrain extends Subsystem {
    		leftDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
    		
    		double pHighGear = .3;//.5
-   		double pLowGear = 1;//.3
+   		double pLowGear = 1.0;//.3
    		double fGainHighGear = .147;
    		double fGainLowGear = 0.320; //.320
-   		double dLowGear = 100;//75 //start at plowgear
-   		double dHighGear = 75;//0
-   		double closedLoopRampRate = 72;
+   		double dLowGear = 100.0;//75 //start at plowgear
+   		double dHighGear = 75.0;//0
+   		double closedLoopRampRate = 72.0;
+   		
+   		
+   		
+   		
    		rightDriveLead.setPID(pHighGear, 0, dHighGear, fGainHighGear, 0, closedLoopRampRate, HIGH_GEAR_PROFILE); // high gear
    		rightDriveLead.setPID(pLowGear, 0, dLowGear, fGainLowGear, 0, closedLoopRampRate, LOW_GEAR_PROFILE); // low gear
    		leftDriveLead.setPID(pHighGear, 0, dHighGear, fGainHighGear, 0, closedLoopRampRate, HIGH_GEAR_PROFILE); // high gear
    		leftDriveLead.setPID(pLowGear, 0, dLowGear, fGainLowGear, 0, closedLoopRampRate, LOW_GEAR_PROFILE); // low gear
    
-   		rightDriveLead.setProfile(1); // 
-   		leftDriveLead.setProfile(1);
+   		
    }
     
 
@@ -96,9 +104,9 @@ public class driveTrain extends Subsystem {
     public void initDefaultCommand() {
       
 
-        setDefaultCommand(new JoystickDrive());
+        //setDefaultCommand(new JoystickDrive());
     	
-    	  //setDefaultCommand(new VelocityDrive());
+    	  setDefaultCommand(new VelocityDrive());
         //setDefaultCommand(new RightDrivetrainPIDTest());
         //setDefaultCommand(new LeftDrivetrainPIDTest());
                                    //change to left or rightdriveTrainPIDTestMode
@@ -128,6 +136,35 @@ public class driveTrain extends Subsystem {
     	shifter.set(DoubleSolenoid.Value.kReverse);
     	
     	isHighGear = false;
+    }
+    
+    public double leftdriveTrainError(){
+    	return leftDriveLead.getSpeed()-leftDriveLead.getSetpoint();
+    }
+    
+    public void setDrivetrainProfileLowGear(){
+    	rightDriveLead.setProfile(LOW_GEAR_PROFILE);
+    	leftDriveLead.setProfile(LOW_GEAR_PROFILE);
+    }
+    public void setDrivetrainProfileHighGear(){
+    	rightDriveLead.setProfile(HIGH_GEAR_PROFILE);
+    	leftDriveLead.setProfile(HIGH_GEAR_PROFILE);
+    }
+    
+    public void setDrivetrainVelocityDrive(){
+    	
+    	
+    	leftDriveLead.setP(pVelocityDrive);
+    	leftDriveLead.setF(fVelocityDrive);
+    	leftDriveLead.setD(dVelocityDrive);
+    	leftDriveLead.setCloseLoopRampRate(cLRRVelocity);
+    	
+    	rightDriveLead.setP(pVelocityDrive);
+    	rightDriveLead.setF(fVelocityDrive);
+    	rightDriveLead.setD(dVelocityDrive);
+    	rightDriveLead.setCloseLoopRampRate(cLRRVelocity);
+    	
+    	changeDriveTrainControlModeToSpeed();
     }
     
     

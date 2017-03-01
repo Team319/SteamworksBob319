@@ -44,6 +44,7 @@ public class RobotMap {
     
     public static CANTalon fuelCollectorFuelCollector;
     public static DoubleSolenoid fuelCollectorFuelPiston;
+    public static DoubleSolenoid fuelCollectorHopperFlap;
     
     public static CANTalon rollervatorRollervatorLead;
     public static CANTalon rollervatorRollervatorFollow;
@@ -93,6 +94,7 @@ public class RobotMap {
         
         fuelCollectorFuelCollector = new CANTalon(9);//
         fuelCollectorFuelPiston = new DoubleSolenoid(0, 2, 3);
+        fuelCollectorHopperFlap = new DoubleSolenoid(0, 4, 5);
        
         //------------rollervator----------------------
         
@@ -101,7 +103,7 @@ public class RobotMap {
         
         //----------------------gearCollector----------------------
        
-        gearCollectorGearPiston = new DoubleSolenoid(0, 4, 5); // this should be removed (TG 2/15/17)
+   
         gearCollectorGearCollectorMotor = new CANTalon(4);//
         gearCollectorGearCollectorArm = new CANTalon(10);//
         gearCollectorSensor = new DigitalInput(0);
