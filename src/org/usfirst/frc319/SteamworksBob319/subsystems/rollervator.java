@@ -72,6 +72,7 @@ public class rollervator extends Subsystem {
 		rollervatorLead.setPID(pShoot, iShoot, dShoot, fShoot, iZoneShoot, 0, SHOOT_PROFILE);		
 		rollervatorLead.setPID(pClimb, iClimb, dClimb, fClimb, 0, 0, CLIMB_PROFILE);
 		
+		rollervatorLead.setVoltageRampRate(36);
 
 	}
 

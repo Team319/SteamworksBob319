@@ -12,9 +12,12 @@
 package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 import org.usfirst.frc319.SteamworksBob319.commands.BrakePadDeploy;
 import org.usfirst.frc319.SteamworksBob319.commands.BrakePadRetract;
+import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.ResetDrivetrainSpeedLimits;
+import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.SetDrivetrainSpeedLimits;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoToSpeed;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
@@ -30,11 +33,15 @@ public class AutomatedCollectGearAndLift extends CommandGroup {
     	
     	addSequential(new StartGearRumble(1.0));
     	addSequential(new GearCollectorArmDeploy());
-    	addSequential(new GearCollectorIn(),1);
-    	addSequential(new GearCollectorInUntilCollected());
+    	addSequential(new GearCollectorIn(),1); // run for 1 second to get past current spike
+    	addSequential(new GearCollectorInUntilCollected()); // runs until current is exceeded
+    	addSequential(new SetDrivetrainSpeedLimits(1000.0, -100.0));
     	addSequential(new GearCollectorStop());
     	addSequential(new StopGearRumble());
+    	addSequential(new WaitCommand(1.0));
     	addSequential(new GearCollectorArmGoToDepositGear());
+    	addSequential(new WaitCommand(1.0));
+    	addSequential(new ResetDrivetrainSpeedLimits());
     	
    
         // Add Commands here:

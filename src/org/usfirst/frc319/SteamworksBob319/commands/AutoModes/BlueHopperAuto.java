@@ -17,8 +17,11 @@ import org.usfirst.frc319.SteamworksBob319.CommandGroups.FuelCollectorDeployThen
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.commands.DoNothing;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
+import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectoryAndCollect;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeployWaitThenHopperFlap;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorStop;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapDeploy;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
@@ -30,11 +33,13 @@ public class BlueHopperAuto extends CommandGroup {
   
     public BlueHopperAuto() {
     	
-    	addParallel(new FuelCollectorDeploy());
+    	//addParallel(new FuelCollectorDeployWaitThenHopperFlap());
+    	addSequential(new FuelCollectorDeploy());
     	addSequential(new FollowTrajectory("BlueHopperAutoPt1"));//stage 1
+    	addSequential(new HopperFlapDeploy());
     	addSequential(new DoNothing(),1.5);// do nothing 3 seconds
     	addSequential(new FollowTrajectory("BlueHopperAutoPt2"));//stage 2
-    	addSequential(new FollowTrajectory("BlueHopperAutoPt3"));//stage 3
+    	addSequential(new FollowTrajectoryAndCollect("BlueHopperAutoPt3"));//stage 3
     	//addParallel(new FuelCollectorStop());
     	addSequential(new SmartShoot());
 

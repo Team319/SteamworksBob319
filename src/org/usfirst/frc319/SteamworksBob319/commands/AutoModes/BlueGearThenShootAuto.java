@@ -9,30 +9,36 @@
 // it from being updated in the future.
 
 
-package org.usfirst.frc319.SteamworksBob319.commands.Rollervator;
+package org.usfirst.frc319.SteamworksBob319.commands.AutoModes;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import org.usfirst.frc319.SteamworksBob319.commands.BrakePadDeploy;
-import org.usfirst.frc319.SteamworksBob319.commands.BrakePadRetract;
-import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
-import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoToSpeed;
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
+import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.AutoDepositGear;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.DepositGear;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
  *
  */
-public class AutomatedRollervatorClimb extends CommandGroup {
+public class BlueGearThenShootAuto extends CommandGroup {
 
 
   
-    public AutomatedRollervatorClimb() {
+    public BlueGearThenShootAuto() {
+    	
+    	
 
-    	//addSequential(new ClimbStart(800.0), 2);
-    	addSequential(new RollervatorClimb(1.0));
-    	// start rollervator for one second 
-    	// have command that climbs while monitoring current
-   
+    	addSequential(new FollowTrajectory("BlueGearAutoLeftSide"));
+    	addSequential(new AutoDepositGear()); // check isfinished
+    	addSequential(new FuelCollectorDeploy());
+    	addSequential(new FollowTrajectory("BlueGearAutoLeftSideShoot")); 
+    	addSequential(new HopperFlapDeploy());
+    	addSequential(new SmartShoot());
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

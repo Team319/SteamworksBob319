@@ -12,6 +12,8 @@
 package org.usfirst.frc319.SteamworksBob319.commands.FuelCollector;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+
+import org.usfirst.frc319.SteamworksBob319.commands.DoNothing;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
@@ -23,8 +25,10 @@ public class FuelCollectorDeployWaitThenHopperFlap extends CommandGroup {
   
     public FuelCollectorDeployWaitThenHopperFlap() {
 
-    	addSequential(new FuelCollectorDeploy(),2);
+    	addSequential(new FuelCollectorDeploy());
+    	addSequential(new DoNothing(),2);
     	addSequential(new HopperFlapDeploy());
+    	
    
         // Add Commands here:
         // e.g. addSequential(new Command1());

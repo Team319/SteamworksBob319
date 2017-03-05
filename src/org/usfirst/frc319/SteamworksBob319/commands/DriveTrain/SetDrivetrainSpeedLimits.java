@@ -8,55 +8,43 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-package org.usfirst.frc319.SteamworksBob319.commands.Rollervator;
+package org.usfirst.frc319.SteamworksBob319.commands.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
-import com.ctre.CANTalon.TalonControlMode;
-
 /**
  *
  */
-public class RollervatorClimb extends Command {
+public class SetDrivetrainSpeedLimits extends Command {
+	private double forwardSpeedLimit = 0;
+	private double backwardSpeedLimit = 0;
 	
-	private double climbSpeed = 0; 
-
-	public RollervatorClimb(double setPoint) {
-		
-		this.climbSpeed = setPoint;
-		requires(Robot.rollervator);
+	public SetDrivetrainSpeedLimits(double forwardLimit, double backwardLimit) {
+		forwardSpeedLimit = forwardLimit;
+		backwardSpeedLimit = backwardLimit;
+		//requires(Robot.driveTrain);
 
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.rollervator.changeModeToVbus();
+		Robot.driveTrain.setMaximumForwardSpeed(forwardSpeedLimit);
+		Robot.driveTrain.setMaximumBackwardSpeed(backwardSpeedLimit);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.rollervator.set(climbSpeed);
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.rollervator.isExceedingCurrentThreshhold(50.0); // This
-																				// is
-																				// the
-																				// amount
-																				// of
-																				// current
-																				// that
-																				// stops
-																				// the
-																				// climb
-		// return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.rollervator.changeModeToSpeed();
 	}
 
 	// Called when another command which requires one or more of the same

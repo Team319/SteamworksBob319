@@ -28,7 +28,7 @@ public class GearCollectorArmDeploy extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double degrees = -83;
+    	double degrees = -79.0;
     	Robot.gearCollector.gearCollectorGoToAngle(degrees);
     }
 

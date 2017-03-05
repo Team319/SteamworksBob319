@@ -62,8 +62,8 @@ public shooter (){
 	
 	shooterLead.setProfile(0);
 	shooterLead.setF(0.14);
-	shooterLead.setP(.1); //seems to be too high - oscillations
-	shooterLead.setI(0.001);
+	shooterLead.setP(0.01); //seems to be too high - oscillations try.01 and go up if it gets rid of osc. +++++too low if it never gets up to speed
+	shooterLead.setI(0.001); //set to 0.0 if its not working
 	shooterLead.setIZone(100);
 	shooterLead.setD(0);
 	

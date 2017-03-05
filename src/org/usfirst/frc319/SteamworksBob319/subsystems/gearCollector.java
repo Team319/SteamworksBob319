@@ -122,7 +122,8 @@ public gearCollector (){
     }
     
     public boolean gearCollectorHasExceededCurrent(double threshold){
-    	if(getGearCollectorCurrent() > 2.5){
+    	
+    	if(getGearCollectorCurrent() > threshold){
     		return true;
     	}
     	else return false;
@@ -130,6 +131,11 @@ public gearCollector (){
     
     public void gearCollectorRetract(){
     	gearCollectorArm.set(0);
+    }
+    
+    public void updateArmPosition(){
+    	double currentPosition = Robot.gearCollector.gearArmAngle();
+    	gearCollectorArm.set(currentPosition);//not finished
     }
     
     public void gearCollectorMotionMagicTestMode() {

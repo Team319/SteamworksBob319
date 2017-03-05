@@ -25,8 +25,8 @@ import com.ctre.CANTalon.TalonControlMode;
  */
 public class VelocityDrive extends Command {
 
-	public double highGearRPM = 850;//1015
-	public double lowGearRPM = 468;
+	public double highGearRPM = 900;// 1015
+	public double lowGearRPM = 440;
 	public double deadband = 0.05;
 
 	public VelocityDrive() {
@@ -38,23 +38,14 @@ public class VelocityDrive extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.driveTrain.setDrivetrainVelocityDrive();
-		
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double moveValue = Robot.oi.driverController.getLeftStickY();
 		double rotateValue = Robot.oi.driverController.getRightStickX();
-
-		if(Robot.driveTrain.isHighGear == true){
-		SmartDashboard.putDouble("move value= ", moveValue);
-		SmartDashboard.putDouble("rotate value", rotateValue);
-			
-		velociRaptorDrive(moveValue, -rotateValue, true, highGearRPM, deadband);
-		}
-		else{
-			velociRaptorDrive(moveValue, -rotateValue,true, lowGearRPM, deadband);
-		}
+		velociRaptorDrive(moveValue, -rotateValue, true, deadband);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -82,34 +73,20 @@ public class VelocityDrive extends Command {
 		return num;
 	}
 
-	public void velociRaptorDrive(double moveValue, double rotateValue, boolean squaredInputs, double maxRPM,
-			double deadband) {
+	public void velociRaptorDrive(double moveValue, double rotateValue, boolean squaredInputs, double deadband) {
 		// local variables to hold the computed PWM values for the motors
 
 		double leftMotorSpeed;
 		double rightMotorSpeed;
 
-		if (moveValue > -deadband && moveValue < deadband && rotateValue >-deadband && rotateValue < deadband) {
+		if (moveValue > -deadband && moveValue < deadband && rotateValue > -deadband && rotateValue < deadband) {
 			Robot.driveTrain.leftDriveLead.changeControlMode(TalonControlMode.PercentVbus);
 			Robot.driveTrain.rightDriveLead.changeControlMode(TalonControlMode.PercentVbus);
-			maxRPM = 1;
 		} else {
 			Robot.driveTrain.changeDriveTrainControlModeToSpeed();
-			if (moveValue > deadband) {
-				//Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(0.0f, -12.0f);
-				//Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(12.0f, 0.0f);
-				Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
-				Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
-				
-			} else if (moveValue < -deadband) {
-				
-				//Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(+12.0f, 0.0f);
-				//Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(0.0f, -12.0f);
-				Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
-				Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
-				
-				
-			}
+			Robot.driveTrain.leftDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
+			Robot.driveTrain.rightDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
+
 		}
 
 		moveValue = limit(moveValue);
@@ -150,12 +127,11 @@ public class VelocityDrive extends Command {
 		}
 
 		// scale for velocity because the talons require rpm in speed mode
-		leftMotorSpeed = leftMotorSpeed * maxRPM;
-		rightMotorSpeed = rightMotorSpeed * maxRPM;
-
-		
+		// leftMotorSpeed = leftMotorSpeed * maxRPM;
+		// rightMotorSpeed = rightMotorSpeed * maxRPM;
 
 		// setLeftRightMotorOutputs(leftMotorSpeed, rightMotorSpeed);
-		Robot.driveTrain.setLeftRightMotors(leftMotorSpeed, rightMotorSpeed);
+
+		Robot.driveTrain.drive(leftMotorSpeed, rightMotorSpeed);
 	}
 }
