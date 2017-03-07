@@ -90,8 +90,7 @@ public class OI {
 		driverController.bButton.whenPressed(new ShooterRollervatorStop());
 		driverController.startButton.whenPressed(new ResetDrivetrainSpeedLimits());
 		
-		driverController.yButton.whenPressed(new GearCollectorIn());
-		driverController.aButton.whenPressed(new GearCollectorStop());
+		driverController.rightTriggerButton.whenPressed(new DepositGear());
 
 	}
 
