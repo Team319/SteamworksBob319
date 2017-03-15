@@ -24,11 +24,11 @@ import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 /**
  *
  */
-public class BlueGearThenShootAuto extends CommandGroup {
+public class BlueGearThenShootAutoLeftSide extends CommandGroup {
 
 
   
-    public BlueGearThenShootAuto() {
+    public BlueGearThenShootAutoLeftSide() {
     	
     	
 

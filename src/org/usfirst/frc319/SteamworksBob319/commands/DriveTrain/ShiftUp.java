@@ -8,40 +8,37 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
+package org.usfirst.frc319.SteamworksBob319.commands.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
-import com.ctre.CANTalon.TalonControlMode;
-
 /**
  *
  */
-public class GearCollectorOut extends Command {
+public class ShiftUp extends Command {
 
-	public GearCollectorOut() {
+	public ShiftUp() {
 
-		requires(Robot.gearCollector);
+		requires(Robot.driveTrain);
 
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.gearCollector.gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);
-		Robot.oi.driverController.setRumble(0.0, 0.0);
-		Robot.oi.operatorController.setRumble(0.0, 0.0);
-	}
+		Robot.driveTrain.shiftUp();
+		}
+	
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double percentVbus = .3;
-		Robot.gearCollector.gearCollectorOut(percentVbus);
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return true; // Might be nice to have this be a threshold so a command
+						// group would only start once it's at speed
 	}
 
 	// Called once after isFinished returns true

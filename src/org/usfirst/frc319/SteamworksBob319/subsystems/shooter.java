@@ -62,10 +62,10 @@ public shooter (){
 	
 	shooterLead.setProfile(0);
 	shooterLead.setF(0.14);
-	shooterLead.setP(0.01); //seems to be too high - oscillations try.01 and go up if it gets rid of osc. +++++too low if it never gets up to speed
+	shooterLead.setP(0.64); //seems to be too high - oscillations try.01 and go up if it gets rid of osc. +++++too low if it never gets up to speed
 	shooterLead.setI(0.001); //set to 0.0 if its not working
 	shooterLead.setIZone(100);
-	shooterLead.setD(0);
+	shooterLead.setD(1.20);
 	
 	
 }
@@ -93,6 +93,9 @@ public shooter (){
     	shooterLead.set(0);
     }
     
+    public void shooterGoSlowClimbing(){
+    	
+    }
     
     //------USED TO TUNE SHOOTER --- USE SHOOTER PID TEST COMMAND TO RUN THIS --  MAKE DEFAULT----//
     public void shooterPIDTestMode(){
@@ -157,6 +160,8 @@ public shooter (){
     	else
     		return true;
     }
+    
+    
     
 }
     	

@@ -19,13 +19,13 @@ import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 /**
  *
  */
-public class MobilityBonus extends CommandGroup {
+public class CrossGreenLine extends CommandGroup {
 
 
   
-    public MobilityBonus() {
+    public CrossGreenLine() {
     	
-    	addSequential(new FollowTrajectory("MobilityBonus"));
+    	addSequential(new FollowTrajectory("CrossGreenLine"));
 
    
         // Add Commands here:

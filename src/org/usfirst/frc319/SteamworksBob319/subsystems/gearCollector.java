@@ -17,6 +17,7 @@ import org.usfirst.frc319.SteamworksBob319.RobotMap;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectStopRetract;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmMaintainPosition;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorMaintainSpeed;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorMotionMagicTestMode;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorStop;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.RetractCollectorThenStopCollect;
@@ -40,7 +41,7 @@ public class gearCollector extends Subsystem {
 
   
     private final DoubleSolenoid gearPiston = RobotMap.gearCollectorGearPiston;
-    private final CANTalon gearCollectorMotor = RobotMap.gearCollectorGearCollectorMotor;
+    public final CANTalon gearCollectorMotor = RobotMap.gearCollectorGearCollectorMotor;
     public final CANTalon gearCollectorArm = RobotMap.gearCollectorGearCollectorArm;
     private final DigitalInput GearSensor = RobotMap.gearCollectorSensor;
     private final Relay lights = RobotMap.lights;
@@ -81,18 +82,19 @@ public gearCollector (){
     	//setDefaultCommand(new GearCollectStopRetract());
         //setDefaultCommand(new GearCollectorArmMaintainPosition());
         //setDefaultCommand(new GearCollectorMotionMagicTestMode());
-    	setDefaultCommand(new GearCollectorStop());
+    	//setDefaultCommand(new GearCollectorStop());
+    	setDefaultCommand(new GearCollectorMaintainSpeed());
 
 
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
     
-    public void gearCollectorOut(double speed){
-    	gearCollectorMotor.set(-speed);
+    public void gearCollectorOut(double percentVbus){
+    	gearCollectorMotor.set(-percentVbus);
     }
-    public void gearCollectorIn(double speed){
-    	gearCollectorMotor.set(speed);
+    public void gearCollectorIn(double percentVbus){
+    	gearCollectorMotor.set(percentVbus);
     }
     public void gearCollectorStop(){
     	gearCollectorMotor.set(0);
@@ -177,4 +179,7 @@ public gearCollector (){
     	lights.set(Relay.Value.kOff);
     }
 }
+   
+
+    	
 

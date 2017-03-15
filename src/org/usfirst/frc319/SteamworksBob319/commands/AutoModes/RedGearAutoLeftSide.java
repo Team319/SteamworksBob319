@@ -13,20 +13,33 @@ package org.usfirst.frc319.SteamworksBob319.commands.AutoModes;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
+import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.ShiftUp;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.AutoDepositGear;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.DepositGear;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
  *
  */
-public class BlueGearAutoLeftSide extends CommandGroup {
+public class RedGearAutoLeftSide extends CommandGroup {
 
-// this is for testing
+
   
-    public BlueGearAutoLeftSide() {
-    	addSequential(new FollowTrajectory("BlueGearAutoLeftSide"));
+    public RedGearAutoLeftSide() {
+    	
+    	
 
-   
+    	addSequential(new FollowTrajectory("BlueGearAutoLeftSide"));
+    	addSequential(new AutoDepositGear()); // check isfinished
+    	addSequential(new FuelCollectorDeploy());
+    	//addSequential(new ShiftUp());
+    	addSequential(new FollowTrajectory("RedDumpHopperLeftSide")); 
+    	addSequential(new HopperFlapDeploy());
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

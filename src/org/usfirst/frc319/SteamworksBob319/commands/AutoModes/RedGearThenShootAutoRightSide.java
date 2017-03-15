@@ -24,17 +24,17 @@ import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 /**
  *
  */
-public class RedGearThenShootAuto extends CommandGroup {
+public class RedGearThenShootAutoRightSide extends CommandGroup {
 
 
   
-    public RedGearThenShootAuto() {
+    public RedGearThenShootAutoRightSide() {
     	
 
-    	addSequential(new FollowTrajectory("RedGearAutoLeftSide"));
+    	addSequential(new FollowTrajectory("RedGearAutoRightSide"));
     	addSequential(new AutoDepositGear()); // check isfinished
     	addSequential(new FuelCollectorDeploy());
-    	addSequential(new FollowTrajectory("RedGearAutoLeftSideShoot"));
+    	addSequential(new FollowTrajectory("RedGearAutoRightSideShoot"));
     	addSequential(new HopperFlapDeploy());
     	addSequential(new SmartShoot());
     	

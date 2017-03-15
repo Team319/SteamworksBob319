@@ -81,7 +81,7 @@ public class driveTrain extends Subsystem {
 
 		double pHighGear = 2.04;// .3
 		double pLowGear = 0.889;// 1.0
-		double fGainHighGear = .166;
+		double fGainHighGear = .162;
 		double fGainLowGear = 0.34; // .320
 		double dLowGear = 0.0;// 100.0
 		double dHighGear = 64.0;// 75.0

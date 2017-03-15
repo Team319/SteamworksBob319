@@ -10,7 +10,14 @@
 
 package org.usfirst.frc319.SteamworksBob319;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSource;
+
+import org.omg.CORBA.portable.OutputStream;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -21,17 +28,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc319.SteamworksBob319.commands.*;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueCenterGearAuto;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearAutoLeftSide;
-import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearThenHopperAuto;
-import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearThenShootAuto;
-import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueHopperAuto;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearAutoRightSide;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearThenHopperAutoRightSide;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearThenShootAutoLeftSide;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearThenShootFromHopperAutoLeftSide;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueHopperThenShootAutoLeftSide;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueHopperAutoPt1;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.DriveFiveFeetForward;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.GearOnlyAuto;
-import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.MobilityBonus;
-import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedGearThenHopperAuto;
-import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedGearThenShootAuto;
-import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedHopperAuto;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedCenterGearAuto;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedGearAutoLeftSide;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.CrossGreenLine;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedGearThenShootAutoRightSide;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedGearThenShootFromHopperAutoRightSide;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedHopperThenShootAutoRightSide;
+import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedHopperAutoPt1;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
@@ -73,22 +86,53 @@ public class Robot extends IterativeRobot {
 		brakePad = new brakePad();
 		// activeFloor = new activeFloor(); // should be deleted (TG 2/15/17)
 		compressor = new compressor();
-		CameraServer.getInstance().startAutomaticCapture(0);
-		//CameraServer.getInstance().startAutomaticCapture(1);
+		
+		new Thread(()-> {
+			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+			camera.setFPS(30);
+			camera.setResolution(640, 480);
+			
+			CvSink cvSink= CameraServer.getInstance().getVideo();
+			CvSource outputStream = CameraServer.getInstance().putVideo("FishEye", 640, 480);
+			
+			Mat source = new Mat();
+			Mat output = new Mat();
+			
+			while(!Thread.interrupted()){
+				cvSink.grabFrame(source);
+				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY); //COLOR_BGR2GRAY
+				outputStream.putFrame(output);
+				//try {
+					//Thread.sleep(33);
+			//	} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+			//		e.printStackTrace();
+			//	}
+			}	
+		}).start();
+	//	CameraServer.getInstance().startAutomaticCapture();
+		//CameraServer.getInstance().putVideo("fishface", 640, 480);
 
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Default", new AutonomousCommand());
-		autoChooser.addObject("BluehopperAuto", new BlueHopperAuto());
-		autoChooser.addObject("BlueGearThenShootAuto", new BlueGearThenShootAuto());
+		//autoChooser.addObject("BlueHopperThenShootAutoLeftSide", new BlueHopperThenShootAutoLeftSide()); // good
+		//autoChooser.addObject("BlueGearThenShootFromBoiler", new BlueGearThenShootAutoLeftSide()); // done 
+		//autoChooser.addObject("Blue Right", new BlueGearThenHopperAutoRightSide()); // Has no motion profiles 
+		autoChooser.addObject("Blue Left", new BlueGearThenShootFromHopperAutoLeftSide());
+		autoChooser.addObject("Blue Right", new BlueGearAutoRightSide());
+		autoChooser.addObject("Blue Center", new BlueCenterGearAuto());
 		//autoChooser.addObject("GearOnlyAuto", new GearOnlyAuto());
-		autoChooser.addObject("RedHopperAuto", new RedHopperAuto());
-		autoChooser.addObject("RedGearThenHopperAuto", new RedGearThenHopperAuto());
-		autoChooser.addObject("DriveFiveFeetForward", new DriveFiveFeetForward());
-		autoChooser.addObject("BlueHopperAutopPt1", new BlueHopperAutoPt1());
-		autoChooser.addObject("MobilityBonus", new MobilityBonus());
-		autoChooser.addObject("RedHopperAutoPt1", new RedHopperAutoPt1());
-		autoChooser.addObject("BlueGearAutoLeftSide", new BlueGearAutoLeftSide());
-		autoChooser.addObject("RedGearThenShootAuto",new RedGearThenShootAuto());
+		//autoChooser.addObject("RedHopperThenShootAutoRightSide", new RedHopperThenShootAutoRightSide());
+		//autoChooser.addObject("RedGearThenShootAutoRightSide",new RedGearThenShootAutoRightSide()); // done
+		autoChooser.addObject("Red Right", new RedGearThenShootFromHopperAutoRightSide());
+		autoChooser.addObject("Red Left", new RedGearAutoLeftSide());
+		autoChooser.addObject("Red Center", new RedCenterGearAuto());
+		//autoChooser.addObject("DriveFiveFeetForward", new DriveFiveFeetForward());
+		//autoChooser.addObject("BlueHopperAutopPt1", new BlueHopperAutoPt1());
+		//autoChooser.addObject("RedHopperAutoPt1", new RedHopperAutoPt1());
+		autoChooser.addObject("Follow Left Side Gear Trajectory", new FollowTrajectory("BlueGearAutoLeftSide"));
+		autoChooser.addObject("CrossGreenLine", new CrossGreenLine());
+	
 		
 
 		SmartDashboard.putData("Autonomus Command chooser", autoChooser);

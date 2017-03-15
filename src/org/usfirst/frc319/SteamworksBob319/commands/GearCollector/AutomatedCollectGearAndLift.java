@@ -36,7 +36,7 @@ public class AutomatedCollectGearAndLift extends CommandGroup {
     	addSequential(new GearCollectorIn(),1); // run for 1 second to get past current spike
     	addSequential(new GearCollectorInUntilCollected()); // runs until current is exceeded
     	addSequential(new SetDrivetrainSpeedLimits(1000.0, -100.0));
-    	addSequential(new GearCollectorStop());
+    	addSequential(new GearCollectorHold());
     	addSequential(new StopGearRumble());
     	addSequential(new WaitCommand(1.0));
     	addSequential(new GearCollectorArmGoToDepositGear());

@@ -18,10 +18,10 @@ import com.ctre.CANTalon.TalonControlMode;
 /**
  *
  */
-public class GearCollectorIn extends Command {
+public class GearCollectorHold extends Command {
 
     
-    public GearCollectorIn() {
+    public GearCollectorHold() {
 
   
         requires(Robot.gearCollector);
@@ -30,18 +30,20 @@ public class GearCollectorIn extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearCollector.gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);
+    	Robot.gearCollector.gearCollectorMotor.changeControlMode(TalonControlMode.Voltage);
+    //	Robot.gearCollector.gearCollectorMotor.setCurrentLimit(6); 
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double percentVbus = .6;
-    	Robot.gearCollector.gearCollectorIn(percentVbus);
+    	//double percentVbus = .3;
+    	//Robot.gearCollector.gearCollectorIn(percentVbus);
+    	Robot.gearCollector.gearCollectorMotor.set(3.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

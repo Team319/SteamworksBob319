@@ -13,15 +13,13 @@ package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
-import com.ctre.CANTalon.TalonControlMode;
-
 /**
  *
  */
-public class GearCollectorIn extends Command {
+public class GearCollectorMaintainSpeed extends Command {
 
     
-    public GearCollectorIn() {
+    public GearCollectorMaintainSpeed() {
 
   
         requires(Robot.gearCollector);
@@ -30,13 +28,12 @@ public class GearCollectorIn extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearCollector.gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double percentVbus = .6;
-    	Robot.gearCollector.gearCollectorIn(percentVbus);
+    	Robot.gearCollector.gearCollectorMotor.set(Robot.gearCollector.gearCollectorMotor.getSetpoint());
     }
 
     // Make this return true when this Command no longer needs to run execute()

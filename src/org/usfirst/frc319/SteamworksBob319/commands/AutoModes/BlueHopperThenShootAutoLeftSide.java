@@ -27,19 +27,19 @@ import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 /**
  *
  */
-public class BlueHopperAuto extends CommandGroup {
+public class BlueHopperThenShootAutoLeftSide extends CommandGroup {
 
 
   
-    public BlueHopperAuto() {
+    public BlueHopperThenShootAutoLeftSide() {
     	
     	//addParallel(new FuelCollectorDeployWaitThenHopperFlap());
     	addSequential(new FuelCollectorDeploy());
-    	addSequential(new FollowTrajectory("BlueHopperAutoPt1"));//stage 1
+    	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt1"));//stage 1
     	addSequential(new HopperFlapDeploy());
     	addSequential(new DoNothing(),1.5);// do nothing 3 seconds
-    	addSequential(new FollowTrajectory("BlueHopperAutoPt2"));//stage 2
-    	addSequential(new FollowTrajectoryAndCollect("BlueHopperAutoPt3"));//stage 3
+    	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt2"));//stage 2
+    	addSequential(new FollowTrajectoryAndCollect("BlueHopperThenShootAutoLeftSidePt3"));//stage 3
     	//addParallel(new FuelCollectorStop());
     	addSequential(new SmartShoot());
 

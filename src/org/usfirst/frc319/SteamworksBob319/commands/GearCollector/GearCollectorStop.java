@@ -13,6 +13,8 @@ package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 /**
  *
  */
@@ -29,6 +31,7 @@ public class GearCollectorStop extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.gearCollector.gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);
 		Robot.oi.driverController.setRumble(0.0, 0.0);
 		Robot.oi.operatorController.setRumble(0.0, 0.0);
     }

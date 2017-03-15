@@ -25,7 +25,7 @@ public class RedHopperAutoPt1 extends CommandGroup {
   
     public RedHopperAutoPt1() {
     	
-    	addSequential(new FollowTrajectory("RedHopperAutoPt1"));
+    	addSequential(new FollowTrajectory("RedHopperThenShootAutoRightSidePt1"));
 
    
         // Add Commands here:

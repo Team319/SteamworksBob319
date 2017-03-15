@@ -13,18 +13,27 @@ package org.usfirst.frc319.SteamworksBob319.commands.AutoModes;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.AutoDepositGear;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
  *
  */
-public class BlueGearAutoLeftSide extends CommandGroup {
+public class RedCenterGearAuto extends CommandGroup {
 
 // this is for testing
   
-    public BlueGearAutoLeftSide() {
-    	addSequential(new FollowTrajectory("BlueGearAutoLeftSide"));
+    public RedCenterGearAuto() {
+    	addSequential(new FollowTrajectory("CenterGearAutoPt1"));
+    	addSequential(new AutoDepositGear());
+    	addSequential(new FuelCollectorDeploy());
+    	addSequential(new FollowTrajectory("RedCenterFromPegToShootPosition"));
+    	addSequential(new HopperFlapDeploy());
+    	addSequential(new SmartShoot());
 
    
         // Add Commands here:

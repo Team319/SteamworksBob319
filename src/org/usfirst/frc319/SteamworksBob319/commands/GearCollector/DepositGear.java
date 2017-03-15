@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 import org.usfirst.frc319.SteamworksBob319.subsystems.gearCollector;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 /**
  *
  */
@@ -27,6 +29,7 @@ public class DepositGear extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.gearCollector.gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);
 		Robot.gearCollector.gearCollectorGoToAngle(-30.0);
 		Robot.gearCollector.gearCollectorOut(0.3);
 	}

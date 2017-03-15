@@ -17,11 +17,11 @@ import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 /**
  *
  */
-public class BlueGearThenHopperAuto extends CommandGroup {
+public class BlueGearThenHopperAutoRightSide extends CommandGroup {
 
 
   
-    public BlueGearThenHopperAuto() {
+    public BlueGearThenHopperAutoRightSide() {
 
    
         // Add Commands here:

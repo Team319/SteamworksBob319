@@ -12,7 +12,7 @@
 package org.usfirst.frc319.SteamworksBob319.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
-import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedHopperAuto;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedHopperThenShootAutoRightSide;
 
 /**
  *
