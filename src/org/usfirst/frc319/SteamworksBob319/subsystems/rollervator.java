@@ -83,7 +83,7 @@ public class rollervator extends Subsystem {
 
 		// setDefaultCommand(new MotorTest(this,
 		// RobotMap.rollervatorRollervatorLead));
-		setDefaultCommand(new RollervatorStop());
+		//setDefaultCommand(new RollervatorStop());
 		//setDefaultCommand(new ClimbStart());
 		// Set the default command for a subsystem here.
 
@@ -183,6 +183,18 @@ public class rollervator extends Subsystem {
 
 	public double getRollervatorCurrent() {
 		return rollervatorLead.getOutputCurrent();
+	}
+	
+	public double getRollerVatorFollowCurrent(){
+		return rollervatorFollow.getOutputCurrent();
+	}
+	
+	public double getRollervatorLeadVoltage(){
+		return rollervatorLead.getOutputVoltage();
+	}
+	
+	public double getRollervatorFollowVoltage(){
+		return rollervatorFollow.getOutputVoltage();
 	}
 
 	// --- could be used as an isfinished to cut the motor off if current is

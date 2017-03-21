@@ -36,6 +36,8 @@ import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearThenShootA
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueGearThenShootFromHopperAutoLeftSide;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueHopperThenShootAutoLeftSide;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.BlueHopperAutoPt1;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.NorthShoreBlue;
+import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.NorthShoreRed;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.DriveFiveFeetForward;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.GearOnlyAuto;
 import org.usfirst.frc319.SteamworksBob319.commands.AutoModes.RedCenterGearAuto;
@@ -87,29 +89,32 @@ public class Robot extends IterativeRobot {
 		// activeFloor = new activeFloor(); // should be deleted (TG 2/15/17)
 		compressor = new compressor();
 		
-		new Thread(()-> {
+		//new Thread(()-> {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 			camera.setFPS(30);
-			camera.setResolution(640, 480);
+			camera.setResolution(320, 240);
 			
-			CvSink cvSink= CameraServer.getInstance().getVideo();
-			CvSource outputStream = CameraServer.getInstance().putVideo("FishEye", 640, 480);
 			
-			Mat source = new Mat();
-			Mat output = new Mat();
+			//CvSink cvSink= CameraServer.getInstance().getVideo();
+			//CvSource outputStream = CameraServer.getInstance().putVideo("FishEye", 640, 480);
 			
-			while(!Thread.interrupted()){
-				cvSink.grabFrame(source);
-				Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY); //COLOR_BGR2GRAY
-				outputStream.putFrame(output);
-				//try {
-					//Thread.sleep(33);
+			//Mat source = new Mat();
+			//Mat output = new Mat();
+			
+		//	while(!Thread.interrupted()){
+				
+				//cvSink.grabFrame(source);
+				//Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY); //COLOR_BGR2GRAY, CV_BLUR_NO_SCALE
+				//outputStream.putFrame(source);
+				
+			//	try {
+				//	Thread.sleep(100);
 			//	} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-			//		e.printStackTrace();
-			//	}
-			}	
-		}).start();
+				//	e.printStackTrace();
+				//}
+		//	}	
+		//}).start();
 	//	CameraServer.getInstance().startAutomaticCapture();
 		//CameraServer.getInstance().putVideo("fishface", 640, 480);
 
@@ -118,13 +123,13 @@ public class Robot extends IterativeRobot {
 		//autoChooser.addObject("BlueHopperThenShootAutoLeftSide", new BlueHopperThenShootAutoLeftSide()); // good
 		//autoChooser.addObject("BlueGearThenShootFromBoiler", new BlueGearThenShootAutoLeftSide()); // done 
 		//autoChooser.addObject("Blue Right", new BlueGearThenHopperAutoRightSide()); // Has no motion profiles 
-		autoChooser.addObject("Blue Left", new BlueGearThenShootFromHopperAutoLeftSide());
+		autoChooser.addObject("Blue Left", new BlueHopperThenShootAutoLeftSide());
 		autoChooser.addObject("Blue Right", new BlueGearAutoRightSide());
 		autoChooser.addObject("Blue Center", new BlueCenterGearAuto());
 		//autoChooser.addObject("GearOnlyAuto", new GearOnlyAuto());
 		//autoChooser.addObject("RedHopperThenShootAutoRightSide", new RedHopperThenShootAutoRightSide());
 		//autoChooser.addObject("RedGearThenShootAutoRightSide",new RedGearThenShootAutoRightSide()); // done
-		autoChooser.addObject("Red Right", new RedGearThenShootFromHopperAutoRightSide());
+		autoChooser.addObject("Red Right", new RedHopperThenShootAutoRightSide());
 		autoChooser.addObject("Red Left", new RedGearAutoLeftSide());
 		autoChooser.addObject("Red Center", new RedCenterGearAuto());
 		//autoChooser.addObject("DriveFiveFeetForward", new DriveFiveFeetForward());
@@ -220,7 +225,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right drive velocity error", Robot.driveTrain.rightdriveTrainError());
 		SmartDashboard.putNumber("rollervator lead output voltage", Robot.rollervator.rollervatorLead.getOutputVoltage());
 		SmartDashboard.putNumber("rollervator follow output voltage", Robot.rollervator.rollervatorFollow.getOutputVoltage());
-		
+		SmartDashboard.putNumber("Rollervator Lead Current", Robot.rollervator.getRollervatorCurrent());
+		SmartDashboard.putNumber("rollervator follow current", Robot.rollervator.getRollerVatorFollowCurrent());
+		SmartDashboard.putNumber("Rollervator Lead Voltage", Robot.rollervator.getRollervatorLeadVoltage());
+		SmartDashboard.putNumber("rollervator follow Voltage", Robot.rollervator.getRollervatorFollowVoltage());
 		
 	}
 

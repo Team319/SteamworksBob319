@@ -13,8 +13,10 @@ package org.usfirst.frc319.SteamworksBob319.commands.AutoModes;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.DeployCollectorAfterWait;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.FuelCollectorDeployThenCollect;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShootAuto;
 import org.usfirst.frc319.SteamworksBob319.commands.DoNothing;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectoryAndCollect;
@@ -22,6 +24,7 @@ import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorD
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeployWaitThenHopperFlap;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorStop;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmGoToDepositGear;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
@@ -34,14 +37,16 @@ public class BlueHopperThenShootAutoLeftSide extends CommandGroup {
     public BlueHopperThenShootAutoLeftSide() {
     	
     	//addParallel(new FuelCollectorDeployWaitThenHopperFlap());
-    	addSequential(new FuelCollectorDeploy());
+    	addSequential(new GearCollectorArmGoToDepositGear());
+    	addParallel(new FuelCollectorDeployWaitThenHopperFlap());
     	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt1"));//stage 1
-    	addSequential(new HopperFlapDeploy());
     	addSequential(new DoNothing(),1.5);// do nothing 3 seconds
-    	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt2"));//stage 2
-    	addSequential(new FollowTrajectoryAndCollect("BlueHopperThenShootAutoLeftSidePt3"));//stage 3
-    	//addParallel(new FuelCollectorStop());
+    	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt2v3"));//stage 2
+    	addSequential(new SmartShootAuto());
+    	addSequential(new FollowTrajectoryAndCollect("RedHopperThenShootAutoRightSidePt3v3"));//stage 3
     	addSequential(new SmartShoot());
+    	//addParallel(new FuelCollectorStop());
+
 
     } 
 }

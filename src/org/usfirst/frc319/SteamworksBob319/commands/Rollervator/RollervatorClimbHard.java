@@ -8,46 +8,57 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-package org.usfirst.frc319.SteamworksBob319.commands.GearCollector;
+package org.usfirst.frc319.SteamworksBob319.commands.Rollervator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
-import org.usfirst.frc319.SteamworksBob319.subsystems.gearCollector;
 
 import com.ctre.CANTalon.TalonControlMode;
 
 /**
  *
  */
-public class DepositGear extends Command {
+public class RollervatorClimbHard extends Command {
+	
+	private double climbSpeed = 0; 
 
-	public DepositGear() {
-
-		requires(Robot.gearCollector);
+	public RollervatorClimbHard(double setPoint) {
+		
+		this.climbSpeed = setPoint;
+		requires(Robot.rollervator);
 
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.gearCollector.gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);
-		Robot.gearCollector.gearCollectorGoToAngle(-70.0); // was -30
-		Robot.gearCollector.gearCollectorOut(0.3);
+		Robot.rollervator.changeModeToVbus();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
+		Robot.rollervator.set(climbSpeed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.gearCollector.isArmAtSetpoint(3.19);
-		// return true;
+		return false;
+		//return Robot.rollervator.isExceedingCurrentThreshhold(50.0); // This
+																				// is
+																				// the
+																				// amount
+																				// of
+																				// current
+																				// that
+																				// stops
+																				// the
+																				// climb
+		// return false;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.gearCollector.gearCollectorStop();
+		Robot.rollervator.changeModeToSpeed();
+		Robot.rollervator.set(0);
 	}
 
 	// Called when another command which requires one or more of the same

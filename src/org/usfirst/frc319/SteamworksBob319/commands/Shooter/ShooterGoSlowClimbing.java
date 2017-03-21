@@ -13,6 +13,8 @@ package org.usfirst.frc319.SteamworksBob319.commands.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 /**
  *
  */
@@ -29,17 +31,18 @@ public class ShooterGoSlowClimbing extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.shooter.shooterLead.changeControlMode(TalonControlMode.PercentVbus);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.shooter.shooterLead.set(-0.2);
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double threshhold = 50;
-        return Robot.shooter.shooterIsAtSpeed(threshhold);
+        return false;
     }
 
     // Called once after isFinished returns true

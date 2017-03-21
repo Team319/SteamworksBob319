@@ -9,25 +9,26 @@
 // it from being updated in the future.
 
 
-package org.usfirst.frc319.SteamworksBob319.commands;
+package org.usfirst.frc319.SteamworksBob319.CommandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
-import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorStop;
-import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterStop;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeployWaitThenHopperFlap;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
  *
  */
-public class ShooterRollervatorStop extends CommandGroup {
+public class DeployCollectorAfterWait extends CommandGroup {
 
-
+	
   
-    public ShooterRollervatorStop() {
-    	addParallel(new ShooterStop());
-    	addSequential(new RollervatorStop());
-
+    public DeployCollectorAfterWait(double seconds) {
+    	
+    	addSequential(new WaitCommand(seconds));
+    	addSequential(new FuelCollectorDeployWaitThenHopperFlap());
    
         // Add Commands here:
         // e.g. addSequential(new Command1());

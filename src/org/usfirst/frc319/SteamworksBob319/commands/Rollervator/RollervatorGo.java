@@ -29,17 +29,18 @@ public class RollervatorGo extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	double speed = 900;
+    	Robot.rollervator.rollervatorShoot(speed); 
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = 900;
-    	Robot.rollervator.rollervatorShoot(speed); // Mr. Derrick thinks we could put this into initialize and it would work.
+    	// Mr. Derrick thinks we could put this into initialize and it would work.
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;  // Might be nice to have this be a threshold so a command group would only start once it's at speed
+        return true;  // Might be nice to have this be a threshold so a command group would only start once it's at speed
     }
 
     // Called once after isFinished returns true

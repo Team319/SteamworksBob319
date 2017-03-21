@@ -13,6 +13,8 @@ package org.usfirst.frc319.SteamworksBob319.commands.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc319.SteamworksBob319.Robot;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 /**
  *
  */
@@ -29,11 +31,12 @@ public class ShooterGoToSpeed extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.shooter.shooterLead.changeControlMode(TalonControlMode.Speed);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = -790; // was 750
+    	double speed = -750; // was 750
     	Robot.shooter.shooterGoToSpeed(speed);
     	System.out.println("Shooter Error" + Robot.shooter.getShooterError());
     }

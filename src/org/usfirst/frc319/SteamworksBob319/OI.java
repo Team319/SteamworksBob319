@@ -11,6 +11,7 @@
 package org.usfirst.frc319.SteamworksBob319;
 
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.FuelCollectorAndHopperFlapRetract;
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.ShooterRollervatorStop;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
@@ -40,6 +41,7 @@ import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightsOn;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.RetractCollectorThenStopCollect;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.AutomatedRollervatorClimb;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorClimb;
+import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorClimbHard;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorStop;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoToSpeed;
@@ -73,12 +75,13 @@ public class OI {
 		operatorController.aButton.whenPressed(new AutomatedCollectGearAndLift());
 		operatorController.bButton.whenPressed(new DepositGear());
 		operatorController.yButton.whenPressed(new RetractCollectorThenStopCollect());
+		operatorController.xButton.whenPressed(new RollervatorClimbHard(1.0));
 		
 		operatorController.rightTriggerButton.whenPressed(new SmartShoot());
-		operatorController.rightBumper.whenPressed(new ShooterStop());
+		operatorController.rightBumper.whenPressed(new ShooterRollervatorStop());
 		
 		operatorController.leftTriggerButton.whenPressed(new AutomatedRollervatorClimb());
-		operatorController.leftBumper.whenPressed(new RollervatorStop());
+		operatorController.leftBumper.whenPressed(new ShooterRollervatorStop());
 		
 		operatorController.selectButton.whenPressed(new FuelCollectorAndHopperFlapRetract());
 		operatorController.startButton.whenPressed(new FuelCollectorDeployWaitThenHopperFlap());

@@ -26,7 +26,7 @@ public class FuelCollectorDeployWaitThenHopperFlap extends CommandGroup {
     public FuelCollectorDeployWaitThenHopperFlap() {
 
     	addSequential(new FuelCollectorDeploy());
-    	addSequential(new DoNothing(),2);
+    	addSequential(new DoNothing(), 0.5);
     	addSequential(new HopperFlapDeploy());
     	
    
