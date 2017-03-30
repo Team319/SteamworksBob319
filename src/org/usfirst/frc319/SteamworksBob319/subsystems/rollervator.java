@@ -177,8 +177,8 @@ public class rollervator extends Subsystem {
 	// ----- All of the information that could be used by the rollervator
 	// ------//
 
-	public int getRollervatorSpeed() {
-		return rollervatorLead.getEncVelocity();
+	public double getRollervatorSpeed() {
+		return rollervatorLead.getSpeed();
 	}
 
 	public double getRollervatorCurrent() {

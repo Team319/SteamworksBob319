@@ -41,9 +41,9 @@ public class BlueHopperThenShootAutoLeftSide extends CommandGroup {
     	addParallel(new FuelCollectorDeployWaitThenHopperFlap());
     	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt1"));//stage 1
     	addSequential(new DoNothing(),1.5);// do nothing 3 seconds
-    	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt2v3"));//stage 2
-    	addSequential(new SmartShootAuto());
-    	addSequential(new FollowTrajectoryAndCollect("RedHopperThenShootAutoRightSidePt3v3"));//stage 3
+    	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt2v4"));//stage 2
+    //	addSequential(new SmartShootAuto());
+    //	addSequential(new FollowTrajectoryAndCollect("RedHopperThenShootAutoRightSidePt3v3"));//stage 3
     	addSequential(new SmartShoot());
     	//addParallel(new FuelCollectorStop());
 

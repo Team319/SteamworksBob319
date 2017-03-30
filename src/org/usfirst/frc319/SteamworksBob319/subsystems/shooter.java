@@ -62,10 +62,10 @@ public shooter (){
 	
 	shooterLead.setProfile(0);
 	shooterLead.setF(0.14);
-	shooterLead.setP(0.64); //seems to be too high - oscillations try.01 and go up if it gets rid of osc. +++++too low if it never gets up to speed
-	shooterLead.setI(0.001); //set to 0.0 if its not working
-	shooterLead.setIZone(100);
-	shooterLead.setD(1.20);
+	shooterLead.setP(1.20); //was 0.64
+	shooterLead.setI(0.00); // was 0.001
+	shooterLead.setIZone(00); // was 100
+	shooterLead.setD(0.29); // was 1.20
 	
 	
 }
@@ -113,7 +113,7 @@ public shooter (){
     
     if(Robot.oi.operatorController.getRawButton(1)){
     	/* Speed mode */
-    	double targetSpeed =  leftYstick * 1000; /* 1500 RPM in either direction */
+    	double targetSpeed =  -750; /* 1500 RPM in either direction */
     	shooterLead.changeControlMode(TalonControlMode.Speed);
     	shooterLead.set(targetSpeed); /* 1500 RPM in either direction */
     	//_sb.append(_talon.getControlMode() );
@@ -153,6 +153,9 @@ public shooter (){
     }
     public double getShooterError(){
     	return shooterLead.getSetpoint() + shooterLead.getSpeed();
+    }
+    public double getShooterCurrent(){
+    	return shooterLead.getOutputCurrent();
     }
     public boolean shooterIsAtSpeed(double threshhold){
     	if (shooterLead.getSpeed() - shooterLead.getSetpoint() > threshhold) 

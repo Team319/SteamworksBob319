@@ -29,7 +29,7 @@ public class RollervatorGo extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double speed = 900;
+    	double speed = 900; // max out at 750 rpm
     	Robot.rollervator.rollervatorShoot(speed); 
     }
 

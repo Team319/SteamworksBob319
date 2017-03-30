@@ -229,6 +229,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("rollervator follow current", Robot.rollervator.getRollerVatorFollowCurrent());
 		SmartDashboard.putNumber("Rollervator Lead Voltage", Robot.rollervator.getRollervatorLeadVoltage());
 		SmartDashboard.putNumber("rollervator follow Voltage", Robot.rollervator.getRollervatorFollowVoltage());
+		SmartDashboard.putNumber("Shooter Current", Robot.shooter.getShooterCurrent());
 		
 	}
 

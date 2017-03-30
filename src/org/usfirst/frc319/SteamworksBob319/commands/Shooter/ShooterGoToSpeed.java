@@ -36,7 +36,7 @@ public class ShooterGoToSpeed extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = -750; // was 750
+    	double speed = -745; // was 765
     	Robot.shooter.shooterGoToSpeed(speed);
     	System.out.println("Shooter Error" + Robot.shooter.getShooterError());
     }
