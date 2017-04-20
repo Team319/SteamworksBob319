@@ -9,32 +9,26 @@
 // it from being updated in the future.
 
 
-package org.usfirst.frc319.SteamworksBob319.commands.Rollervator;
+package org.usfirst.frc319.SteamworksBob319.CommandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import org.usfirst.frc319.SteamworksBob319.commands.BrakePadDeploy;
-import org.usfirst.frc319.SteamworksBob319.commands.BrakePadRetract;
-import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
-import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoSlowClimbing;
-import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoToSpeed;
+import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.ClimberStop;
+import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorStop;
+import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterStop;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
 /**
  *
  */
-public class AutomatedRollervatorClimb extends CommandGroup {
+public class ShooterClimberStop extends CommandGroup {
 
 
   
-    public AutomatedRollervatorClimb() {
+    public ShooterClimberStop() {
+    	addParallel(new ShooterStop());
+    	addSequential(new ClimberStop());
 
-    	//addSequential(new ClimbStart(800.0), 2);
-    //	addParallel(new ShooterGoSlowClimbing());
-    	addSequential(new RollervatorClimb(1.0));
-    	
-    	// start rollervator for one second 
-    	// have command that climbs while monitoring current
    
         // Add Commands here:
         // e.g. addSequential(new Command1());

@@ -11,6 +11,7 @@
 package org.usfirst.frc319.SteamworksBob319;
 
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.FuelCollectorAndHopperFlapRetract;
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.ShooterClimberStop;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.ShooterRollervatorStop;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
@@ -77,11 +78,11 @@ public class OI {
 		operatorController.yButton.whenPressed(new RetractCollectorThenStopCollect());
 		operatorController.xButton.whenPressed(new RollervatorClimbHard(1.0));
 		
-		operatorController.rightTriggerButton.whenPressed(new SmartShoot());
+		operatorController.rightTriggerButton.whenPressed(new FuelCollectorToggle(.6));
 		operatorController.rightBumper.whenPressed(new ShooterRollervatorStop());
 		
 		operatorController.leftTriggerButton.whenPressed(new AutomatedRollervatorClimb());
-		operatorController.leftBumper.whenPressed(new ShooterRollervatorStop());
+		operatorController.leftBumper.whenPressed(new ShooterClimberStop());
 		
 		operatorController.selectButton.whenPressed(new FuelCollectorAndHopperFlapRetract());
 		operatorController.startButton.whenPressed(new FuelCollectorDeployWaitThenHopperFlap());
@@ -94,7 +95,8 @@ public class OI {
 		driverController.startButton.whenPressed(new ResetDrivetrainSpeedLimits());
 		
 		driverController.rightTriggerButton.whenPressed(new DepositGear());
-
+		driverController.leftTriggerButton.whenPressed(new SmartShoot());
+		
 	}
 
 	public Joystick getdriverController() {

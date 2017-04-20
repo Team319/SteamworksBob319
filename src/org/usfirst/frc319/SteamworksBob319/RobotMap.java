@@ -61,6 +61,9 @@ public class RobotMap {
     public static DigitalInput gearCollectorSensor;
     
     public static Relay lights;
+     
+    public static CANTalon climberclimberLead;
+    public static CANTalon climberclimberFollow;
     
 
 
@@ -87,8 +90,8 @@ public class RobotMap {
         
         //---------------------------shooter--------------------------//
         
-        shooterShooterLead = new CANTalon(6);//
-        shooterShooterFollow = new CANTalon(1); //
+        shooterShooterLead = new CANTalon(12);// was 6
+        shooterShooterFollow = new CANTalon(11); //  was 1
    
         //----------------fuelCollector----------------------------//
         
@@ -117,7 +120,13 @@ public class RobotMap {
         
         compressorCompressor = new Compressor(0);
         compressorPressureSensor = new AnalogInput(0);
-       
+        
+        //-----------------------climber-------------------------------------//
+        
+        climberclimberLead = new CANTalon(6);
+        climberclimberFollow = new CANTalon(1);
+        
+        
 
     }
 }

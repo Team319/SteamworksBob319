@@ -86,13 +86,17 @@ public class Robot extends IterativeRobot {
 		rollervator = new rollervator();
 		gearCollector = new gearCollector();
 		brakePad = new brakePad();
-		// activeFloor = new activeFloor(); // should be deleted (TG 2/15/17)
 		compressor = new compressor();
 		
 		//new Thread(()-> {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 			camera.setFPS(30);
 			camera.setResolution(320, 240);
+			//camera.setExposureAuto();
+			//camera.setBrightness(100);
+			camera.setExposureManual(6);//5 worked in shop
+			
+			
 			
 			
 			//CvSink cvSink= CameraServer.getInstance().getVideo();
@@ -188,6 +192,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("shooter speed", Robot.shooter.getShooterSpeed());
+		SmartDashboard.putNumber("rollervator speed", Robot.rollervator.getRollervatorSpeed());
 	}
 
 	public void teleopInit() {
@@ -196,8 +202,9 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		Robot.brakePad.brakePadRetract();
-		Robot.driveTrain.shiftUp();
+		//Robot.driveTrain.shiftUp();
 		Robot.driveTrain.setDrivetrainProfileHighGear();
+		Robot.gearCollector.lightsOn();
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -230,6 +237,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Rollervator Lead Voltage", Robot.rollervator.getRollervatorLeadVoltage());
 		SmartDashboard.putNumber("rollervator follow Voltage", Robot.rollervator.getRollervatorFollowVoltage());
 		SmartDashboard.putNumber("Shooter Current", Robot.shooter.getShooterCurrent());
+		SmartDashboard.putNumber("Climber Current", Robot.rollervator.climberCurrent());
 		
 	}
 

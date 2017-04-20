@@ -23,6 +23,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 
 /**
  *
@@ -32,14 +33,17 @@ public class rollervator extends Subsystem {
 	public final CANTalon rollervatorLead = RobotMap.rollervatorRollervatorLead;
 	public final CANTalon rollervatorFollow = RobotMap.rollervatorRollervatorFollow;
 	
+	public final CANTalon climberLead = RobotMap.climberclimberLead;
+	public final CANTalon climberFollow = RobotMap.climberclimberFollow;
+	
 	private final int SHOOT_PROFILE = 0;
 	private final int CLIMB_PROFILE = 1;
 	
-	private double pShoot = 0.06;
-	private double fShoot = 0.1;
-	private double dShoot = 0.0;
-	private double iShoot = 0.08;
-	private int iZoneShoot = 500;
+	private double pShoot = 0.2; // was 0.06 for tower v1
+	private double fShoot = 0.289;
+	private double dShoot = 0.2; // was .2
+	private double iShoot = 0.0; // was 0.08 for tower v1
+	private int iZoneShoot = 0; // was 500 for tower v1
 	
 	private double pClimb = 0.06;
 	private double fClimb = 0.1;
@@ -55,15 +59,18 @@ public class rollervator extends Subsystem {
 		rollervatorLead.enableBrakeMode(false);
 		rollervatorFollow.enableBrakeMode(false);
 
-		rollervatorLead.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		rollervatorLead.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		rollervatorLead.configEncoderCodesPerRev(1024);
 		rollervatorLead.reverseOutput(false);
-		rollervatorLead.reverseSensor(true);
+		rollervatorLead.reverseSensor(false);
 
 		rollervatorFollow.changeControlMode(TalonControlMode.Follower);
 		rollervatorFollow.set(rollervatorLead.getDeviceID());
-		rollervatorFollow.reverseOutput(true);
-		// talon7.reverseSensor(true); There is no sensor, doing this for
-		// continuity
+		rollervatorFollow.reverseOutput(false);
+		
+		rollervatorLead.setCloseLoopRampRate(36.0);
+		rollervatorFollow.setCloseLoopRampRate(36.0);
+		
 
 		rollervatorLead.configNominalOutputVoltage(+0.0f, -0.0f);
 		rollervatorLead.configPeakOutputVoltage(12.0, 0.0);
@@ -73,6 +80,23 @@ public class rollervator extends Subsystem {
 		rollervatorLead.setPID(pClimb, iClimb, dClimb, fClimb, 0, 0, CLIMB_PROFILE);
 		
 		rollervatorLead.setVoltageRampRate(36);
+		
+		climberLead.changeControlMode(TalonControlMode.PercentVbus);
+		climberLead.enableBrakeMode(false);
+		climberFollow.enableBrakeMode(false);
+		
+		climberFollow.changeControlMode(TalonControlMode.Follower);
+		climberFollow.set(climberLead.getDeviceID());
+		climberFollow.reverseOutput(true);
+		climberLead.reverseOutput(false);
+		
+		climberLead.configNominalOutputVoltage(+0.0f, -0.0f);
+		climberLead.configPeakOutputVoltage(12.0, 0.0);
+		climberFollow.configPeakOutputVoltage(-12.0, -0.0);
+		
+		climberLead.setVoltageRampRate(36.0);
+		climberFollow.setVoltageRampRate(36.0);
+		
 
 	}
 
@@ -85,6 +109,7 @@ public class rollervator extends Subsystem {
 		// RobotMap.rollervatorRollervatorLead));
 		//setDefaultCommand(new RollervatorStop());
 		//setDefaultCommand(new ClimbStart());
+		//setDefaultCommand(new RollervatorPIDTestMode());
 		// Set the default command for a subsystem here.
 
 	}
@@ -101,9 +126,17 @@ public class rollervator extends Subsystem {
 																		// speed
 		rollervatorLead.set(0);
 	}
+	public void climberStop(){
+		climberLead.changeControlMode(TalonControlMode.PercentVbus);
+		climberLead.set(0);
+	}
 	
 	public void set(double setpoint){
 		rollervatorLead.set(setpoint);
+	}
+	
+	public void setClimber(double setpoint){
+		climberLead.set(setpoint);
 	}
 
 	public void rollervatorShoot(double speed) {
@@ -128,7 +161,7 @@ public class rollervator extends Subsystem {
 
 	// ---USED for tuning rollervator Velocity PID -----//
 	public void rollervatorPIDTestMode() {
-
+		rollervatorLead.setProfile(SHOOT_PROFILE);
 		/* get gamepad axis */
 		double leftYstick = -Robot.oi.operatorController.getLeftStickY();
 		double motorOutput = rollervatorLead.getOutputVoltage() / rollervatorLead.getBusVoltage();
@@ -140,7 +173,7 @@ public class rollervator extends Subsystem {
 
 		if (Robot.oi.operatorController.getRawButton(1)) {
 			/* Speed mode */
-			double targetSpeed = 1000; /* 1500 RPM in either direction */
+			double targetSpeed = 362; /* 1500 RPM in either direction */
 			rollervatorLead.changeControlMode(TalonControlMode.Speed);
 			rollervatorLead.set(targetSpeed); /* 1500 RPM in either direction */
 			// _sb.append(_talon.getControlMode() );
@@ -175,7 +208,6 @@ public class rollervator extends Subsystem {
 	}
 
 	// ----- All of the information that could be used by the rollervator
-	// ------//
 
 	public double getRollervatorSpeed() {
 		return rollervatorLead.getSpeed();
@@ -196,14 +228,18 @@ public class rollervator extends Subsystem {
 	public double getRollervatorFollowVoltage(){
 		return rollervatorFollow.getOutputVoltage();
 	}
+	
 
 	// --- could be used as an isfinished to cut the motor off if current is
 	// exceeded ---///
 	public boolean isExceedingCurrentThreshhold(double threshhold) {
-		if (rollervatorLead.getOutputCurrent() > threshhold) {
+		if (climberLead.getOutputCurrent() > threshhold) {
 			return true;
 		} else
 			return false;
+	}
+	public double climberCurrent(){
+		return climberLead.getOutputCurrent();
 	}
 
 }

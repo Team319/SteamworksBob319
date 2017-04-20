@@ -20,6 +20,7 @@ import com.ctre.CANTalon.TalonControlMode;
  */
 public class ShooterGoToSpeed extends Command {
 
+	double speed = -745; // was 745
    
     public ShooterGoToSpeed() {
 
@@ -36,15 +37,15 @@ public class ShooterGoToSpeed extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = -745; // was 765
     	Robot.shooter.shooterGoToSpeed(speed);
     	System.out.println("Shooter Error" + Robot.shooter.getShooterError());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double threshhold = 50;
-        return Robot.shooter.shooterIsAtSpeed(threshhold);
+    	return Robot.shooter.shooterAboveTarget(Math.abs(speed));
+    	//double threshhold = 10;
+        //return Robot.shooter.shooterIsAtSpeed(threshhold);
     }
 
     // Called once after isFinished returns true

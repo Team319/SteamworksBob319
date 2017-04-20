@@ -16,10 +16,10 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
 /**
  *
  */
-public class RollervatorGo extends Command {
+public class ClimberStop extends Command {
 
    
-    public RollervatorGo() {
+    public ClimberStop() {
 
     
         requires(Robot.rollervator);
@@ -29,13 +29,11 @@ public class RollervatorGo extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double speed = 400; // was 362
-    	Robot.rollervator.rollervatorShoot(speed); 
+    	Robot.rollervator.climberStop();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	// Mr. Derrick thinks we could put this into initialize and it would work.
     }
 
     // Make this return true when this Command no longer needs to run execute()

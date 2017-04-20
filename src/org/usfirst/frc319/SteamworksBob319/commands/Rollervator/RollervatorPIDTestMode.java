@@ -39,7 +39,7 @@ public class RollervatorPIDTestMode extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;  // Might be nice to have this be a threshold so a command group would only start once it's at speed
+        return false;  
     }
 
     // Called once after isFinished returns true

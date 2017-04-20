@@ -52,11 +52,15 @@ public shooter (){
 	
 	shooterFollow.changeControlMode(TalonControlMode.Follower);
 	shooterFollow.set(shooterLead.getDeviceID());
+	//shooterFollow.reverseOutput(true);
 	shooterFollow.reverseOutput(true);
 	
 	shooterLead.configNominalOutputVoltage(+0.0f, -0.0f);
 	shooterLead.configPeakOutputVoltage(+12.0f, -12.0f);
 	shooterFollow.configPeakOutputVoltage(+12.0f, -12.0f);
+	
+	shooterLead.setCloseLoopRampRate(36.0);
+	shooterFollow.setCloseLoopRampRate(36.0);
 	
 	
 	
@@ -65,7 +69,8 @@ public shooter (){
 	shooterLead.setP(1.20); //was 0.64
 	shooterLead.setI(0.00); // was 0.001
 	shooterLead.setIZone(00); // was 100
-	shooterLead.setD(0.29); // was 1.20
+	shooterLead.setD(3.6); // was 2.4
+	
 	
 	
 }
@@ -162,6 +167,10 @@ public shooter (){
     		return false;
     	else
     		return true;
+    }
+    
+    public boolean shooterAboveTarget(double target){
+    	return Math.abs(shooterLead.getSpeed()) > target;
     }
     
     
