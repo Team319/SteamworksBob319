@@ -17,11 +17,13 @@ import org.usfirst.frc319.SteamworksBob319.CommandGroups.DeployCollectorAfterWai
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.FuelCollectorDeployThenCollect;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShootAuto;
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShootVariable;
 import org.usfirst.frc319.SteamworksBob319.commands.DoNothing;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectoryAndCollect;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeployWaitThenHopperFlap;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorIn;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorStop;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapDeploy;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmGoToDepositGear;
@@ -40,11 +42,14 @@ public class BlueHopperThenShootAutoLeftSide extends CommandGroup {
     	addSequential(new GearCollectorArmGoToDepositGear());
     	addParallel(new FuelCollectorDeployWaitThenHopperFlap());
     	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt1"));//stage 1
-    	addSequential(new DoNothing(),1.5);// do nothing 3 seconds
+    	addSequential(new DoNothing(),3.19);// do nothing 3 seconds
     	addSequential(new FollowTrajectory("BlueHopperThenShootAutoLeftSidePt2v4"));//stage 2
     //	addSequential(new SmartShootAuto());
     //	addSequential(new FollowTrajectoryAndCollect("RedHopperThenShootAutoRightSidePt3v3"));//stage 3
-    	addSequential(new SmartShoot());
+    	addSequential(new SmartShootVariable(-740.0));
+    	//addSequential(new SmartShoot());
+    	addSequential(new DoNothing(), 3);
+    	addSequential(new FuelCollectorIn(0.3));
     	//addParallel(new FuelCollectorStop());
 
 

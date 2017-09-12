@@ -241,5 +241,14 @@ public class rollervator extends Subsystem {
 	public double climberCurrent(){
 		return climberLead.getOutputCurrent();
 	}
+	public double climberFollowCurrent(){
+		return climberFollow.getOutputCurrent();
+	}
+	public double climberLeadVoltage(){
+		return climberLead.getOutputVoltage();
+	}
+	public double climberFollowVoltage(){
+		return climberFollow.getOutputVoltage();
+	}
 
 }

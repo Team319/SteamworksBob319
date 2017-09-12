@@ -20,6 +20,7 @@ import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShootAuto;
 import org.usfirst.frc319.SteamworksBob319.commands.DoNothing;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectoryAndCollect;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorBurp;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeployWaitThenHopperFlap;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorIn;
@@ -27,6 +28,8 @@ import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorS
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorToggle;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapDeploy;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmGoToDepositGear;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightsOff;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightsOn;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoToSpeed;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
 
@@ -43,13 +46,16 @@ public class RedHopperThenShootAutoRightSide extends CommandGroup {
     	addSequential(new GearCollectorArmGoToDepositGear());
     	addParallel(new FuelCollectorDeployWaitThenHopperFlap());
     	addSequential(new FollowTrajectory("RedHopperThenShootAutoRightSidePt1"));//stage 1
-    	addSequential(new DoNothing(),1.5 );// do nothing 3 seconds
+    	addSequential(new DoNothing(),3.19 );// do nothing 3 seconds
     	addSequential(new FollowTrajectory("RedHopperThenShootAutoRightSidePt2v4"));//stage 2
     //	addSequential(new SmartShootAuto());
     //	addSequential(new FollowTrajectory("RedHopperThenShootAutoRightSidePt3v3"));
+    	addSequential(new LightsOn());
     	addSequential(new SmartShoot());
     	addSequential(new DoNothing(), 3);
-    	addSequential(new FuelCollectorIn());
+    	addSequential(new FuelCollectorBurp());
+    	addSequential(new FuelCollectorIn(0.3));
+    	addSequential(new LightsOff());
     	//addParallel(new FuelCollectorStop());
     	
     	

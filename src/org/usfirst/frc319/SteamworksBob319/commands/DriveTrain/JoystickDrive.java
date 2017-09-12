@@ -36,7 +36,7 @@ public class JoystickDrive extends Command {
     protected void execute() {
     	double moveValue = Robot.oi.driverController.getLeftStickY();
     	double rotateValue = Robot.oi.driverController.getRightStickX();
-    	Robot.driveTrain.joystickDrive(-moveValue, rotateValue);
+    	Robot.driveTrain.joystickDrive(-moveValue, rotateValue); // Shooter Config was - + Gear Config = +,+
     	SmartDashboard.putDouble("move value in joystick mode = ", moveValue);
 		SmartDashboard.putDouble("rotate value in joystick mode = ", rotateValue);
     	SmartDashboard.putBoolean("isHighGear", Robot.driveTrain.isHighGear);

@@ -78,6 +78,12 @@ public class driveTrain extends Subsystem {
 
 		leftDriveLead.configNominalOutputVoltage(+0.0f, -0.0f);
 		leftDriveLead.configPeakOutputVoltage(+12.0f, -12.0f);
+		
+		//leftDriveLead.setVoltageRampRate(48);
+		//leftDriveFollow.setVoltageRampRate(48);
+		
+		//rightDriveLead.setVoltageRampRate(48);
+		//rightDriveFollow.setVoltageRampRate(48);
 
 		double pHighGear = 2.04;// .3
 		double pLowGear = 0.889;// 1.0

@@ -46,6 +46,8 @@ public class gearCollector extends Subsystem {
     private final DigitalInput GearSensor = RobotMap.gearCollectorSensor;
     private final Relay lights = RobotMap.lights;
     StringBuilder _sb = new StringBuilder();
+    
+    public boolean lightIsOn;
 
 public gearCollector (){
 	gearCollectorMotor.changeControlMode(TalonControlMode.PercentVbus);
@@ -113,6 +115,10 @@ public gearCollector (){
     	return gearCollectorMotor.getOutputCurrent();
     }
     
+    public double getGearCollectorVoltage(){
+    	return gearCollectorMotor.getOutputVoltage();
+    }
+    
     public boolean isArmAtSetpoint(double tolerance){
     	double position = gearCollectorArm.getPosition();
     	double setpoint = gearCollectorArm.getSetpoint();
@@ -174,9 +180,16 @@ public gearCollector (){
 	}
     public void lightsOn(){
     	lights.set(Relay.Value.kForward);
+    	
+    	lightIsOn = true;
     }
     public void lightsOff(){
-    	lights.set(Relay.Value.kOff);
+    	lights.set(Relay.Value.kReverse);
+    	
+    	lightIsOn = false;
+    }
+    public void lightsToggle(){
+    	
     }
 }
    

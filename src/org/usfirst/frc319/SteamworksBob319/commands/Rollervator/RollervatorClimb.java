@@ -21,6 +21,7 @@ import com.ctre.CANTalon.TalonControlMode;
 public class RollervatorClimb extends Command {
 	
 	private double climbSpeed = 0; 
+	
 
 	public RollervatorClimb(double setPoint) {
 		
@@ -41,7 +42,7 @@ public class RollervatorClimb extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.rollervator.isExceedingCurrentThreshhold(50.0); // This
+		return Robot.rollervator.isExceedingCurrentThreshhold(50); // This
 																				// is
 																				// the
 																				// amount

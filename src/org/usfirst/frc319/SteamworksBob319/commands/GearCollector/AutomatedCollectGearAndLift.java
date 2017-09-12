@@ -38,7 +38,7 @@ public class AutomatedCollectGearAndLift extends CommandGroup {
     	addSequential(new SetDrivetrainSpeedLimits(1000.0, -100.0));
     	addSequential(new GearCollectorHold());
     	addSequential(new StopGearRumble());
-    	addSequential(new WaitCommand(1.0));
+    	addSequential(new WaitCommand(0.5)); //reduced from 1.0 at Summer Heat
     	addSequential(new GearCollectorArmGoToDepositGear());
     	addSequential(new WaitCommand(1.0));
     	addSequential(new ResetDrivetrainSpeedLimits());

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorBurp;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.HopperFlapDeploy;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.AutoDepositGear;
@@ -33,7 +34,8 @@ public class BlueGearThenShootFromHopperAutoLeftSide extends CommandGroup {
     	addSequential(new FuelCollectorDeploy());
     	addSequential(new FollowTrajectory("BlueGearThenShootFromHopperAutoLeftSide"));
     	addSequential(new HopperFlapDeploy());
-    	addSequential(new SmartShoot());
+    	addSequential(new SmartShoot(), 6);
+    	addSequential(new FuelCollectorBurp());
 
    
         // Add Commands here:

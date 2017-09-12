@@ -27,6 +27,7 @@ public class ShooterRollervatorStop extends CommandGroup {
     public ShooterRollervatorStop() {
     	addParallel(new ShooterStop());
     	addSequential(new RollervatorStop());
+    	
 
    
         // Add Commands here:

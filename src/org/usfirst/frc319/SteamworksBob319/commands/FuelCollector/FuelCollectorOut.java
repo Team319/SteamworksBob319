@@ -18,12 +18,12 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
  */
 public class FuelCollectorOut extends Command {
 
-   
-    public FuelCollectorOut() {
+   public double setpoint = 0.0;
+    public FuelCollectorOut(double speed) {
 
     
         requires(Robot.fuelCollector);
-
+        setpoint = speed;
    
     }
 
@@ -33,8 +33,8 @@ public class FuelCollectorOut extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = -1;
-    	Robot.fuelCollector.fuelCollectorOut(speed);
+    //	double speed = -0.5;
+    	Robot.fuelCollector.fuelCollectorOut(setpoint);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -29,7 +29,7 @@ public class GearCollectorArmGoToDepositGear extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearCollector.gearCollectorGoToAngle(-19);
+    	Robot.gearCollector.gearCollectorGoToAngle(-10); // was -19 5/20/2017
     }
 
     // Called repeatedly when this Command is scheduled to run

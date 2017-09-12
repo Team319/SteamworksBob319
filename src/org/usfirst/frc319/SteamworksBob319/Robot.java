@@ -87,14 +87,17 @@ public class Robot extends IterativeRobot {
 		gearCollector = new gearCollector();
 		brakePad = new brakePad();
 		compressor = new compressor();
+	
+		
+		
 		
 		//new Thread(()-> {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-			camera.setFPS(30);
-			camera.setResolution(320, 240);
+			//camera.setFPS(30);
+			//camera.setResolution(320, 240);
 			//camera.setExposureAuto();
 			//camera.setBrightness(100);
-			camera.setExposureManual(6);//5 worked in shop
+			//camera.setExposureManual(6);//5 worked in shop
 			
 			
 			
@@ -204,7 +207,7 @@ public class Robot extends IterativeRobot {
 		Robot.brakePad.brakePadRetract();
 		//Robot.driveTrain.shiftUp();
 		Robot.driveTrain.setDrivetrainProfileHighGear();
-		Robot.gearCollector.lightsOn();
+		//Robot.gearCollector.lightsOn();
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -223,6 +226,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("RollerVator Test Mode motorspeed", Robot.rollervator.rollervatorLead.getSpeed());
 		SmartDashboard.putNumber("motorspeed", Robot.shooter.shooterLead.getSpeed());
 		SmartDashboard.putNumber("Collector Current", Robot.gearCollector.getGearCollectorCurrent());
+		SmartDashboard.putNumber("gear collector voltage", Robot.gearCollector.getGearCollectorVoltage());
 		SmartDashboard.putNumber("Rollervator Current", Robot.rollervator.getRollervatorCurrent());
 		SmartDashboard.putNumber("Shooter Error", Robot.shooter.getShooterError());
 		SmartDashboard.putBoolean("IsHighGear", Robot.driveTrain.isHighGear);
@@ -238,6 +242,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("rollervator follow Voltage", Robot.rollervator.getRollervatorFollowVoltage());
 		SmartDashboard.putNumber("Shooter Current", Robot.shooter.getShooterCurrent());
 		SmartDashboard.putNumber("Climber Current", Robot.rollervator.climberCurrent());
+		SmartDashboard.putNumber("Climber Follow Current", Robot.rollervator.climberFollowCurrent());
+		SmartDashboard.putNumber("Climber Lead Voltage", Robot.rollervator.climberLeadVoltage());
+		SmartDashboard.putNumber("Climber Follow Voltage", Robot.rollervator.climberFollowVoltage());
 		
 	}
 

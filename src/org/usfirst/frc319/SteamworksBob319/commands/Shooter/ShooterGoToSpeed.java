@@ -20,7 +20,7 @@ import com.ctre.CANTalon.TalonControlMode;
  */
 public class ShooterGoToSpeed extends Command {
 
-	double speed = -745; // was 745
+	double speed = -750; // was 745
    
     public ShooterGoToSpeed() {
 

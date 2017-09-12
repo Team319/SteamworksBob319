@@ -43,6 +43,7 @@ public class RobotMap {
     public static CANTalon shooterShooterFollow;
     
     public static CANTalon fuelCollectorFuelCollector;
+    public static CANTalon fuelcollectorFuelCollectorFollow; 
     public static DoubleSolenoid fuelCollectorFuelPiston;
     public static DoubleSolenoid fuelCollectorHopperFlap;
     
@@ -96,6 +97,7 @@ public class RobotMap {
         //----------------fuelCollector----------------------------//
         
         fuelCollectorFuelCollector = new CANTalon(9);//
+        fuelcollectorFuelCollectorFollow = new CANTalon(13);
         fuelCollectorFuelPiston = new DoubleSolenoid(0, 2, 3);
         fuelCollectorHopperFlap = new DoubleSolenoid(0, 4, 5);
        

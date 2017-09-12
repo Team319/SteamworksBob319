@@ -12,9 +12,11 @@
 package org.usfirst.frc319.SteamworksBob319.CommandGroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 import org.usfirst.frc319.SteamworksBob319.commands.DoNothing;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.FollowTrajectory;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorIn;
 import org.usfirst.frc319.SteamworksBob319.commands.Rollervator.RollervatorGo;
 import org.usfirst.frc319.SteamworksBob319.commands.Shooter.ShooterGoToSpeed;
 import org.usfirst.frc319.SteamworksBob319.subsystems.*;
@@ -30,6 +32,8 @@ public class SmartShoot extends CommandGroup {
 
     	addSequential(new ShooterGoToSpeed());
     	addSequential(new RollervatorGo());
+    	addSequential(new WaitCommand(1.0));
+    	addSequential(new FuelCollectorIn(0.3));
  
     } 
 }

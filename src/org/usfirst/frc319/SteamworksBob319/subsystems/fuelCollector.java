@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class fuelCollector extends Subsystem {
 
 	private final CANTalon fuelCollector = RobotMap.fuelCollectorFuelCollector;
+	private final CANTalon fuelCollectorFollow = RobotMap.fuelcollectorFuelCollectorFollow;
 	private final DoubleSolenoid fuelPiston = RobotMap.fuelCollectorFuelPiston;
 	private final DoubleSolenoid hopperFlap = RobotMap.fuelCollectorHopperFlap;
 
@@ -35,6 +36,14 @@ public class fuelCollector extends Subsystem {
 
 	public fuelCollector() {
 		fuelCollector.changeControlMode(TalonControlMode.PercentVbus);
+		fuelCollectorFollow.changeControlMode(TalonControlMode.Follower);
+		fuelCollectorFollow.set(fuelCollector.getDeviceID());
+		
+		fuelCollector.reverseOutput(false);
+		fuelCollectorFollow.reverseOutput(true);
+		
+		fuelCollector.setVoltageRampRate(36);
+		fuelCollectorFollow.setVoltageRampRate(36);
 	}
 
 	// Put methods for controlling this subsystem

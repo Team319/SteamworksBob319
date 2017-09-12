@@ -31,6 +31,7 @@ public class AutomatedRollervatorClimb extends CommandGroup {
 
     	//addSequential(new ClimbStart(800.0), 2);
     //	addParallel(new ShooterGoSlowClimbing());
+    	//addSequential(new RollervatorClimbStageOne(0.4));
     	addSequential(new RollervatorClimb(1.0));
     	
     	// start rollervator for one second 

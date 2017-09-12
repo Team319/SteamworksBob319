@@ -18,28 +18,31 @@ import org.usfirst.frc319.SteamworksBob319.Robot;
  */
 public class FuelCollectorIn extends Command {
 
-   
-    public FuelCollectorIn() {
+   public double setpoint = 0.0;
+    public FuelCollectorIn(double speed) {
 
     
         requires(Robot.fuelCollector);
-
+        setpoint = speed;
    
     }
 
+    public FuelCollectorIn(){
+    	setpoint = 1;
+    }
     // Called just before this Command runs the first time
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = 1;
-    	Robot.fuelCollector.fuelCollectorIn(speed);
+    	//double speed = 1;
+    	Robot.fuelCollector.fuelCollectorIn(setpoint);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

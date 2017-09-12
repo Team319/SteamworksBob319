@@ -12,6 +12,7 @@ package org.usfirst.frc319.SteamworksBob319;
 
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.FuelCollectorAndHopperFlapRetract;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.ShooterClimberStop;
+import org.usfirst.frc319.SteamworksBob319.CommandGroups.ShooterRollervatorCollectorStop;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.ShooterRollervatorStop;
 import org.usfirst.frc319.SteamworksBob319.CommandGroups.SmartShoot;
 import org.usfirst.frc319.SteamworksBob319.commands.*;
@@ -21,9 +22,11 @@ import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.JoystickDrive;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.ResetDrivetrainSpeedLimits;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.SetDrivetrainSpeedLimits;
 import org.usfirst.frc319.SteamworksBob319.commands.DriveTrain.ShiftToggle;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorBurp;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeploy;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorDeployWaitThenHopperFlap;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorIn;
+import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorOut;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorRetract;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorStop;
 import org.usfirst.frc319.SteamworksBob319.commands.FuelCollector.FuelCollectorToggle;
@@ -37,6 +40,7 @@ import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorI
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorOut;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorArmRetract;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.GearCollectorStop;
+import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightToggle;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightsOff;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.LightsOn;
 import org.usfirst.frc319.SteamworksBob319.commands.GearCollector.RetractCollectorThenStopCollect;
@@ -74,12 +78,13 @@ public class OI {
 		// --------OPERATOR---------------//
 
 		operatorController.aButton.whenPressed(new AutomatedCollectGearAndLift());
-		operatorController.bButton.whenPressed(new DepositGear());
+		operatorController.bButton.whenPressed(new LightToggle());
 		operatorController.yButton.whenPressed(new RetractCollectorThenStopCollect());
 		operatorController.xButton.whenPressed(new RollervatorClimbHard(1.0));
 		
 		operatorController.rightTriggerButton.whenPressed(new FuelCollectorToggle(.6));
-		operatorController.rightBumper.whenPressed(new ShooterRollervatorStop());
+		operatorController.rightBumper.whileHeld(new FuelCollectorOut(0.5));
+		operatorController.rightBumper.whenReleased(new FuelCollectorStop());
 		
 		operatorController.leftTriggerButton.whenPressed(new AutomatedRollervatorClimb());
 		operatorController.leftBumper.whenPressed(new ShooterClimberStop());
@@ -88,14 +93,26 @@ public class OI {
 		operatorController.startButton.whenPressed(new FuelCollectorDeployWaitThenHopperFlap());
 		
 		// -----------DRIVER-----------//
+		//----SHOOTER BOB CONFIG------//
 
-		driverController.leftBumper.whenPressed(new FuelCollectorToggle(.6));
+		driverController.leftBumper.whenPressed(new FuelCollectorToggle(0.8));//Shooter BOB
 		driverController.rightBumper.whenPressed(new ShiftToggle());		
-		driverController.bButton.whenPressed(new ShooterRollervatorStop());
-		driverController.startButton.whenPressed(new ResetDrivetrainSpeedLimits());
-		
+		driverController.aButton.whenPressed(new FuelCollectorBurp());
 		driverController.rightTriggerButton.whenPressed(new DepositGear());
-		driverController.leftTriggerButton.whenPressed(new SmartShoot());
+		driverController.leftTriggerButton.whileHeld(new SmartShoot());
+		driverController.leftTriggerButton.whenReleased(new ShooterRollervatorCollectorStop());
+		//------GEARBOB CONFIG ------///----also change arm angle and drive direction
+
+		//driverController.rightBumper.whenPressed(new ShiftToggle());		
+		//driverController.bButton.whenPressed(new ShooterRollervatorStop());
+		//driverController.xButton.whenPressed(new AutomatedRollervatorClimb());
+		//driverController.rightTriggerButton.whenPressed(new DepositGear());
+		//driverController.leftTriggerButton.whenPressed(new AutomatedCollectGearAndLift());
+		//driverController.bButton.whenPressed(new ShooterClimberStop());
+	
+		
+		
+		
 		
 	}
 
